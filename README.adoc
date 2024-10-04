@@ -1,1 +1,8 @@
-= Subasterra;
+= Projecte 1 DAW
+
+== Integrants del grup
+****
+Roger Ortiz Leal (ortiz.leal.roger@alumnat.copernic.cat)
+Ramón González Guix (gonzalez.guix.ramon@alumnat.copernic.cat)
+Ismael Benítez Martínez (ibenitez@alumnat.copernic.cat)
+****
