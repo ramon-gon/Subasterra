@@ -2,16 +2,17 @@
 
 == Integrants del grup
 ****
-Roger Ortiz Leal (ortiz.leal.roger@alumnat.copernic.cat)
+* https://gitlab.com/ortiz.leal.roger[**Roger Ortiz Leal**] (`ortiz.leal.roger@alumnat.copernic.cat`)
 
-Ramón González Guix (gonzalez.guix.ramon@alumnat.copernic.cat)
+* https://gitlab.com/gonzalez.guix.ramon[**Ramón González Guix**] (`gonzalez.guix.ramon@alumnat.copernic.cat`)
 
-Ismael Benítez Martínez (ibenitez@alumnat.copernic.cat)
+* https://gitlab.com/ibenitez[**Ismael Benítez Martínez**] (`ibenitez@alumnat.copernic.cat`)
 ****
 
-= GUIA DE ESTILS
+== **R01**: Guia d'estils de l'aplicació
+=== Paleta de colors
 
-== TIPOGRAFIA
+=== Tipografia
 
 ==== Logo: 
 [source, css]
