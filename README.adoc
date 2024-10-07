@@ -8,3 +8,57 @@ Ramón González Guix (gonzalez.guix.ramon@alumnat.copernic.cat)
 
 Ismael Benítez Martínez (ibenitez@alumnat.copernic.cat)
 ****
+
+= GUIA DE ESTILS
+
+== TIPOGRAFIA
+
+==== Logo: 
+[source, css]
+----
+{
+    font-family: Cinzel;
+    font-weight: 50px;
+    font-style: normal;
+}
+----
+
+==== General:
+[source, css]
+----
+{
+    font-family: Roboto;
+    font-weight: 50px;
+    font-style: normal;
+}
+----
+
+==== Categories: 
+[source, css]
+----
+{
+    font-family: Roboto;
+    font-weight: 50px;
+    font-style: normal;
+}
+----
+
+==== Títols:
+[source, css]
+----
+{
+    font-family: Roboto;
+    font-weight: 50px;
+    font-style: normal;
+}
+----
+
+==== Subtítols: 
+[source, css]
+----
+{
+    font-family: Roboto;
+    font-weight: 50px;
+    font-style: normal;
+}
+----
