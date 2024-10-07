@@ -72,21 +72,108 @@ Aquesta secció de la memòria està dedicada a explicar com configurar un entor
 
 IMPORTANT: S'assumeix que l'usuari ja té un compte a IsardVDI i que ha configurat dos servidors.
 
-=== Instal·lació del servidor SSH
+=== Servidor de desenvolupament
+
+==== Configuració prèvia de la màquina virtual
+Abans de començar a treballar amb el servidor, realitzarem unes configuracions prèvies a la màquina virtual:
+
+1. Actualitzem els paquets del sistema amb la comanda `sudo apt update`.
+
+2. Canviarem el `hostname` de la màquina virtual amb `sudo hostnamectl set-hostname dev-server`.
+
+3. Aparentment, després de canviar el `hostname`, el canvi no es reflecteix a l'arxiu `/etc/hosts` i cada cop que executem `sudo` ens apareix un missatge d'error. Per solucionar-ho, podem utilitzar `sed` per canviar el `hostname` antic pel nou: `sudo sed -i 's/hostname-antic/dev-server/g' /etc/hosts`.
+
+4. Finalment, reiniciarem la màquina amb `sudo /sbin/init 0` (sembla que `reboot` no existeix a Debian).
+
+==== Instal·lació del servidor SSH
 Per poder connectar-nos de forma remota a les màquines virtuals, necessitem instal·lar un servidor SSH:
 
-1. Abans de res, actualitzem els paquets del sistema amb la comanda `sudo apt update`. Això assegura que tenim la darrera versió dels paquets disponibles.
+1. Instal·lem el servidor SSH amb la comanda `sudo apt install openssh-server`.
 
-2. Instal·lem el servidor SSH amb la comanda `sudo apt install openssh-server`.
+2. Un cop instal·lat, iniciem el servei amb la comanda `sudo systemctl start ssh`.
 
-3. Un cop instal·lat, iniciem el servei amb la comanda `sudo systemctl start ssh`.
+3. Per comprovar que el servei s'ha iniciat correctament, executem `sudo systemctl status ssh`.
 
-4. Per comprovar que el servei s'ha iniciat correctament, executem `sudo systemctl status ssh`.
-
-5. Si ho hem fet tot correctament, veurem un missatge semblant a aquest:
+4. Si ho hem fet tot correctament, veurem un missatge semblant a aquest:
 [source, bash]
 ----
 ● ssh.service - OpenBSD Secure Shell server
      Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
      Active: active (running) since Thu 2021-10-14 10:00:00 CEST; 1h 30min ago
 ----
+
+==== Instal·lació d'Apache2
+Per poder desplegar la nostra aplicació, necessitem un servidor web. En aquest cas, utilitzarem Apache:
+
+1. Instal·lem Apache amb la comanda `sudo apt install apache2`.
+
+2. Un cop instal·lat, iniciem el servei amb la comanda `sudo systemctl start apache2`.
+
+3. El següent pas és configurar el firewall per permetre el tràfic HTTP (i HTTPS, si és necessari). Per fer-ho, executem `sudo ufw allow 'WWW Secure'`.
+
+4. Per comprovar que el servei s'ha iniciat correctament, executem `sudo systemctl status apache2`.
+
+5. Si ho hem fet tot correctament, veurem un missatge semblant a aquest:
+[source, bash]
+----
+● apache2.service - The Apache HTTP Server
+     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+     Active: active (running) since Thu 2021-10-14 10:00:00 CEST; 1h 30min ago
+----
+
+==== Instal·lació de PHP (8.2)
+TIP: Pots consultar https://php.watch/articles/install-php82-ubuntu-debian[**aquesta guia**] per obtenir insutrccions més detallades (en anglès).
+
+Per poder fer funcionar el backend de la nostra aplicació, necessitem PHP:
+
+1. Instal·lem les dependències necessàries amb la comanda `sudo apt install apt-transport-https lsb-release ca-certificates software-properties-common`.
+
+2. Afegim el repositori de PHP amb la comanda `sudo add-apt-repository ppa:ondrej/php`.
+
+3. Actualitzem els paquets amb `sudo apt update`.
+
+4. Instal·lem PHP 8.2 amb la comanda `sudo apt install php8.2 php8.2-cli php8.2-{bz2,curl,mbstring,intl}`.
+
+==== Configuració de PHP
+Per defecte, PHP no està configurat per funcionar amb Apache. Per solucionar-ho, necessitem instal·lar el mòdul de PHP per Apache:
+
+1. Instal·lem el mòdul amb la comanda `sudo apt install libapache2-mod-php8.2`.
+
+2. Activen el mòdul amb `sudo a2enmod php8.2` i reiniciem Apache amb `sudo systemctl restart apache2`.
+
+3. Per comprovar que PHP està funcionant correctament, crearem un arxiu `info.php` a la carpeta `/var/www/html` amb el següent contingut i accedirem a `http://dev-server/info.php` des d'un navegador. Si tot ha anat bé, hauríem de veure una pàgina amb la informació de PHP:
+[source, php]
+----
+<?php
+phpinfo();
+----
+
+==== Instal·lació de MariaDB
+Per poder emmagatzemar les dades de la nostra aplicació, hem decidit optar per MariaDB ja que és una opció senzilla de configurar amb PHP:
+
+1. Instal·lem MariaDB amb la comanda `sudo apt install mariadb-server`.
+
+2. Un cop instal·lat, iniciem el servei amb la comanda `sudo systemctl start mariadb`.
+
+3. Per comprovar que el servei s'ha iniciat correctament, executem `sudo systemctl status mariadb`.
+
+==== Configuració de MariaDB
+Un cop tenim MariaDB instal·lat, necessitem configurar-lo per poder començar a treballar amb ell:
+
+1. Executem la comanda `sudo mysql_secure_installation` per configurar la seguretat de la base de dades.
+
+2. Se'ns demanarà que canviarem la contrasenya de l'usuari `root`, en aquest cas, la deixarem en blanc.
+
+3. A continuació, se'ns demanarà si volem canviar la contrasenya `root` per a MariaDB. Nosaltres li direm que no (`N`).
+
+4. Després, simplement prem `Y` i `Enter` per a les següents preguntes (per acceptar les opcions per defecte).
+
+5. Finalment, reiniciem el servei amb `sudo systemctl restart mariadb`.
+
+6. Un cop reiniciat, accedim a la consola de MariaDB amb `sudo mysql -u root`.
+
+7. Crearem un nou usuari amb permisos d'administrador per poder treballar amb la base de dades fent servir `GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password1234!' WITH GRANT OPTION;`
+
+8. Fem servir `FLUSH PRIVILEGES;` per aplicar els canvis i sortim de la consola amb `exit`.
+
+9. Per comprovar que tot ha anat bé, podem tornar a accedir a la consola de MariaDB amb `sudo mysql -u admin -p` i introduir la contrasenya que hem definit abans.
