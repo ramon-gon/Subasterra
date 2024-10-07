@@ -69,7 +69,7 @@
 
 === Link al diagrama E-R
 
-https://app.diagrams.net/#G1Y18KrAgeyOQ7Dl8aT-LCpGar8g0uD_9X#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D
+`https://app.diagrams.net/#G1Y18KrAgeyOQ7Dl8aT-LCpGar8g0uD_9X#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D`
 
 == **R03**: Entorns de desplegament a Isard
 
