@@ -63,3 +63,30 @@
     font-style: normal;
 }
 ----
+
+== **R03**: Entorns de desplegament a Isard
+
+Per realitzar aquest projecte, utilitzarem https://isardvdi.com/[**IsardVDI**] com a entorn de desenvolupament i desplegament.
+
+Aquesta secció de la memòria està dedicada a explicar com configurar un entorn de desenvolupament i desplegament a IsardVDI.
+
+IMPORTANT: S'assumeix que l'usuari ja té un compte a IsardVDI i que ha configurat dos servidors.
+
+=== Instal·lació del servidor SSH
+Per poder connectar-nos de forma remota a les màquines virtuals, necessitem instal·lar un servidor SSH:
+
+1. Abans de res, actualitzem els paquets del sistema amb la comanda `sudo apt update`. Això assegura que tenim la darrera versió dels paquets disponibles.
+
+2. Instal·lem el servidor SSH amb la comanda `sudo apt install openssh-server`.
+
+3. Un cop instal·lat, iniciem el servei amb la comanda `sudo systemctl start ssh`.
+
+4. Per comprovar que el servei s'ha iniciat correctament, executem `sudo systemctl status ssh`.
+
+5. Si ho hem fet tot correctament, veurem un missatge semblant a aquest:
+[source, bash]
+----
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+     Active: active (running) since Thu 2021-10-14 10:00:00 CEST; 1h 30min ago
+----
