@@ -10,60 +10,97 @@
 ****
 
 == **R01**: Guia d'estils de l'aplicació
-
 === Paleta de colors
+
+++++
+include::styles_guide/color_palette.html[]
+++++
+
+La idea es fer un disseny minimalista amb fons **blanc** i la tipografia de color **negre**. La idea es fer ús del **gris** per donar volum a la  pàgina web i algunes decoracions amb un color **crema**. Per resaltar elements de la web farem ús del **daurat** i quan volguem fer una crida a la acció utilitzarem el color **vermell**.
 
 === Tipografia
 
-==== Logo: 
+++++
+include::styles_guide/logo.html[]
+++++
 [source, css]
 ----
 {
     font-family: Cinzel;
-    font-weight: 50px;
-    font-style: normal;
+    font-size: 24px;
 }
 ----
 
-==== General:
+++++
+include::styles_guide/general.html[]
+++++
 [source, css]
 ----
 {
     font-family: Roboto;
-    font-weight: 50px;
-    font-style: normal;
+    font-size: 16px;
 }
 ----
 
-==== Categories: 
+++++
+include::styles_guide/categories.html[]
+++++
+[source, css]
+----
+{
+    font-family: Montserrat;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+----
+
+++++
+include::styles_guide/titles.html[]
+++++
 [source, css]
 ----
 {
     font-family: Roboto;
-    font-weight: 50px;
-    font-style: normal;
+    font-size: 22px;
 }
 ----
 
-==== Títols:
+++++
+include::styles_guide/subtitles.html[]
+++++
+
 [source, css]
 ----
 {
     font-family: Roboto;
-    font-weight: 50px;
-    font-style: normal;
+    font-size: 18px;
 }
 ----
 
-==== Subtítols: 
-[source, css]
-----
-{
-    font-family: Roboto;
-    font-weight: 50px;
-    font-style: normal;
-}
-----
+=== Iconografía:
+Utilitzarem la iconografia que ofereix __Google Fonts__. Farem ús sempre que sigui necessari per donar informació a l'usuari. Si hi ha un menú per fer cerques colocarem l'icono __Search__, si fem ús de display __Keyboard Arrow Down__, per tancar finestres __Close__, entre altres...
+
+=== Botons:
+==== Botons amb crida a l'acció: 
+++++
+include::styles_guide/buttons_prototype_1.html[]
+++++
+
+=== Enllaços:
+==== Enllaços de navegació:
+
+++++
+include::styles_guide/links_prototype_1.html[]
+++++
+
+=== Elements de formulari:
+++++
+include::styles_guide/form_prototype_1.html[]
+++++
+
+=== Altres components:
+
+Pendent
 
 == **R02**: Mantenir actualitzat un diagrama de la base de dades
 
