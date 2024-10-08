@@ -116,6 +116,48 @@ Aquesta secció de la memòria està dedicada a explicar com configurar un entor
 
 IMPORTANT: S'assumeix que l'usuari ja té un compte a IsardVDI i que ha configurat dos servidors.
 
+=== Client de desenvolupament
+
+==== Configuració prèvia de la màquina virtual
+Abans de començar a treballar amb el servidor, realitzarem unes configuracions prèvies a la màquina virtual:
+
+1. Actualitzem els paquets del sistema amb la comanda `sudo apt update`.
+
+2. Farem que se li assigni una IP al servidor amb la comanda `sudo dhclient`.
+
+3. Canviarem el `hostname` de la màquina virtual amb `sudo hostnamectl set-hostname dev-client`.
+
+4. Aparentment, després de canviar el `hostname`, el canvi no es reflecteix a l'arxiu `/etc/hosts` i cada cop que executem `sudo` ens apareix un missatge d'error. Per solucionar-ho, podem utilitzar `sed` per canviar el `hostname` antic pel nou: `sudo sed -i 's/hostname-antic/dev-client/g' /etc/hosts`.
+
+5. Finalment, reiniciarem la màquina amb `sudo reboot`.
+
+==== Instal·lació del servidor SSH
+
+Per poder connectar-nos de forma remota a les màquines virtuals, necessitem instal·lar un servidor SSH:
+
+1. Instal·lem el servidor SSH amb la comanda `sudo apt install openssh-server`.
+
+2. Un cop instal·lat, iniciem el servei amb la comanda `sudo systemctl start ssh`.
+
+3. Per comprovar que el servei s'ha iniciat correctament, executem `sudo systemctl status ssh`.
+
+4. Si ho hem fet tot correctament, veurem un missatge semblant a aquest:
+
+[source, bash]
+----
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2024-10-08 15:48:36 CEST; 1h 42min ago
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+   Main PID: 493 (sshd)
+      Tasks: 1 (limit: 2315)
+     Memory: 8.4M
+        CPU: 122ms
+     CGroup: /system.slice/ssh.service
+             └─493 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+----
+
 === Servidor de desenvolupament
 
 ==== Configuració prèvia de la màquina virtual
@@ -123,11 +165,13 @@ Abans de començar a treballar amb el servidor, realitzarem unes configuracions 
 
 1. Actualitzem els paquets del sistema amb la comanda `sudo apt update`.
 
-2. Canviarem el `hostname` de la màquina virtual amb `sudo hostnamectl set-hostname dev-server`.
+2. Farem que se li assigni una IP al servidor amb la comanda `sudo dhclient`.
 
-3. Aparentment, després de canviar el `hostname`, el canvi no es reflecteix a l'arxiu `/etc/hosts` i cada cop que executem `sudo` ens apareix un missatge d'error. Per solucionar-ho, podem utilitzar `sed` per canviar el `hostname` antic pel nou: `sudo sed -i 's/hostname-antic/dev-server/g' /etc/hosts`.
+3. Canviarem el `hostname` de la màquina virtual amb `sudo hostnamectl set-hostname dev-server`.
 
-4. Finalment, reiniciarem la màquina amb `sudo /sbin/init 0` (sembla que `reboot` no existeix a Debian).
+4. Aparentment, després de canviar el `hostname`, el canvi no es reflecteix a l'arxiu `/etc/hosts` i cada cop que executem `sudo` ens apareix un missatge d'error. Per solucionar-ho, podem utilitzar `sed` per canviar el `hostname` antic pel nou: `sudo sed -i 's/hostname-antic/dev-server/g' /etc/hosts`.
+
+5. Finalment, reiniciarem la màquina amb `sudo reboot`.
 
 ==== Instal·lació del servidor SSH
 Per poder connectar-nos de forma remota a les màquines virtuals, necessitem instal·lar un servidor SSH:
@@ -142,8 +186,16 @@ Per poder connectar-nos de forma remota a les màquines virtuals, necessitem ins
 [source, bash]
 ----
 ● ssh.service - OpenBSD Secure Shell server
-     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
-     Active: active (running) since Thu 2021-10-14 10:00:00 CEST; 1h 30min ago
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2024-10-08 15:48:36 CEST; 1h 42min ago
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+   Main PID: 493 (sshd)
+      Tasks: 1 (limit: 2315)
+     Memory: 8.4M
+        CPU: 122ms
+     CGroup: /system.slice/ssh.service
+             └─493 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
 ----
 
 ==== Instal·lació d'Apache2
@@ -161,8 +213,17 @@ Per poder desplegar la nostra aplicació, necessitem un servidor web. En aquest 
 [source, bash]
 ----
 ● apache2.service - The Apache HTTP Server
-     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
-     Active: active (running) since Thu 2021-10-14 10:00:00 CEST; 1h 30min ago
+     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2024-10-08 15:48:37 CEST; 1h 42min ago
+       Docs: https://httpd.apache.org/docs/2.4/
+   Main PID: 494 (apache2)
+      Tasks: 55 (limit: 2315)
+     Memory: 11.8M
+        CPU: 388ms
+     CGroup: /system.slice/apache2.service
+             ├─494 /usr/sbin/apache2 -k start
+             ├─495 /usr/sbin/apache2 -k start
+             └─496 /usr/sbin/apache2 -k start
 ----
 
 ==== Instal·lació de PHP (8.2)
@@ -170,13 +231,15 @@ TIP: Pots consultar https://php.watch/articles/install-php82-ubuntu-debian[**aqu
 
 Per poder fer funcionar el backend de la nostra aplicació, necessitem PHP:
 
-1. Instal·lem les dependències necessàries amb la comanda `sudo apt install apt-transport-https lsb-release ca-certificates software-properties-common`.
+1. Instal·lem les dependències necessàries amb la comanda `sudo apt install apt-transport-https lsb-release ca-certificates software-properties-common python3-launchpadlib`.
 
-2. Afegim el repositori de PHP amb la comanda `sudo add-apt-repository ppa:ondrej/php`.
+2. Descarreguem i instal·lem `libicu70` amb `wget http://ftp.osuosl.org/pub/ubuntu/pool/main/i/icu/libicu70_70.1-2_amd64.deb && sudo dpkg -i libicu70_70.1-2_amd64.deb`.
 
-3. Actualitzem els paquets amb `sudo apt update`.
+3. Afegim el repositori de PHP amb la comanda `sudo add-apt-repository ppa:ondrej/php`.
 
-4. Instal·lem PHP 8.2 amb la comanda `sudo apt install php8.2 php8.2-cli php8.2-{bz2,curl,mbstring,intl}`.
+4. Actualitzem els paquets amb `sudo apt update`.
+
+5. Instal·lem PHP 8.2 amb la comanda `sudo apt install php8.2 php8.2-cli php8.2-{bz2,curl,mbstring,intl}`.
 
 ==== Configuració de PHP
 Per defecte, PHP no està configurat per funcionar amb Apache. Per solucionar-ho, necessitem instal·lar el mòdul de PHP per Apache:
@@ -201,6 +264,23 @@ Per poder emmagatzemar les dades de la nostra aplicació, hem decidit optar per 
 
 3. Per comprovar que el servei s'ha iniciat correctament, executem `sudo systemctl status mariadb`.
 
+4. Si ho hem fet tot correctament, veurem un missatge semblant a aquest:
+[source, bash]
+----
+● mariadb.service - MariaDB 10.11.6 database server
+     Loaded: loaded (/lib/systemd/system/mariadb.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2024-10-08 17:38:11 CEST; 8s ago
+       Docs: man:mariadbd(8)
+             https://mariadb.com/kb/en/library/systemd/
+   Main PID: 14169 (mariadbd)
+     Status: "Taking your SQL requests now..."
+      Tasks: 13 (limit: 2315)
+     Memory: 86.0M
+        CPU: 264ms
+     CGroup: /system.slice/mariadb.service
+             └─14169 /usr/sbin/mariadbd
+----
+
 ==== Configuració de MariaDB
 Un cop tenim MariaDB instal·lat, necessitem configurar-lo per poder començar a treballar amb ell:
 
@@ -221,3 +301,28 @@ Un cop tenim MariaDB instal·lat, necessitem configurar-lo per poder començar a
 8. Fem servir `FLUSH PRIVILEGES;` per aplicar els canvis i sortim de la consola amb `exit`.
 
 9. Per comprovar que tot ha anat bé, podem tornar a accedir a la consola de MariaDB amb `sudo mysql -u admin -p` i introduir la contrasenya que hem definit abans.
+
+==== Configuració de la xarxa (servidor)
+La màquina està configurada amb 3 interficies de xarxa. 2 d’elles es configuren automàticament per DHCP i una altra ha de ser manual.
+
+Per la configuració manual, haurem d’assignar a la nostra màquina la IP que se'ns ha assignat. Per fer-ho, seguirem els següents passos:
+
+* `sudo nano /etc/network/interfaces` i dintre de l'arxiu, a sota de la linia `# The primary network interface` afegirem el següent:
+[source, bash]
+----
+auto enp2s0
+auto enp3s0
+
+allow-hotplug enp1s0
+iface enp1s0 inet dhcp
+iface enp2s0 inet dhcp
+iface enp3s0 inet static
+        address 192.168.50.xxx 
+        netmask 255.255.255.0
+----
+
+* Un cop afegit, guardem l'arxiu i sortim de l'editor (`Ctrl + X`, `Y` i `Enter`).
+
+* Seguidament, reiniciarem la màquina amb la comanda `sudo reboot`.
+
+* Un cop reiniciada, comprovarem que la IP s'ha assignat correctament amb `ip a`.
