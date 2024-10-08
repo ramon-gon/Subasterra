@@ -2,7 +2,7 @@
 
 Subasterra és una plataforma de subastes en línia que permet a qualsevol usuari pujar productes per a subhastar-los i a la vegada, pujar per aquests productes. 
 
-Els membres del grup són:
+Els membres del grup que han desenvolupat aquest projecte són:
 ****
 * https://gitlab.com/ortiz.leal.roger[**Roger Ortiz Leal**] (`ortiz.leal.roger@alumnat.copernic.cat`)
 
@@ -11,4 +11,4 @@ Els membres del grup són:
 * https://gitlab.com/ibenitez[**Ismael Benítez Martínez**] (`ibenitez@alumnat.copernic.cat`)
 ****
 
-Per a més informació, consulteu la memòria del projecte link:docs/MEMORIA.adoc[**Memòria del projecte**].
+Per a més informació, consulteu la link:docs/MEMORIA.adoc[**Memòria del projecte**].

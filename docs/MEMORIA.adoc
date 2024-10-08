@@ -1,4 +1,4 @@
-= MEMORIA: (PROJECTE SUBASTES)
+= Subasterra: Memòria del projecte
 
 toc::[]
 
