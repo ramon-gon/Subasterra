@@ -1,7 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Changa:wght@200..800&family=Cinzel:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Overpass:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-body {
+html {
+    min-height: 100%;
+    position: relative;
+}
 
+body {
+    margin: 0;
+    margin-bottom: 65px;
 }
 
 header {
@@ -33,12 +39,6 @@ header {
     background-color: #B30000;
 }
 
-#search {
-    margin-right: 20px;
-    min-height: 30px;
-    max-width: 100px;
-}
-
 .container-auctions {
     position: relative;
     background-color: rgba(0, 0, 0, 0.1);
@@ -52,6 +52,7 @@ header {
 .title-category {
     display: flex;
     padding: 10px;
+    padding-bottom: 0px;
     justify-content: center;
     text-decoration: underline;
 
@@ -100,9 +101,17 @@ footer {
     bottom: 0;
     width: 99%;
     height: 40px;
+    margin-top: 50px;
 }
 
 #footer-content {
     font-family: 'Roboto';
     text-align: center;
+}
+
+#search {
+    display: flex;
+    background-size: 24px;
+    width: 500px;
+    margin-left: 50px;
 }
