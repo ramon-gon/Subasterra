@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Changa:wght@200..800&family=Cinzel:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Overpass:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+
+}
+
+header {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 2px black;
+}
+
+#logo {
+    font-family: Cinzel;
+    font-size: 36px;
+    margin-left: 20px;
+}
+
+#login {
+    margin: 20px;
+    margin-left: auto;
+    font-family: Roboto;
+    font-size: 16px;
+    background-color: #730000;
+    color: #FFF;
+    border-radius: 5px;
+    padding: 10px 15px;
+    border: none;
+    transition-duration: 0.5s;   
+} 
+
+#login:hover {
+    background-color: #B30000;
+}
+
+#search {
+    margin-right: 20px;
+    min-height: 30px;
+    max-width: 100px;
+}
+
+.container-auctions {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin: 25px 50px;
+}
+
+.current-auctions {
+
+}
+
+.title-category {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    text-decoration: underline;
+
+    font-family: Montserrat;
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+.auction-gallery {
+    display: flex;
+    justify-content: space-around;
+}
+
+.product {
+    margin: 15px;
+    border: solid 2px;
+    width: 225px;
+}
+
+
+#product-name {
+    font-family: Roboto;
+    font-size: 18px;
+    text-align: center;
+}
+
+
+#product-description {
+    font-family: Roboto;
+    font-size: 16px;
+}
+
+#product-price {
+    background-color: #730000;
+    padding: 10px;
+    color: white;
+
+    font-family: Roboto;
+    font-size: 16px;
+    text-align: center;
+}
+
+footer {
+    border-top: solid 2px black;
+    position: absolute;
+    bottom: 0;
+    width: 99%;
+    height: 40px;
+}
+
+#footer-content {
+    font-family: 'Roboto';
+    text-align: center;
+}

@@ -37,7 +37,7 @@ La plataforma respon a les següents necessitats:
 include::styles_guide/color_palette.html[]
 ++++
 
-La idea es fer un disseny minimalista amb fons **blanc** i la tipografia de color **negre**. La idea es fer ús del **gris** per donar volum a la  pàgina web i algunes decoracions amb un color **crema**. Per resaltar elements de la web farem ús del **daurat** i quan volguem fer una crida a la acció utilitzarem el color **vermell**.
+La idea es fer un disseny minimalista amb fons **blanc** i la tipografia de color **negre**. La idea es fer ús del **gris** per donar volum a la  pàgina web i fer ús d'una paleta de colors **vermells** per resaltar elements.
 
 === Tipografia
 
