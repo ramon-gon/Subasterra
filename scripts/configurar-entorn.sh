@@ -64,6 +64,7 @@ sudo bash -c "cat > $CONF_APACHE" <<EOL
 EOL
 
 sudo a2ensite $(basename "$CONF_APACHE")
+sudo a2dissite 000-default
 sudo systemctl reload apache2
 
 echo "L'entorn de $TIPUS_ENTORN s'ha configurat correctament!"
