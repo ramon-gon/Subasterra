@@ -124,11 +124,20 @@ include::styles_guide/form_prototype_1.html[]
 Pendent de definir.
 
 == 5. Confecció del manual d’instal·lació/distribució de l’aplicació
-Per realitzar aquest projecte, utilitzarem https://isardvdi.com/[**IsardVDI**] com a entorn de desenvolupament i desplegament.
+=== Desplegament
 
-Aquesta secció de la memòria està dedicada a explicar com configurar un entorn de desenvolupament i desplegament a IsardVDI.
+Per desplegar l'aplicació, hem utilitzar IsardVDI. Hem configurat dos servidors, un per a desenvolupament i un altre per a producció:
 
-IMPORTANT: S'assumeix que l'usuari ja té un compte a IsardVDI i que ha configurat dos servidors.
+* **Desenvolupament**: `192.168.50.154`
+* **Producció**: `192.168.50.153`
+
+El servidor de producció utilitza la branca `main` del repositori, mentre que el servidor de desenvolupament utilitza la branca `development`.
+
+Addicionalment, hem configurat el servidor de desenvolupament amb el major nombre d'opcions de depuració possibles per facilitar el desenvolupament.
+
+Tot aquest procés l'hem automatitzat amb un script de desplegament que es pot trobar a la carpeta `scripts` del repositori.
+
+Per veure com configurar un entorn de desenvolupament i desplegament a IsardVDI, seguiu les instruccions següents.
 
 === Client de desenvolupament
 
@@ -349,6 +358,18 @@ iface enp3s0 inet static
 
 * Un cop reiniciada, comprovarem que la IP s'ha assignat correctament amb `ip a`.
 
+==== Desplegament de l'aplicació
+Per desplegar l'aplicació, hem utilitzar l'script de desplegament que es pot trobar a la carpeta `scripts` del repositori:
+
+1. Instal·lem `git` amb la comanda `sudo apt install git`.
+
+2. Configurem les claus SSH seguint les instruccions de la guia oficial de GitHub: https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh[**Connecting to GitHub with SSH**].
+
+3. Clonem el repositori amb la comanda `git clone git@gitlab.com:ortiz.leal.roger/subasterra.git`.
+
+4. Un cop clonat, entrem a la carpeta del repositori amb `cd subasterra`.
+
+5. Finalment, executem l'script de desplegament amb `bash scripts/deploy.sh desenvolupament`. Si volem desplegar l'aplicació en producció, canviarem `desenvolupament` per `produccio`.
 
 == 6. Confecció del manual d’usuari
 
