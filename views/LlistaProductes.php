@@ -23,8 +23,8 @@
     <form id="search" method="GET" action="/index.php">
         <input type="text" name="search" placeholder="Cerca productes..." value="<?= htmlspecialchars($search); ?>">
         <select name="order">
-            <option value="nom" <?= $order === 'nom' ? 'selected' : ''; ?>>Ordena per nom</option>
-            <option value="preu_sortida" <?= $order === 'preu_sortida' ? 'selected' : ''; ?>>Ordena per preu</option>
+            <option value="nom" <?= $order === 'name' ? 'selected' : ''; ?>>Ordena per nom</option>
+            <option value="preu_sortida" <?= $order === 'starting_price' ? 'selected' : ''; ?>>Ordena per preu</option>
         </select>
         <button type="submit">Cerca</button>
     </form>
@@ -36,10 +36,11 @@
             <?php if ($result->num_rows > 0): ?>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <div class="product">
-                    <img id="foto" src="<?= htmlentities($row['foto']); ?>" alt="<?= htmlentities($row['nom']); ?>" class="foto">
-                        <p id="product-name"><?= htmlentities($row['nom']); ?></p>
-                        <p id="product-description"><?= htmlentities($row['descripcio']); ?></p>
-                        <p id="product-price"> Preu de sortida: <?= number_format($row['preu_sortida'], 2); ?> €</p>
+                    <img id="photo" src="<?= htmlentities($row['photo']); ?>" alt="<?= htmlentities($row['name']); ?>" class="foto">
+                        <p id="product-name"><?= htmlentities($row['name']); ?></p>
+                        <p id="product-description_short"><?= htmlentities($row['short_description']); ?></p>
+                        <p id="product-description_long"><?= htmlentities($row['long_description']); ?></p>
+                        <p id="product-price"> Preu de sortida: <?= number_format($row['starting_price'], 2); ?> €</p>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>

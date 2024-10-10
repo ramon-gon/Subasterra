@@ -10,13 +10,13 @@ class ProductModel {
         $search_param = '%' . $search . '%';
 
         // Validació de l'ordre per evitar SQL injection
-        if ($order !== 'nom' && $order !== 'preu_sortida') {
-            $order = 'nom';
+        if ($order !== 'name' && $order !== 'starting_price') {
+            $order = 'name';
         }
 
-        $sql = "SELECT id, nom, descripcio, foto, preu_sortida 
-                FROM productes 
-                WHERE LOWER(REPLACE(nom, 'à', 'a')) LIKE LOWER(REPLACE(?, 'à', 'a')) 
+        $sql = "SELECT id, name, short_description, long_description, photo, starting_price
+                FROM products 
+                WHERE LOWER(REPLACE(name, 'à', 'a')) LIKE LOWER(REPLACE(?, 'à', 'a')) 
                 ORDER BY $order";
 
         $stmt = $this->conn->prepare($sql);
