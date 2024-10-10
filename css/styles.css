@@ -55,7 +55,6 @@ header {
     padding-bottom: 0px;
     justify-content: center;
     text-decoration: underline;
-
     font-family: Montserrat;
     font-size: 24px;
     text-transform: uppercase;
@@ -89,7 +88,6 @@ header {
     background-color: #730000;
     padding: 10px;
     color: white;
-
     font-family: Roboto;
     font-size: 16px;
     text-align: center;
@@ -105,13 +103,15 @@ footer {
 }
 
 #footer-content {
-    font-family: 'Roboto';
+    font-family: Roboto;
     text-align: center;
 }
 
 #search {
     display: flex;
-    background-size: 24px;
+    justify-content: flex-end;
     width: 500px;
-    margin-left: 50px;
+    margin-left: auto;
+    margin-bottom: 20px;
+    padding-right: 40px;
 }
