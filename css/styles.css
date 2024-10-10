@@ -63,6 +63,7 @@ header {
 .auction-gallery {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .product {
