@@ -23,8 +23,8 @@
     <form id="search" method="GET" action="/index.php">
         <input type="text" name="search" placeholder="Cerca productes..." value="<?= htmlspecialchars($search); ?>">
         <select name="order">
-            <option value="nom" <?= $order === 'name' ? 'selected' : ''; ?>>Ordena per nom</option>
-            <option value="preu_sortida" <?= $order === 'starting_price' ? 'selected' : ''; ?>>Ordena per preu</option>
+            <option value="name" <?= $order === 'name' ? 'selected' : ''; ?>>Ordena per nom</option>
+            <option value="starting_price" <?= $order === 'starting_price' ? 'selected' : ''; ?>>Ordena per preu</option>
         </select>
         <button type="submit">Cerca</button>
     </form>
