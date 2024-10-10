@@ -25,4 +25,3 @@ class ProductModel {
         return $stmt->get_result();
     }
 }
-?>
