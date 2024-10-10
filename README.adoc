@@ -11,4 +11,10 @@ Els membres del grup que han desenvolupat aquest projecte són:
 * https://gitlab.com/ibenitez[**Ismael Benítez Martínez**] (`ibenitez@alumnat.copernic.cat`)
 ****
 
+Els servidors on s'ha desplegat el projecte són:
+****
+* **Desenvolupament**: `192.168.50.154`
+* **Producció**: `192.168.50.153`
+****
+
 Per a més informació, consulteu la link:docs/MEMORIA.adoc[**Memòria del projecte**].
