@@ -67,4 +67,6 @@ sudo a2ensite $(basename "$CONF_APACHE")
 sudo a2dissite 000-default
 sudo systemctl reload apache2
 
+sudo mysql -u root -p < /var/www/subasterra/ddbb/files/subasterra.sql
+
 echo "L'entorn de $TIPUS_ENTORN s'ha configurat correctament!"
