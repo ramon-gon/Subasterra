@@ -10,4 +10,4 @@ $result = $productModel->getProducts($search, $order);
 
 // Passar les dades a la vista
 include __DIR__ . '/../views/LlistaProductes.php';
-?>
+
