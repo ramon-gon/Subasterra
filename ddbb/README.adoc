@@ -1,0 +1,27 @@
+= Desplegament DDBB local (Vagrant + MariaDB)
+
+WARNING: Aquest arxiu és merament orientatiu per als components del grup. Explica com desplegar una base de dades MariaDB en un entorn de desenvolupament local amb Vagrant.
+
+1. Assegura't de descarregar la última versió de Vagrant des de la seva https://www.vagrantup.com/downloads[**pàgina oficial**].
+
+2. Comprova que la versió de VirtualBox que tens instal·lada és compatible amb la versió de Vagrant que has descarregat. Només suporta fins a la versió 7.0 (7.1.2 no és compatible).
+
+3. Assegura't que `vbmanage` (el gestor de màquines virtuals de VirtualBox) està disponible al teu PATH. Per comprovat-ho, executa la comanda `vbmanage --version` al terminal. Si retorna un error, llegeix el pas 4, si no, salta directament al pas 5.
+
+4. Afegeix `vboxmanage` al PATH:
+
+- Escriu `path` al menú d'inici i selecciona `Editar les variables d'entorn del sistema` (o qualsevol opció similar).
+- A la finestra que s'obre, fes clic a `Variables d'entorn`.
+- A la secció `Variables de usuari`, selecciona la variable `Path` i fes clic a `Editar`.
+- Fes clic a `Nou` i afegeix la ruta on tens instal·lat VirtualBox. Normalment és `C:\Program Files\Oracle\VirtualBox`.
+- Fes clic a `Aceptar` a totes les finestres obertes.
+- Tanca i torna a obrir el terminal.
+- Executa `vbmanage --version` per comprovar que s'ha afegit correctament (hauria de mostrar la versió de VirtualBox).
+
+5. Mou-te al directori del projecte i entra dins de la carpeta `ddbb` (assegura't que el terminal està obert en aquesta carpeta).
+
+6. Executa la comanda `vagrant up` per a crear la màquina virtual i instal·lar MariaDB.
+
+7. Un cop finalitzi, connecta't a la màquina virtual amb `vagrant ssh default`.
+
+8. Si vols parar la màquina virtual, executa `vagrant halt` i per a eliminar-la, `vagrant destroy --force`.
