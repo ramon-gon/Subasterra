@@ -1,24 +1,48 @@
-DROP DATABASE IF EXISTS subhasta;
-CREATE DATABASE IF NOT EXISTS subhasta CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE subhasta;
+-- Elimina la base de dades si ja existeix
+DROP DATABASE IF EXISTS subasterra;
 
-CREATE TABLE IF NOT EXISTS products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-short_description TEXT,
-    long_description TEXT,
-    photo VARCHAR(255),
-    starting_price DECIMAL(10, 2) NOT NULL
+-- Crea la base de dades si no existeix
+CREATE DATABASE IF NOT EXISTS subasterra CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Selecciona la base de dades a utilitzar
+USE subasterra;
+
+-- Taula d'usuaris
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador únic per a cada usuari
+    username VARCHAR(255) UNIQUE NOT NULL, -- Nom d'usuari únic
+    password VARCHAR(255) NOT NULL, -- Contrasenya de l'usuari
+    role ENUM('venedor', 'subhastador') NOT NULL -- Rol de l'usuari (venedor o subhastador)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-INSERT INTO products (name, short_description, long_description, photo, starting_price) VALUES
-('Laptop Acer', 'Portatil lleuger', 'Un portàtil lleuger amb pantalla de 15.6 polzades.', '/../images/images.jpg', 599.99),
-('Smartphone Samsung', 'Smartphone amb camera', 'Smartphone amb càmera de 64 MP i bateria de llarga durada.', '/../images/images.jpg', 399.99),
-('Auriculars Sony', 'Auriculars sense fil', 'Auriculars sense fil amb cancel·lació de soroll.', '/../images/images.jpg', 199.99),
-('Tablet Apple', 'Tablet amb pantalla Retina', 'Tablet amb pantalla Retina de 10.2 polzades i 128 GB de capacitat.', '/../images/images.jpg', 329.99),
-('Càmera Canon', 'Camera digital', 'Càmera rèflex digital amb objectiu de 18-55mm.', '/../images/images.jpg', 499.99),
-('Laptop Acer2', 'Portatil lleuger', 'Un portàtil lleuger amb pantalla de 15.6 polzades.', '/../images/images.jpg', 599.99),
-('Smartphone Samsung2', 'Smartphone amb camera', 'Smartphone amb càmera de 64 MP i bateria de llarga durada.', '/../images/images.jpg', 399.99),
-('Auriculars Sony2', 'Auriculars sense fil', 'Auriculars sense fil amb cancel·lació de soroll.', '/../images/images.jpg', 199.99),
-('Tablet Apple2', 'Tablet amb pantalla retina', 'Tablet amb pantalla Retina de 10.2 polzades i 128 GB de capacitat.', '/../images/images.jpg', 329.99),
-('Càmera Canon2', 'Camera reflex', 'Càmera rèflex digital amb objectiu de 18-55mm.', '/../images/images.jpg', 499.99);
+-- Inserir usuaris de prova
+INSERT INTO users (username, password, role) VALUES 
+('venedor1', 'venedor1', 'venedor'), -- Venedor de prova
+('venedor2', 'venedor2', 'venedor'), -- Un altre venedor de prova
+('subhastador', 'subhastador', 'subhastador'); -- Subhastador de prova
+
+-- Taula de productes
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador únic per a cada producte
+    name VARCHAR(255) NOT NULL, -- Nom del producte
+    short_description TEXT, -- Descripció curta del producte
+    long_description TEXT, -- Descripció llarga del producte
+    starting_price DECIMAL(10, 2) NOT NULL, -- Preu inicial de la subhasta
+    photo VARCHAR(255), -- Ruta de la imatge del producte
+    status ENUM('pendent', 'rebutjat', 'acceptat', 'pendent_adjudicacio') DEFAULT 'pendent', -- Estat de la validació del producte
+    auctioneer_message TEXT, -- Missatge del subhastador en cas d'acceptació o rebuig
+    user_id INT, -- Identificador de l'usuari venedor
+    FOREIGN KEY (user_id) REFERENCES users(id) -- Clau forana que referencia l'usuari
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Inserció de productes de prova
+INSERT INTO products (name, short_description, long_description, photo, starting_price, user_id) VALUES
+('Televisor LG', 'Televisor 4K UHD', 'Televisor LG de 55 polzades amb resolució 4K i compatibilitat amb HDR.', '/../images/images.jpg', 699.99, 2),
+('Consola PlayStation 5', 'Consola de nova generació', 'Consola de jocs PlayStation 5 amb gràfics de nova generació i SSD ultra ràpid.', '/../images/images.jpg', 499.99, 1),
+('Auriculars Bose', 'Auriculars amb so immersiu', 'Auriculars amb so de qualitat superior i cancel·lació de soroll activa.', '/../images/images.jpg', 299.99, 2),
+('Smartwatch Garmin', 'Rellotge intel·ligent', 'Rellotge intel·ligent per a esportistes amb GPS integrat i monitor de ritme cardíac.', '/../images/images.jpg', 249.99, 2),
+('Laptop Acer', 'Portatil lleuger', 'Un portàtil lleuger amb pantalla de 15.6 polzades.', '/../images/images.jpg', 599.99, 1),
+('Smartphone Samsung', 'Smartphone amb càmera', 'Smartphone amb càmera de 64 MP i bateria de llarga durada.', '/../images/images.jpg', 399.99, 1),
+('Auriculars Sony', 'Auriculars sense fil', 'Auriculars sense fil amb cancel·lació de soroll.', '/../images/images.jpg', 199.99, 2),
+('Tablet Apple', 'Tablet amb pantalla Retina', 'Tablet amb pantalla Retina de 10.2 polzades i 128 GB de capacitat.', '/../images/images.jpg', 329.99, 2),
+('Càmera Canon', 'Càmera digital', 'Càmera rèflex digital amb objectiu de 18-55mm.', '/../images/images.jpg', 499.99, 1);
