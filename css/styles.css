@@ -124,3 +124,50 @@ footer {
     margin-bottom: 20px;
     padding-right: 40px;
 }
+
+.product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    textarea {
+        width: 90%;
+        height: 100px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        resize: none;
+        font-size: 14px;
+        font-family: Roboto;
+    }
+
+    .btn {
+        padding: 10px;
+        border-radius: 5px;
+        color: #FFF;
+        font-size: 14px;
+        cursor: pointer;
+
+        &.accept {
+            background-color: #4CAF50;
+            margin-top: 5px;
+
+            &:hover {
+                background-color: #308834;
+            }
+        }
+
+        &.reject {
+            background-color: #f44336;
+            margin-top: 5px;
+
+            &:hover {
+                background-color: #dd2a26;
+            }
+        }
+
+    }
+}
