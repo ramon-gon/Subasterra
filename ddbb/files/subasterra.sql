@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS products (
     name VARCHAR(255) NOT NULL, -- Nom del producte
     short_description TEXT, -- Descripció curta del producte
     long_description TEXT, -- Descripció llarga del producte
+    observations TEXT, -- Observacions sobre el producte
     starting_price DECIMAL(10, 2) NOT NULL, -- Preu inicial de la subhasta
     photo VARCHAR(255), -- Ruta de la imatge del producte
     status ENUM('pendent', 'rebutjat', 'acceptat', 'pendent_adjudicacio') DEFAULT 'pendent', -- Estat de la validació del producte
@@ -36,13 +37,13 @@ CREATE TABLE IF NOT EXISTS products (
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Inserció de productes de prova
-INSERT INTO products (name, short_description, long_description, photo, starting_price, user_id) VALUES
-('Televisor LG', 'Televisor 4K UHD', 'Televisor LG de 55 polzades amb resolució 4K i compatibilitat amb HDR.', '/../images/images.jpg', 699.99, 2),
-('Consola PlayStation 5', 'Consola de nova generació', 'Consola de jocs PlayStation 5 amb gràfics de nova generació i SSD ultra ràpid.', '/../images/images.jpg', 499.99, 1),
-('Auriculars Bose', 'Auriculars amb so immersiu', 'Auriculars amb so de qualitat superior i cancel·lació de soroll activa.', '/../images/images.jpg', 299.99, 2),
-('Smartwatch Garmin', 'Rellotge intel·ligent', 'Rellotge intel·ligent per a esportistes amb GPS integrat i monitor de ritme cardíac.', '/../images/images.jpg', 249.99, 2),
-('Laptop Acer', 'Portatil lleuger', 'Un portàtil lleuger amb pantalla de 15.6 polzades.', '/../images/images.jpg', 599.99, 1),
-('Smartphone Samsung', 'Smartphone amb càmera', 'Smartphone amb càmera de 64 MP i bateria de llarga durada.', '/../images/images.jpg', 399.99, 1),
-('Auriculars Sony', 'Auriculars sense fil', 'Auriculars sense fil amb cancel·lació de soroll.', '/../images/images.jpg', 199.99, 2),
-('Tablet Apple', 'Tablet amb pantalla Retina', 'Tablet amb pantalla Retina de 10.2 polzades i 128 GB de capacitat.', '/../images/images.jpg', 329.99, 2),
-('Càmera Canon', 'Càmera digital', 'Càmera rèflex digital amb objectiu de 18-55mm.', '/../images/images.jpg', 499.99, 1);
+INSERT INTO products (name, short_description, long_description, observations, photo, starting_price, user_id) VALUES
+('Televisor LG', 'Televisor 4K UHD', 'Televisor LG de 55 polzades amb resolució 4K i compatibilitat amb HDR.', 'Pantalla amb alta resolució i colors vius.', '/../images/images.jpg', 699.99, 2),
+('Consola PlayStation 5', 'Consola de nova generació', 'Consola de jocs PlayStation 5 amb gràfics de nova generació i SSD ultra ràpid.', 'Inclou un controlador extra i un joc.', '/../images/images.jpg', 499.99, 1),
+('Auriculars Bose', 'Auriculars amb so immersiu', 'Auriculars amb so de qualitat superior i cancel·lació de soroll activa.', 'Lleugers i còmodes per a ús prolongat.', '/../images/images.jpg', 299.99, 2),
+('Smartwatch Garmin', 'Rellotge intel·ligent', 'Rellotge intel·ligent per a esportistes amb GPS integrat i monitor de ritme cardíac.', 'Resistent a l\aigua fins a 50 metres.', '/../images/images.jpg', 249.99, 2),
+('Laptop Acer', 'Portàtil lleuger', 'Un portàtil lleuger amb pantalla de 15.6 polzades.', 'Ideal per a treball i entreteniment.', '/../images/images.jpg', 599.99, 1),
+('Smartphone Samsung', 'Smartphone amb càmera', 'Smartphone amb càmera de 64 MP i bateria de llarga durada.', 'Pantalla AMOLED de 6.5 polzades.', '/../images/images.jpg', 399.99, 1),
+('Auriculars Sony', 'Auriculars sense fil', 'Auriculars sense fil amb cancel·lació de soroll.', 'Autonomia de fins a 30 hores.', '/../images/images.jpg', 199.99, 2),
+('Tablet Apple', 'Tablet amb pantalla Retina', 'Tablet amb pantalla Retina de 10.2 polzades i 128 GB de capacitat.', 'Compatible amb Apple Pencil.', '/../images/images.jpg', 329.99, 2),
+('Càmera Canon', 'Càmera digital', 'Càmera rèflex digital amb objectiu de 18-55mm.', 'Ideal per a fotografies de paisatges i retrats.', '/../images/images.jpg', 499.99, 1);

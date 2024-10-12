@@ -32,8 +32,8 @@ header {
     border-radius: 5px;
     padding: 10px 15px;
     border: none;
-    transition-duration: 0.5s;   
-} 
+    transition-duration: 0.5s;
+}
 
 #login:hover {
     background-color: #B30000;
@@ -45,9 +45,7 @@ header {
     margin: 25px 50px;
 }
 
-.current-auctions {
-
-}
+.current-auctions {}
 
 .title-category {
     display: flex;
@@ -92,6 +90,11 @@ header {
     margin: 10px;
 }
 
+#product-observation {
+    font-family: Roboto;
+    font-size: 14px;
+    margin: 10px;
+}
 #product-price {
     background-color: #730000;
     padding: 10px;
@@ -123,6 +126,18 @@ footer {
     margin-left: auto;
     margin-bottom: 20px;
     padding-right: 40px;
+}
+
+#revision {
+    color: #dc3545;
+    font-weight: bold;
+    text-align: center;
+
+    &::after {
+        content: " • Productes per revisar";
+        color: #ff0000;
+        font-size: 0.8em;
+    }
 }
 
 .product-form {
