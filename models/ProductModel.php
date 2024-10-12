@@ -40,5 +40,11 @@ class ProductModel {
         $stmt->bind_param('ssi', $status, $message, $product_id);
         return $stmt->execute();
     }
-    
+
+    public function updateProductDescriptions($product_id, $short_description, $long_description) {
+        $sql = "UPDATE products SET short_description = ?, long_description = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('ssi', $short_description, $long_description, $product_id);
+        $stmt->execute();
+    }    
 }
