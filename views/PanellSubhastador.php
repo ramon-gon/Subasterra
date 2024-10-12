@@ -49,6 +49,8 @@
                             <label for="long_description_<?= $row['id']; ?>">Descripció Llarga:</label>
                             <textarea id="long_description_<?= $row['id']; ?>" name="long_description"><?= htmlspecialchars($row['long_description'] ?? ''); ?></textarea>
 
+                            <p id="product-price"><strong>Preu de Sortida:</strong> <?= number_format($row['starting_price'], 2); ?> €</p>
+
                             <label for="message_<?= $row['id']; ?>">Missatge per al venedor:</label>
                             <textarea id="message_<?= $row['id']; ?>" name="message" placeholder="Escriu un missatge per al venedor..."><?= htmlspecialchars($row['auctioneer_message'] ?? ''); ?></textarea>
 
