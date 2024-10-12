@@ -24,8 +24,8 @@ class ProductModel {
     }
     
     public function getPendingProducts() {
-        $sql = "SELECT p.id, p.name, p.short_description, p.long_description, p.starting_price, p.photo, 
-                p.status, u.username 
+        $sql = "SELECT p.id, p.name, p.short_description, p.long_description, p.observations, p.starting_price, p.photo, 
+                p.status, p.auctioneer_message, u.username 
                 FROM products p 
                 JOIN users u ON p.user_id = u.id 
                 WHERE p.status = 'pendent'";

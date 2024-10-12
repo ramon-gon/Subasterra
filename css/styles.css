@@ -90,6 +90,11 @@ header {
     margin: 10px;
 }
 
+#product-observation {
+    font-family: Roboto;
+    font-size: 14px;
+    margin: 10px;
+}
 #product-price {
     background-color: #730000;
     padding: 10px;
