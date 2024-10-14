@@ -10,8 +10,8 @@ USE subasterra;
 -- Taula d'usuaris
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador únic per a cada usuari
-    username VARCHAR(255) UNIQUE NOT NULL, -- Nom d'usuari únic
-    password VARCHAR(255) NOT NULL, -- Contrasenya de l'usuari
+    username VARCHAR(20) UNIQUE NOT NULL, -- Nom d'usuari únic
+    password VARCHAR(20) NOT NULL, -- Contrasenya de l'usuari
     role ENUM('venedor', 'subhastador') NOT NULL -- Rol de l'usuari (venedor o subhastador)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -24,12 +24,12 @@ INSERT INTO users (username, password, role) VALUES
 -- Taula de productes
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador únic per a cada producte
-    name VARCHAR(255) NOT NULL, -- Nom del producte
+    name VARCHAR(50) NOT NULL, -- Nom del producte
     short_description TEXT, -- Descripció curta del producte
     long_description TEXT, -- Descripció llarga del producte
     observations TEXT, -- Observacions sobre el producte
     starting_price DECIMAL(10, 2) NOT NULL, -- Preu inicial de la subhasta
-    photo VARCHAR(255), -- Ruta de la imatge del producte
+    photo VARCHAR(50), -- Ruta de la imatge del producte
     status ENUM('pendent', 'rebutjat', 'acceptat', 'pendent_adjudicacio') DEFAULT 'pendent', -- Estat de la validació del producte
     auctioneer_message TEXT, -- Missatge del subhastador en cas d'acceptació o rebuig
     user_id INT, -- Identificador de l'usuari venedor
