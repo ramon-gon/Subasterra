@@ -15,5 +15,12 @@ apt install -y mariadb-server
 sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
 systemctl restart mariadb
 
+# Crea l'usuari i li dona permisos
+sudo mariadb <<EOF
+CREATE USER 'subasterra'@'%' IDENTIFIED BY 'subasterra1234!';
+GRANT ALL PRIVILEGES ON *.* TO 'subasterra'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EOF
+
 # Crea la base de dades
 mariadb < /Vagrant/files/subasterra.sql
