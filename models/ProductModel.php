@@ -12,15 +12,25 @@ class ProductModel {
             $order = 'name';
         }
         
-        $sql = "SELECT id, name, short_description, long_description, photo, starting_price 
+        $sql = "SELECT id, name, short_description, long_description, photo, starting_price, status
                 FROM products 
-                WHERE LOWER(name) LIKE LOWER(?) 
+                WHERE LOWER(name) LIKE LOWER(?) AND status = 'acceptat'
                 ORDER BY $order";
         
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param('s', $search_param);
         $stmt->execute();
         return $stmt->get_result();
+    }
+    
+    public function getAcceptProducts() {
+        $sql = "SELECT p.id, p.name, p.short_description, p.long_description, p.observations, p.starting_price, p.photo, 
+                p.status, p.auctioneer_message, u.username 
+                FROM products p 
+                JOIN users u ON p.user_id = u.id 
+                WHERE p.status = 'acceptat'";
+    
+        return $this->conn->query($sql);
     }
     
     public function getPendingProducts() {
