@@ -11,7 +11,7 @@
 
 <header>
     <p id="logo">Subasterra</p>
-    <button id="login">Inicia sessió</button>
+    
 </header>
 
 </head>
