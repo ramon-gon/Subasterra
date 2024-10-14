@@ -33,21 +33,39 @@
         <div class="auction-gallery">
             
 
-            <?php if ($result->num_rows > 0): ?>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <div class="product">
-                    <img id="photo" src="<?= htmlentities($row['photo']); ?>" alt="<?= htmlentities($row['name']); ?>" class="foto">
-                        <p id="product-name"><?= htmlentities($row['name']); ?></p>
-                        <p id="product-description_short"><?= htmlentities($row['short_description']); ?></p>
-                        <p id="product-description_long"><?= htmlentities($row['long_description']); ?></p>
-                        <p id="product-price"> Preu de sortida: <?= number_format($row['starting_price'], 2); ?> €</p>
-                    </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p>No s'han trobat productes.</p>
-            <?php endif; ?>
+        <?php if ($userRole === 'subhastador'): ?>
+    <?php if ($result->num_rows > 0): ?>
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="product">
+                <img id="photo" src="<?= htmlentities($row['photo']); ?>" alt="<?= htmlentities($row['name']); ?>" class="foto">
+                <p id="product-name"><?= htmlentities($row['name']); ?></p>
+                <p id="product-status">Estat del producte: <?= htmlentities($row['status']); ?></p>
+                <p id="product-description_short">Descripció curta:<?= htmlentities($row['short_description']); ?></p>
+                <p id="product-description_long">Descripció llarga:<?= htmlentities($row['long_description']); ?></p>
+                <p id="product-price">Preu de sortida: <?= number_format($row['starting_price'], 2); ?> €</p>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p>No s'han trobat productes.</p>
+    <?php endif; ?>
+<?php else: ?>
+    <?php if ($result->num_rows > 0): ?>
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="product">
+                <img id="photo" src="<?= htmlentities($row['photo']); ?>" alt="<?= htmlentities($row['name']); ?>" class="foto">
+                <p id="product-name"><?= htmlentities($row['name']); ?></p>
+                <p id="product-description_short">Descripció curta:<?= htmlentities($row['short_description']); ?></p>
+                <p id="product-description_long">Descripció llarga:<?= htmlentities($row['long_description']); ?></p>
+                <p id="product-price">Preu de sortida: <?= number_format($row['starting_price'], 2); ?> €</p>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p>No s'han trobat productes.</p>
+    <?php endif; ?>
+<?php endif; ?>
 
-            <?php $conn->close(); ?>
+<?php $conn->close(); ?>
+
 
         </div>
     </div>

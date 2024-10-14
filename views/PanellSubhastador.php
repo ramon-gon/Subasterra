@@ -42,13 +42,13 @@
                         <form method="POST" class="product-form">
                             <input type="hidden" name="product_id" value="<?= $row['id']; ?>">
 
-                            <label for="short_description_<?= $row['id']; ?>">Descripció Curta:</label>
+                            <label for="short_description_<?= $row['id']; ?>">Descripció curta:</label>
                             <textarea id="short_description_<?= $row['id']; ?>" name="short_description"><?= htmlspecialchars($row['short_description'] ?? ''); ?></textarea>
 
-                            <label for="long_description_<?= $row['id']; ?>">Descripció Llarga:</label>
+                            <label for="long_description_<?= $row['id']; ?>">Descripció llarga:</label>
                             <textarea id="long_description_<?= $row['id']; ?>" name="long_description"><?= htmlspecialchars($row['long_description'] ?? ''); ?></textarea>
 
-                            <p id="product-price"><strong>Preu de Sortida:</strong> <?= number_format($row['starting_price'], 2); ?> €</p>
+                            <p id="product-price"><strong>Preu de sortida:</strong> <?= number_format($row['starting_price'], 2); ?> €</p>
 
                             <p id="product-observation"><strong>Observacions:</strong> <?= htmlspecialchars($row['observations']); ?></p>
 

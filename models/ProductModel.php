@@ -12,7 +12,7 @@ class ProductModel {
             $order = 'name';
         }
         
-        $sql = "SELECT id, name, short_description, long_description, photo, starting_price 
+        $sql = "SELECT id, name, short_description, long_description, photo, starting_price, status
                 FROM products 
                 WHERE LOWER(name) LIKE LOWER(?) AND status = 'acceptat'
                 ORDER BY $order";
