@@ -11,7 +11,6 @@
 
 <header>
     <p id="logo">Subasterra</p>
-    
 </header>
 
 </head>
