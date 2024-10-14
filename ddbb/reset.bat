@@ -3,6 +3,8 @@ setlocal
 
 set "FOLDER=C:\Users\%USERNAME%\VirtualBox VMs"
 
+vagrant destroy -f
+
 for /d %%i in ("%FOLDER%\*subasterra*") do (
     echo Borrant carpeta: %%i
     rd /s /q "%%i"
