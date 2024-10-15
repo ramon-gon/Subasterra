@@ -16,7 +16,7 @@ session_start();
             <form id="login-form" method="post" action="">
                 <?php
                 include(__DIR__ . "/../config/config.php");
-                include(__DIR__ . "/../controllers/login_controller.php");
+                include(__DIR__ . "/../controllers/login-controller.php");
                 ?>  
                 <div>    
                     <label for="username">Usuari:</label>
