@@ -1,6 +1,9 @@
 <?php
-session_start();
+session_start(); 
+$login_error = isset($_SESSION['login_error']) ? $_SESSION['login_error'] : '';
+unset($_SESSION['login_error']); // Eliminar el mensaje de error después de mostrarlo
 ?>
+
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -28,6 +31,9 @@ session_start();
                     <input type="password" id="password" name="password">
                 </div>
                 <input name="login-button" class="btn" type="submit" value="INICIAR SESIÓN">
+                <?php if ($login_error): ?>
+                <p class="error"><?= htmlspecialchars($login_error); ?></p>
+            <?php endif; ?>
             </form>
         </div>
     </div>
