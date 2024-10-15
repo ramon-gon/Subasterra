@@ -1,3 +1,3 @@
 <?php
-include 'controllers/ProductController.php';
+include 'controllers/products-controller.php';
 ?>

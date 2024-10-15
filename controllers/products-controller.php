@@ -1,9 +1,6 @@
 <?php
 include_once __DIR__ . '/../config/config.php';
-include_once __DIR__ . '/../models/ProductModel.php';
-
-// Obtenir el rol de l'usuari (aquest valor hauria de provenir de la sessió o autenticació)
-$userRole = 'subhastador';
+include_once __DIR__ . '/../models/products-model.php';
 
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $order = isset($_GET['order']) ? $_GET['order'] : 'name';
@@ -18,4 +15,5 @@ if ($userRole === 'subhastador') {
 }
 
 // Passar les dades a la vista
-include_once __DIR__ . '/../views/LlistaProductes.php';
+include_once __DIR__ . '/../views/products-list-view.php';
+

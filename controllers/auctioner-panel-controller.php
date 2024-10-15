@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . '/../config/config.php';
-include_once __DIR__ . '/../models/ProductModel.php';
+include_once __DIR__ . '/../models/products-model.php';
 
 $productModel = new ProductModel($conn);
 $result = $productModel->getPendingProducts();
@@ -24,5 +24,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit();
 }
-include_once __DIR__ . '/../views/PanellSubhastador.php';
+include_once __DIR__ . '/../views/auctioner-panel-view.php';
 
