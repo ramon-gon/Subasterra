@@ -30,6 +30,8 @@ La plataforma respon a les següents necessitats:
 
 == 3. Skeitching d'interfícies
 
+image::images_guide/subastes_actives.jpg[Subhastes actives]
+
 == 4. La guia d’estil
 === Paleta de colors
 
