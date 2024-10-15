@@ -13,8 +13,8 @@ Els membres del grup que han desenvolupat aquest projecte són:
 
 Els servidors on s'ha desplegat el projecte són:
 ****
-* **Desenvolupament**: `192.168.50.154`
-* **Producció**: `192.168.50.153`
+* **Desenvolupament** (Roger Ortiz Leal): `192.168.50.154`
+* **Producció** (Ismael Benítez Martínez): `192.168.50.153`
 ****
 
 Per a més informació, consulteu la link:docs/MEMORIA.adoc[**Memòria del projecte**].
