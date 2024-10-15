@@ -371,6 +371,21 @@ Per desplegar l'aplicació, hem utilitzar l'script de desplegament que es pot tr
 
 5. Finalment, executem l'script de desplegament amb `bash scripts/deploy.sh desenvolupament`. Si volem desplegar l'aplicació en producció, canviarem `desenvolupament` per `produccio`.
 
+==== Desenvolupament local
+Per poder treballar en l'aplicació de forma local, necessitem tenir un entorn de desenvolupament configurat:
+
+1. Clonem aquest repositori o, si ja ho hem fet, actualitzem-lo amb `git pull` i ens movem a la carpeta de DDBB amb `cd ddbb` (dins del repositori).
+
+2. Si volem començar de zero, borrem totes les màquines de Vagrant prèviament creades amb `.\reset.bat`.
+
+3. Seguidament, posem en marxa la màquina virtual amb `vagrant up`.
+
+4. Un cop finalitzat, ens assegurem que la base de dades està sincronitzada amb la màquina virtual amb `vagrant ssh default -c "fetchdb"`.
+
+5. Finalment, ens movem a la carpeta arrel del repositori amb `cd ..` i posem en marxa el servidor PHP amb `php -S localhost:8000`.
+
+6. Si tot ha anat bé, podrem accedir a l'aplicació a `http://localhost:8000`.
+
 == 6. Confecció del manual d’usuari
 
 == 7. Línies futures
