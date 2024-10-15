@@ -1,8 +1,3 @@
-<?php
-session_start();
-$userRole = 'subhastador'
-?>
-
 <!DOCTYPE html>
 <html lang="ca">
 
@@ -17,7 +12,9 @@ $userRole = 'subhastador'
 <body>
     <header>
         <p id="logo">Subasterra</p>
-        <button id="login">Inicia sessió</button>
+        <button id="login" onclick="window.location.href='/views/login.php'">
+            Inicia sessió 
+        </button>
 
     </header>
 
