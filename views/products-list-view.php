@@ -12,7 +12,7 @@
 <body>
     <header>
         <p id="logo">Subasterra</p>
-        <button id="login" onclick="window.location.href='/views/login.php'">
+        <button id="login" onclick="window.location.href='/views/login-view.php'">
             Inicia sessió 
         </button>
 
