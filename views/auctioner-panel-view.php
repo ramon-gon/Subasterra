@@ -21,7 +21,7 @@
         <div class="current-auctions-header">
             <p class="title-category">Panell de Subhastador</p>
         </div>
-        <button class="btn-panel" onclick="window.location.href='/controllers/ProductController.php'">
+        <button class="btn-panel" onclick="window.location.href='/controllers/products-controller.php'">
             Llista de productes
         </button>
         

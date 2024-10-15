@@ -23,11 +23,11 @@
             <p class="title-category">Subastes actives</p>
 
             <?php if ($userRole === 'subhastador'): ?>
-                <button class="btn-panel" onclick="window.location.href='/controllers/PanellSubhastadorController.php'">
+                <button class="btn-panel" onclick="window.location.href='/controllers/auctioner-panel-controller.php'">
                     Panell Subhastador
                 </button>
             <?php elseif ($userRole === 'venedor'): ?>
-                <button class="btn-panel" onclick="window.location.href='/controllers/PanellVenedorController.php'">
+                <button class="btn-panel" onclick="window.location.href='/controllers/vendor-panel-controller.php'">
                     Panell Venedor
                 </button>
             <?php endif; ?>

@@ -33,17 +33,15 @@ La plataforma respon a les següents necessitats:
 == 4. La guia d’estil
 === Paleta de colors
 
-++++
-include::styles_guide/color_palette.html[]
-++++
+image::images_guide/color_palette.png[Colors,link=https://gitlab.com/ortiz.leal.roger/subasterra/-/blob/develop/docs/styles_guide/categories.html]
 
 La idea es fer un disseny minimalista amb fons **blanc** i la tipografia de color **negre**. La idea es fer ús del **gris** per donar volum a la  pàgina web i fer ús d'una paleta de colors **vermells** per resaltar elements.
 
 === Tipografia
 
-++++
-include::styles_guide/logo.html[]
-++++
+image::images_guide/logo.png[Logo,link=https://gitlab.com/ortiz.leal.roger/subasterra/-/blob/develop/docs/styles_guide/logo.html,width=250,height=250]
+
+
 [source, css]
 ----
 {
@@ -52,9 +50,8 @@ include::styles_guide/logo.html[]
 }
 ----
 
-++++
-include::styles_guide/general.html[]
-++++
+image::images_guide/subtitles.png[Subtítols,link=https://gitlab.com/ortiz.leal.roger/subasterra/-/blob/develop/docs/styles_guide/general.html,width=80,height=80]
+
 [source, css]
 ----
 {
@@ -63,9 +60,8 @@ include::styles_guide/general.html[]
 }
 ----
 
-++++
-include::styles_guide/categories.html[]
-++++
+image::images_guide/categories.png[Categories,link=https://gitlab.com/ortiz.leal.roger/subasterra/-/blob/develop/docs/styles_guide/categories.html,width=150,height=150]
+
 [source, css]
 ----
 {
@@ -75,9 +71,8 @@ include::styles_guide/categories.html[]
 }
 ----
 
-++++
-include::styles_guide/titles.html[]
-++++
+image::images_guide/titles.png[Títols,link=https://gitlab.com/ortiz.leal.roger/subasterra/-/blob/develop/docs/styles_guide/titles.html,width=70,height=70]
+
 [source, css]
 ----
 {
@@ -86,38 +81,22 @@ include::styles_guide/titles.html[]
 }
 ----
 
-++++
-include::styles_guide/subtitles.html[]
-++++
-
-[source, css]
-----
-{
-    font-family: Roboto;
-    font-size: 18px;
-}
-----
-
 === Iconografía:
 Utilitzarem la iconografia que ofereix __Google Fonts__. Farem ús sempre que sigui necessari per donar informació a l'usuari. Si hi ha un menú per fer cerques colocarem l'icono __Search__, si fem ús de display __Keyboard Arrow Down__, per tancar finestres __Close__, entre altres...
 
 === Botons:
-==== Botons amb crida a l'acció: 
-++++
-include::styles_guide/buttons_prototype_1.html[]
-++++
+==== Botons amb crida a l'acció:
+
+image::images_guide/buttons.png[Buttons,link=https://gitlab.com/ortiz.leal.roger/subasterra/-/blob/develop/docs/styles_guide/buttons_prototype_1.html,width=200,height=200]
 
 === Enllaços:
 ==== Enllaços de navegació:
 
-++++
-include::styles_guide/links_prototype_1.html[]
-++++
+image::images_guide/links.png[Links,link=https://gitlab.com/ortiz.leal.roger/subasterra/-/blob/develop/docs/styles_guide/links_prototype_1.html,width=250,height=250]
 
 === Elements de formulari:
-++++
-include::styles_guide/form_prototype_1.html[]
-++++
+
+image::images_guide/form.png[Form,link=https://gitlab.com/ortiz.leal.roger/subasterra/-/blob/develop/docs/styles_guide/form_prototype_1.html,width=700,height=700]
 
 === Altres components:
 
@@ -128,8 +107,8 @@ Pendent de definir.
 
 Per desplegar l'aplicació, hem utilitzar IsardVDI. Hem configurat dos servidors, un per a desenvolupament i un altre per a producció:
 
-* **Desenvolupament**: `192.168.50.154`
-* **Producció**: `192.168.50.153`
+* **Desenvolupament** (Roger Ortiz Leal): `192.168.50.154`
+* **Producció** (Ismael Benítez Martínez): `192.168.50.153`
 
 El servidor de producció utilitza la branca `main` del repositori, mentre que el servidor de desenvolupament utilitza la branca `development`.
 
@@ -370,6 +349,21 @@ Per desplegar l'aplicació, hem utilitzar l'script de desplegament que es pot tr
 4. Un cop clonat, entrem a la carpeta del repositori amb `cd subasterra`.
 
 5. Finalment, executem l'script de desplegament amb `bash scripts/deploy.sh desenvolupament`. Si volem desplegar l'aplicació en producció, canviarem `desenvolupament` per `produccio`.
+
+==== Desenvolupament local
+Per poder treballar en l'aplicació de forma local, necessitem tenir un entorn de desenvolupament configurat:
+
+1. Clonem aquest repositori o, si ja ho hem fet, actualitzem-lo amb `git pull` i ens movem a la carpeta de DDBB amb `cd ddbb` (dins del repositori).
+
+2. Si volem començar de zero, borrem totes les màquines de Vagrant prèviament creades amb `.\reset.bat`.
+
+3. Seguidament, posem en marxa la màquina virtual amb `vagrant up`.
+
+4. Un cop finalitzat, ens assegurem que la base de dades està sincronitzada amb la màquina virtual amb `vagrant ssh default -c "fetchdb"`.
+
+5. Finalment, ens movem a la carpeta arrel del repositori amb `cd ..` i posem en marxa el servidor PHP amb `php -S localhost:8000`.
+
+6. Si tot ha anat bé, podrem accedir a l'aplicació a `http://localhost:8000`.
 
 == 6. Confecció del manual d’usuari
 
