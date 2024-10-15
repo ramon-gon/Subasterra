@@ -1,9 +1,5 @@
 <?php
-session_start();
-$userRole = isset($_SESSION['userRole']) ? $_SESSION['userRole'] : '';
-?>
-
-<?php
+session_start(); 
 include_once __DIR__ . '/../config/config.php';
 include_once __DIR__ . '/../models/products-model.php';
 
