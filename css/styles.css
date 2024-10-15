@@ -110,6 +110,12 @@ header {
     margin: 10px;
 }
 
+#product-status {
+    font-family: Roboto;
+    font-size: 16px;
+    margin: 10px;
+}
+
 #product-description_long {
     font-family: Roboto;
     font-size: 14px;

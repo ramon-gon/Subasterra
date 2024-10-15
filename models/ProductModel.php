@@ -28,7 +28,7 @@ class ProductModel {
                 p.status, p.auctioneer_message, u.username 
                 FROM products p 
                 JOIN users u ON p.user_id = u.id 
-                WHERE p.status = 'acceptat'";
+                WHERE p.status = 'pendent'";
     
         return $this->conn->query($sql);
     }
