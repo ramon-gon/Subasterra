@@ -1,5 +1,4 @@
 <?php
-session_start();
 include(__DIR__ . "/../config/config.php");
 include(__DIR__ . "/../controllers/login-controller.php");
 
