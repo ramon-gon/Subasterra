@@ -24,4 +24,6 @@ WARNING: Aquest arxiu és merament orientatiu per als components del grup. Expli
 
 7. Un cop finalitzi, connecta't a la màquina virtual amb `vagrant ssh default`.
 
-8. Si vols parar la màquina virtual, executa `vagrant halt` i per a eliminar-la, `vagrant destroy --force`.
+8. Si vols parar la màquina virtual, executa `vagrant halt` i per a eliminar-la, `.\reset.bat`
+
+9. Si vols sincronitzar la base de dades (`files/subasterra.sql`) amb la base de dades de la màquina virtual, executa `vagrant ssh default -c "fetchdb"`.

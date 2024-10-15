@@ -15,7 +15,7 @@ apt install -y mariadb-server
 sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
 systemctl restart mariadb
 
-# Crea l'usuari i li dona permisos
+# Crea l'usuari i dona-li permisos
 sudo mariadb <<EOF
 CREATE USER 'subasterra'@'%' IDENTIFIED BY 'subasterra1234!';
 GRANT ALL PRIVILEGES ON *.* TO 'subasterra'@'%' WITH GRANT OPTION;
@@ -24,3 +24,10 @@ EOF
 
 # Crea la base de dades
 mariadb < /Vagrant/files/subasterra.sql
+
+# Crea script per actualitzar la base de dades
+cat <<EOF > /usr/bin/fetchdb
+#!/bin/bash
+sudo mariadb < /Vagrant/files/subasterra.sql
+EOF
+chmod +x /usr/bin/fetchdb
