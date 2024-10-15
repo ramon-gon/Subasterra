@@ -1,7 +1,15 @@
 <?php
 session_start();
-$userRole = 'subhastador'
-?>
+include(__DIR__ . "/../config/config.php");
+include(__DIR__ . "/../controllers/login-controller.php");
+
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+} else {
+    $role = null;
+}
+
+?> 
 
 <!DOCTYPE html>
 <html lang="ca">
@@ -17,8 +25,11 @@ $userRole = 'subhastador'
 <body>
     <header>
         <p id="logo">Subasterra</p>
-        <button id="login">Inicia sessió</button>
-
+        <?php if ($role === null): ?>
+            <button id="login" onclick="window.location.href='/../views/login-view.php'">Inicia sessió</button>
+        <?php else: ?>
+            <a id="logout" href="/../controllers/logout-controller.php">Surt</a>
+        <?php endif; ?>
     </header>
 
     <div class="container-auctions">

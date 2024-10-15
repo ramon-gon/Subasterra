@@ -40,6 +40,13 @@ header {
 }
 }
 
+#logout {
+    margin: 20px;
+    margin-left: auto;
+    font-family: Roboto;
+    font-size: 16px;
+    color: black;
+}
 
 .btn-panel {
     margin: 20px;
