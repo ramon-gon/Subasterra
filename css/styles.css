@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Changa:wght@200..800&family=Cinzel:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Overpass:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-html {
+html, body {
     height: 100%;
     margin: 0;
 }
@@ -217,3 +217,85 @@ footer {
 
     }
 }    
+
+.login-page {
+    background-image: none; /* En un futur s'afegirà una imatge aquí */
+    background-size: cover; 
+    background-position: center;
+    height: 100%;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+#login-form {
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    padding: 50px 20px;
+    min-width: 350px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+  
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000;
+    font-size: 16px;
+    padding-bottom: 5px;
+    font-family: 'Roboto';
+}
+  
+label.required::after {
+    content: "*";
+    color: red;
+    margin-left: 5px;
+}
+
+label.inline {
+    display: inline-block;
+    margin-right: 10px;
+}
+  
+#username, #password {
+    width: 100%;
+    padding: 10px;
+    min-height: 46px;
+    margin-bottom: 15px;
+    border: 1px solid #CFCFCF;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+#username:focus, #password:focus {
+    border: 2px solid #876800;
+    outline: none;
+    background-color: none;
+}
+  
+#username:invalid:focus, #password:invalid:focus {
+    background-color: #ffdddd;
+    border: 2px solid red;
+  
+  }
+  
+#username:valid:focus, #password:valid:focus {
+    border: 2px solid green;
+    background-color: #e4ffdd;
+  }
+  
+.btn {
+    position: relative;
+    font-family: Roboto;
+    font-size: 16px;
+    background-color: #000000;
+    color: #FFFFFF;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    transition-duration: 0.5s;
+}
+  
+.btn:hover {
+    background-color: #222222;
+}
