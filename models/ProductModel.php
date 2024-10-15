@@ -23,6 +23,23 @@ class ProductModel {
         return $stmt->get_result();
     }
     
+    public function getProductsSubhastador($search = '', $order = 'name') {
+        $search_param = '%' . $search . '%';
+        if ($order !== 'name' && $order !== 'starting_price') {
+            $order = 'name';
+        }
+        
+        $sql = "SELECT id, name, short_description, long_description, photo, starting_price, status
+                FROM products 
+                WHERE LOWER(name) LIKE LOWER(?) 
+                ORDER BY $order";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('s', $search_param);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+    
     public function getAcceptProducts() {
         $sql = "SELECT p.id, p.name, p.short_description, p.long_description, p.observations, p.starting_price, p.photo, 
                 p.status, p.auctioneer_message, u.username 
