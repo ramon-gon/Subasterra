@@ -1,23 +1,29 @@
 <?php
 if (!empty($_POST["login-button"])) {
-    if (!empty($_POST["username"]) && !empty($_POST["password"])) { // Asegúrate de que ambos campos estén llenos
+    if (!empty($_POST["username"]) && !empty($_POST["password"])) { 
         $user = $_POST["username"];
         $pass = $_POST["password"];
-        
-        // Preparar la consulta
+
+        // Iniciar la sesión
+        session_start();
+
+        // Preparar la consulta para verificar las credenciales
         $check_credentials = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
         $check_credentials->bind_param("ss", $user, $pass);
         $check_credentials->execute();
 
-        // Obtener el resultado como objeto
+        // Obtener el resultado
         $result = $check_credentials->get_result();
-        $user_data = $result->fetch_object(); // Aquí se obtiene el objeto
+        $user_data = $result->fetch_object();
 
         if ($user_data) {
-            $_SESSION["id"]=$user_data->id;
-            $_SESSION["username"]=$user_data->username;
-            $_SESSION["role"]=$user_data->role;
-            header("location: /../index.php");
+            // Almacenar la información del usuario en la sesión
+            $_SESSION["id"] = $user_data->id;
+            $_SESSION["username"] = $user_data->username;
+            $_SESSION["userRole"] = $user_data->role; // Asegúrate de que sea "userRole"
+            
+            // Redirigir al usuario a la página principal
+            header("Location: /index.php");
             exit();
         } else {
             echo "ACCESO DENEGADO";
@@ -28,4 +34,3 @@ if (!empty($_POST["login-button"])) {
         echo "Los campos están vacíos";
     }
 }
-?>
