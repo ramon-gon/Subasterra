@@ -1,13 +1,6 @@
-<?php
+<button?php
 include(__DIR__ . "/../config/config.php");
 include(__DIR__ . "/../controllers/login-controller.php");
-
-if (isset($_SESSION['role'])) {
-    $role = $_SESSION['role'];
-} else {
-    $role = null;
-}
-
 ?> 
 
 <!DOCTYPE html>
@@ -27,7 +20,7 @@ if (isset($_SESSION['role'])) {
         <?php if ($role === null): ?>
             <button id="login" onclick="window.location.href='/../views/login-view.php'">Inicia sessió</button>
         <?php else: ?>
-            <a id="logout" href="/../controllers/logout-controller.php">Surt</a>
+            <button id="login" onclick="window.location.href='/../controllers/logout-controller.php'">Tancar sessió</button>
         <?php endif; ?>
     </header>
 
@@ -57,7 +50,7 @@ if (isset($_SESSION['role'])) {
         </div>
 
         <div class="auction-gallery">
-            <?php if ($userRole === 'subhastador'): ?>
+            <?php if ($role === 'subhastador'): ?>
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <div class="product">
