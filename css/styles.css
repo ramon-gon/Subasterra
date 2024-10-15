@@ -33,11 +33,39 @@ header {
     padding: 10px 15px;
     border: none;
     transition-duration: 0.5s;
-}
 
-#login:hover {
+
+&:hover {
     background-color: #B30000;
 }
+}
+
+
+.btn-panel {
+    margin: 20px;
+    font-family: 'Roboto';
+    font-size: 16px;
+    background-color: #B30000;
+    color: #FFF;
+    border-radius: 5px;
+    padding: 5px 5px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.5s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-panel:hover {
+    background-color: #730000;
+}
+
+.btn-panel:focus {
+    outline: none;
+    box-shadow: 0 0 5px #730000;
+} 
 
 .container-auctions {
     flex-grow: 1;
@@ -93,6 +121,7 @@ header {
     font-size: 14px;
     margin: 10px;
 }
+
 #product-price {
     background-color: #730000;
     padding: 10px;
@@ -181,4 +210,4 @@ footer {
         }
 
     }
-}
+}    
