@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $long_description = $_POST['long_description'] ?? '';
 
     if ($action === 'accept') {
-        $productModel->updateProductStatus($product_id, 'acceptat', 'Producte acceptat. ' . $message);
+        $productModel->updateProductStatus($product_id, 'pendent_adjudiacio', 'Producte acceptat. ' . $message);
     } elseif ($action === 'reject') {
         $productModel->updateProductStatus($product_id, 'rebutjat', 'Producte rebutjat. ' . $message);
     }
