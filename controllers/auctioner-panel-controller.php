@@ -7,7 +7,7 @@ $productModel = new ProductModel($conn);
 $products = $productModel->getPendingProducts();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    var_dump($_POST);
+    //var_dump($_POST);
     $product_id = $_POST['product_id'];
     $action = $_POST['action'];
     $message = $_POST['message'] ?? '';
@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $productModel->updateProductDescriptions($product_id, $short_description, $long_description);
         
     // Redireccionar a la misma página para evitar reenvíos de formularios
-    //header("Location: " . $_SERVER['REQUEST_URI']);
-    //exit();
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit();
 }
 include_once __DIR__ . '/../views/auctioner-panel-view.php';
 
