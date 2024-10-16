@@ -162,14 +162,6 @@ Per poder connectar-nos de forma remota a les màquines virtuals, necessitem ins
              └─493 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
 ----
 
-==== Configuració de la xarxa (client)
-La màquina està configurada amb 3 interficies de xarxa. 2 d’elles es configuren automàticament per DHCP i una altra ha de ser manual.
-
-Per la configuració manual, haurem d’assignar a la nostra màquina la IP que se'ns ha assignat. Per fer-ho, seguirem els següents passos:
-
-* Com que utilitzarem netplan, crearem un arxiu de configuració amb `sudo nano /etc/netplan/01-netcfg.yaml`.
-
-
 === Servidor de desenvolupament
 
 ==== Configuració prèvia de la màquina virtual
