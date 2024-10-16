@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS products (
     long_description TEXT, -- Descripció llarga del producte
     observations TEXT, -- Observacions sobre el producte
     starting_price DECIMAL(10, 2) NOT NULL, -- Preu inicial de la subhasta
+    last_bid DECIMAL(10,2) NOT NULL DEFAULT 0,
     photo VARCHAR(50), -- Ruta de la imatge del producte
     status ENUM('pendent', 'rebutjat', 'acceptat', 'pendent_adjudicacio') DEFAULT 'pendent', -- Estat de la validació del producte
     auctioneer_message TEXT, -- Missatge del subhastador en cas d'acceptació o rebuig
