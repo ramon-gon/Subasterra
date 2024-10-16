@@ -103,4 +103,10 @@ class ProductModel {
 
         return $result;
     }
+
+    public function addProduct($name, $short_description, $long_description, $observations, $starting_price, $photo_path, $user_id) {
+        $stmt = $this->conn->prepare("INSERT INTO products (name, short_description, long_description, observations, starting_price, photo, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssdsd", $name, $short_description, $long_description, $observations, $starting_price, $photo_path, $user_id);
+        return $stmt->execute();
+    }
 }
