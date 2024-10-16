@@ -4,20 +4,18 @@ session_start();
 include_once __DIR__ . '/../config/config.php';
 include_once __DIR__ . '/../models/products-model.php';
 
-$role = isset($_SESSION['role']);
+$role = $_SESSION['role'] ?? null;
 
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $order = isset($_GET['order']) ? $_GET['order'] : 'name';
 
-$id = isset($_SESSION['id']);
+$id = $_SESSION['id'] ?? null;
 
-$productModel = new ProductModel($conn);
+$productModel = new ProductModel($conn);    
 
 // Comprovar el rol de l'usuari per decidir quina funció cridar
 if ($role === 'subhastador') {
     $result = $productModel->getProductsSubhastador($search, $order);
-} else if ($role === 'venedor'){
-    $result = $productModel->getMyProducts($id);
 } else {
     $result = $productModel->getProducts($search, $order);
 }

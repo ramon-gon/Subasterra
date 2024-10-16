@@ -244,13 +244,22 @@ footer {
 }
   
 label {
-    display: block;
     font-weight: bold;
-    margin-bottom: 5px;
     color: #000;
     font-size: 16px;
     padding-bottom: 5px;
     font-family: 'Roboto';
+} 
+
+.login-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.panel-label {
+    display: inline-block;
+    margin-right: 10px;
+    width: 180px;
 }
   
 label.required::after {
@@ -305,4 +314,48 @@ label.inline {
   
 .btn:hover {
     background-color: #222222;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+.detailed-info-content {
+    display: none;
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
+}
+
+.detailed-info-expanded {
+    display: table-row; 
+}
+
+.short-info-dropdown {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+}
+.dropdown-content img {
+    width: 150px;
+    height: 150px;
+}
+
+.dropdown-info-field {
+    margin-bottom: 10px;
+}
+
+.product-info {
+    display: inline-block;
+    min-width: 500px;
 }

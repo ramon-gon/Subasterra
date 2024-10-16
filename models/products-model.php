@@ -75,9 +75,23 @@ class ProductModel {
         $stmt->execute();
     }
 
+    /*public function getMyProducts($id) {
+        $sql ="SELECT p.id, p.name, p.short_description, p.starting_price, p.last_bid, p.status, p.photo, 
+                p.long_description, p.observations
+                FROM products p 
+                JOIN users u ON p.user_id = u.id 
+                WHERE u.id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result;
+    }*/
     public function getMyProducts($id) {
-        $sql ="SELECT p.id, p.name, p.short_description, p.long_description, p.observations, p.starting_price, p.photo, 
-                p.status, p.auctioneer_message
+        $sql ="SELECT p.id, p.name, p.short_description, p.starting_price, p.status, p.photo, 
+                p.long_description, p.observations
                 FROM products p 
                 JOIN users u ON p.user_id = u.id 
                 WHERE u.id = ?";

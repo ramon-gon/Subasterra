@@ -8,6 +8,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subasterra - Iniciar sessió</title>
     <link rel="stylesheet" href="/../css/styles.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body>
     <div class="login-page">
@@ -19,11 +20,11 @@ session_start();
                 include(__DIR__ . "/../controllers/login-controller.php");
                 ?>  
                 <div>    
-                    <label for="username">Usuari:</label>
+                    <label class="login-label" for="username">Usuari:</label>
                     <input type="text" id="username" name="username">
                 </div>
                 <div>
-                    <label for="password">Contrasenya:</label>
+                    <label class="login-label" for="password">Contrasenya:</label>
                     <input type="password" id="password" name="password">
                 </div>
                 <input name="login-button" class="btn" type="submit" value="INICIAR SESIÓN">
