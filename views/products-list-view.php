@@ -15,14 +15,7 @@ include(__DIR__ . "/../controllers/login-controller.php");
 </head>
 
 <body>
-    <header>
-        <p id="logo">Subasterra</p>
-        <?php if ($role === null): ?>
-            <button id="login" onclick="window.location.href='/../views/login-view.php'">Inicia sessió</button>
-        <?php else: ?>
-            <button id="login" onclick="window.location.href='/../controllers/logout-controller.php'">Tancar sessió</button>
-        <?php endif; ?>
-    </header>
+    <?php include(__DIR__ . "/header-view.php"); ?>
 
     <div class="container-auctions">
         <div class="current-auctions-header">
