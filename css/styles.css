@@ -1,3 +1,4 @@
+@import 'global.css';
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Changa:wght@200..800&family=Cinzel:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Overpass:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 html, body {
@@ -27,17 +28,16 @@ header {
     margin-left: auto;
     font-family: Roboto;
     font-size: 16px;
-    background-color: #730000;
-    color: #FFF;
+    background-color: var(--primary-color);
+    color: white;
     border-radius: 5px;
     padding: 10px 15px;
     border: none;
     transition-duration: 0.5s;
 
-
-&:hover {
-    background-color: #B30000;
-}
+    &:hover {
+        background-color: var(--primary-color-dark);
+    }
 }
 
 #logout {
@@ -52,8 +52,8 @@ header {
     margin: 20px;
     font-family: 'Roboto';
     font-size: 16px;
-    background-color: #B30000;
-    color: #FFF;
+    background-color: var(--primary-color-dark);
+    color: white;
     border-radius: 5px;
     padding: 5px 5px;
     border: none;
@@ -66,12 +66,12 @@ header {
 }
 
 .btn-panel:hover {
-    background-color: #730000;
+    background-color: var(--primary-color);
 }
 
 .btn-panel:focus {
     outline: none;
-    box-shadow: 0 0 5px #730000;
+    box-shadow: 0 0 5px var(--primary-color);
 } 
 
 .container-auctions {
@@ -87,7 +87,7 @@ header {
     padding-bottom: 0px;
     justify-content: center;
     text-decoration: underline;
-    font-family: Montserrat;
+    font-family: var(--font-montserrat);
     font-size: 24px;
     text-transform: uppercase;
 }
@@ -106,41 +106,41 @@ header {
 
 
 #product-name {
-    font-family: Roboto;
+    font-family: var(--font-roboto);
     font-size: 18px;
     text-align: center;
 }
 
 
 #product-description_short {
-    font-family: Roboto;
+    font-family: var(--font-roboto);
     font-size: 16px;
     margin: 10px;
 }
 
 #product-status {
-    font-family: Roboto;
+    font-family: var(--font-roboto);
     font-size: 16px;
     margin: 10px;
 }
 
 #product-description_long {
-    font-family: Roboto;
+    font-family: var(--font-roboto);
     font-size: 14px;
     margin: 10px;
 }
 
 #product-observation {
-    font-family: Roboto;
+    font-family: var(--font-roboto);
     font-size: 14px;
     margin: 10px;
 }
 
 #product-price {
-    background-color: #730000;
+    background-color: var(--primary-color);
     padding: 10px;
     color: white;
-    font-family: Roboto;
+    font-family: var(--font-roboto);
     font-size: 16px;
     text-align: center;
     margin: 10px;
@@ -154,7 +154,7 @@ footer {
 }
 
 #footer-content {
-    font-family: Roboto;
+    font-family: var(--font-roboto);
     text-align: center;
 }
 
@@ -184,7 +184,7 @@ footer {
     flex-direction: column;
     gap: 10px;
     padding: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid white;
     border-radius: 8px;
 
     textarea {
@@ -192,34 +192,34 @@ footer {
         height: 100px;
         padding: 10px;
         border-radius: 5px;
-        border: 1px solid #ccc;
+        border: 1px solid white;
         resize: none;
         font-size: 14px;
-        font-family: Roboto;
+        font-family: var(--font-roboto);
     }
 
     .btn {
         padding: 10px;
         border-radius: 5px;
-        color: #FFF;
+        color: white;
         font-size: 14px;
         cursor: pointer;
 
         &.accept {
-            background-color: #4CAF50;
+            background-color: var(--secondary-color);
             margin-top: 5px;
 
             &:hover {
-                background-color: #308834;
+                background-color: var(--secondary-color-dark);
             }
         }
 
         &.reject {
-            background-color: #f44336;
+            background-color: var(--danger-color);
             margin-top: 5px;
 
             &:hover {
-                background-color: #dd2a26;
+                background-color: var(--danger-color-dark);
             }
         }
 
@@ -237,7 +237,7 @@ footer {
 }
 
 #login-form {
-    background-color: #FFFFFF;
+    background-color: white;
     border-radius: 5px;
     padding: 50px 20px;
     min-width: 350px;
@@ -246,7 +246,7 @@ footer {
   
 label {
     font-weight: bold;
-    color: #000;
+    color: var(--text-color);
     font-size: 16px;
     padding-bottom: 5px;
     font-family: 'Roboto';
@@ -299,14 +299,14 @@ label.inline {
 #username:valid:focus, #password:valid:focus {
     border: 2px solid green;
     background-color: #e4ffdd;
-  }
+}
   
 .btn {
     position: relative;
     font-family: Roboto;
     font-size: 16px;
-    background-color: #000000;
-    color: #FFFFFF;
+    background-color: black;
+    color: white;
     border-radius: 5px;
     padding: 10px 20px;
     border: none;
@@ -347,6 +347,7 @@ th, td {
     justify-content: space-between; 
     align-items: flex-start; 
 }
+
 .dropdown-content img {
     width: 150px;
     height: 150px;

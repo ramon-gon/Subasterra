@@ -1,0 +1,13 @@
+:root {
+    --primary-color: #730000;
+    --primary-color-dark: #B30000;
+    --secondary-color: #4CAF50;
+    --secondary-color-dark: #308834;
+    --danger-color: #f44336;
+    --danger-color-dark: #dd2a26;
+    --text-color: #333;
+    --font-roboto: 'Roboto', sans-serif;
+    --font-cinzel: 'Cinzel', serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+    --spacing-unit: 10px;
+}
