@@ -1,4 +1,4 @@
-@import 'global.css';
+@import 'globals.css';
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Changa:wght@200..800&family=Cinzel:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Overpass:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 html, body {
@@ -15,6 +15,9 @@ header {
     display: flex;
     align-items: center;
     border-bottom: solid 2px black;
+    height: 75px;
+    background-color: black;
+    color: white;
 }
 
 #logo {
@@ -30,14 +33,15 @@ header {
     font-size: 16px;
     background-color: var(--primary-color);
     color: white;
-    border-radius: 5px;
+    border-radius: 2px;
     padding: 10px 15px;
     border: none;
     transition-duration: 0.5s;
+    cursor: pointer;
+}
 
-    &:hover {
-        background-color: var(--primary-color-dark);
-    }
+#login:hover {
+    background-color: var(--primary-color-dark);
 }
 
 #logout {
@@ -293,8 +297,7 @@ label.inline {
 #username:invalid:focus, #password:invalid:focus {
     background-color: #ffdddd;
     border: 2px solid red;
-  
-  }
+}
   
 #username:valid:focus, #password:valid:focus {
     border: 2px solid green;
