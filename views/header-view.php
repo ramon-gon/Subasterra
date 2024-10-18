@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php
+    require_once(__DIR__ . '/../controllers/session-controller.php');
+    lazy_session_start();    
+?>
 
 <link rel="stylesheet" href="<?= '/css/header.css'; ?>">
 

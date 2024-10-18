@@ -1,4 +1,7 @@
 <?php
+require_once(__DIR__ . "/session-controller.php");
+lazy_session_start();
+
 if (!empty($_POST["login-button"])) {
     if (!empty($_POST["username"]) && !empty($_POST["password"])) {
         $user = $_POST["username"];

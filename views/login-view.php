@@ -1,5 +1,7 @@
 <?php
-session_start(); 
+require_once(__DIR__ . "/../controllers/session-controller.php");
+lazy_session_start();
+
 $login_error = isset($_SESSION['login_error']) ? $_SESSION['login_error'] : '';
 unset($_SESSION['login_error']); // Eliminar el mensaje de error después de mostrarlo
 ?>
