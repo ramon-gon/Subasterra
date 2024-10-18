@@ -7,7 +7,7 @@
     <div class="navbar">
         <ul id="navbar">
             <li><a href="/">Llista de productes</a></li>
-            <li><a href="/views/auctioner-panel-view.php">Panell de subhastador</a></li>
+            <li><a href="/controllers/auctioner-panel-controller.php">Panell de subhastador</a></li>
         </ul>
         <div class="user-menu">
             <div class="avatar" onclick="obreDropDownUsuari()">
