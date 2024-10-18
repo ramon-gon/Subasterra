@@ -109,4 +109,29 @@ class ProductModel {
         $stmt->bind_param("ssssdsd", $name, $short_description, $long_description, $observations, $starting_price, $photo_path, $user_id);
         return $stmt->execute();
     }
+    public function getProductById($product_id) {
+        // Preparar la consulta SQL para obtener el producto por su ID
+        $stmt = $this->conn->prepare("SELECT * FROM products WHERE id = ?");
+        $stmt->bind_param('i', $product_id);
+        
+        // Ejecutar la consulta
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        // Verificar si se obtuvo un resultado
+        if ($result->num_rows > 0) {
+            // Retornar el producto como un array asociativo
+            return $result->fetch_assoc();
+        } else {
+            // Si no se encuentra, retornar null
+            return null;
+        }
+    }
+    
+    public function updateProductStatusRetired($product_id, $status) {
+        $stmt = $this->conn->prepare("UPDATE products SET status = ? WHERE id = ?");
+        $stmt->bind_param('si', $status, $product_id);
+        return $stmt->execute();
+    }  
+    
 }
