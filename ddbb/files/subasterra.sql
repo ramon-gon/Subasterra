@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS products (
     starting_price DECIMAL(10, 2) NOT NULL, -- Preu inicial de la subhasta
     last_bid DECIMAL(10,2) NOT NULL DEFAULT 0,
     photo VARCHAR(50), -- Ruta de la imatge del producte
-    status ENUM('pendent', 'rebutjat', 'acceptat', 'pendent_adjudicacio') DEFAULT 'pendent', -- Estat de la validació del producte
+    status ENUM('pendent', 'rebutjat', 'acceptat', 'pendent d’assignació a una subhasta', 'assignat a una subhasta', 'pendent_adjudicacio', 'retirat') DEFAULT 'pendent', -- Estat de la validació del producte
     auctioneer_message TEXT, -- Missatge del subhastador en cas d'acceptació o rebuig
     user_id INT, -- Identificador de l'usuari venedor
     FOREIGN KEY (user_id) REFERENCES users(id) -- Clau forana que referencia l'usuari

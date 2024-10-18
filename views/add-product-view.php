@@ -5,6 +5,7 @@ unset($_SESSION['message']);
 
 <!DOCTYPE html>
 <html lang="ca">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +13,13 @@ unset($_SESSION['message']);
     <link rel="stylesheet" href="/../css/styles.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
+
 <body>
     <header id="header">
         <p id="logo">Subasterra</p>
+        <button class="btn-panel" onclick="window.location.href='/controllers/vendor-panel-controller.php'">
+            Panell Venedor
+        </button>
     </header>
 
     <div class="container-auctions">
@@ -56,4 +61,5 @@ unset($_SESSION['message']);
         <p>Roger Ortiz Leal | Ramón González Guix | Ismael Benítez Martínez © All Rights Reserved</p>
     </footer>
 </body>
+
 </html>
