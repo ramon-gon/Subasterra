@@ -1,8 +1,3 @@
-<?php
-$message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
-unset($_SESSION['message']);
-?>
-
 <!DOCTYPE html>
 <html lang="ca">
 
@@ -30,27 +25,27 @@ unset($_SESSION['message']);
 
         <form action="/../controllers/form-product-controller.php" method="post" enctype="multipart/form-data" id="product-form">
             <div class="form-group">
-                <label for="name">Nom del producte:</label>
-                <input type="text" name="name" id="name" required>
+                <label for="name">Nom del producte:<span class="required-asterisk">*</span></label>
+                <input type="text" name="name" id="name" maxlength="50" required>
             </div>
             <div class="form-group">
                 <label for="short_description">Descripció curta:</label>
-                <textarea name="short_description" id="short_description" required></textarea>
+                <textarea name="short_description" id="short_description"></textarea>
             </div>
             <div class="form-group">
                 <label for="long_description">Descripció llarga:</label>
-                <textarea name="long_description" id="long_description" required></textarea>
+                <textarea name="long_description" id="long_description"></textarea>
             </div>
             <div class="form-group">
                 <label for="observations">Observacions:</label>
                 <textarea name="observations" id="observations"></textarea>
             </div>
             <div class="form-group">
-                <label for="starting_price">Preu de sortida (€):</label>
+                <label for="starting_price">Preu de sortida (€):<span class="required-asterisk">*</span></label>
                 <input type="number" step="0.01" name="starting_price" id="starting_price" required>
             </div>
             <div class="form-group">
-                <label for="photo">Imatge del producte:</label>
+                <label for="photo">Imatge del producte:<span class="required-asterisk">*</span></label>
                 <input type="file" name="photo" id="photo" accept="image/*" required>
             </div>
             <input type="submit" value="Afegir Producte" class="btn" id="submit-btn">

@@ -400,7 +400,7 @@ h1 {
 .form-group {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 40%;
     align-items: center;
     justify-content: center;
 }
@@ -421,6 +421,7 @@ input[type="file"] {
     width: 100%;
     box-sizing: border-box;
     font-size: 16px;
+    text-align: center;
 }
 
 textarea {
@@ -440,4 +441,9 @@ textarea {
 
 #submit-btn:hover {
     background-color: #218838;
+}
+
+.required-asterisk {
+    color: red;
+    margin-left: 5px;
 }
