@@ -21,17 +21,6 @@ include(__DIR__ . "/../controllers/login-controller.php");
         <div class="current-auctions-header">
             <p class="title-category">Subastes actives</p>
 
-            <?php if ($role === 'subhastador'): ?>
-                <button class="btn-panel" onclick="window.location.href='/controllers/auctioner-panel-controller.php'">
-                    Panell Subhastador
-                </button>
-            <?php elseif ($role === 'venedor'): ?>
-                <button class="btn-panel" onclick="window.location.href='/controllers/vendor-panel-controller.php'">
-                    Panell Venedor
-                </button>
-            <?php endif; ?>
-
-
             <form id="search" method="GET" action="/index.php">
                 <input type="text" name="search" placeholder="Cerca productes..." value="<?= htmlspecialchars($search); ?>">
                 <select name="order">
