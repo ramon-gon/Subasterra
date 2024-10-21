@@ -53,6 +53,42 @@
     </div>
 
     <?php include(__DIR__ . "/footer-view.php"); ?>
+    <script>
+    document.getElementById('product-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevenir el envío del formulario inicial
+
+        // Mostrar un mensaje de confirmación
+        const confirmation = confirm('Estàs segur que vols afegir aquest producte?');
+
+        // Si l'usuari confirma, procedim amb l'enviament
+        if (confirmation) {
+            // Realizar la solicitud del formulario
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Verificar si el producto se añadió correctamente
+                if (data.includes('Producte afegit correctament.')) {
+                    alert('Producte afegit correctament.');
+                    window.location.href = '/controllers/vendor-panel-controller.php'; // Redirigir al Panell Venedor
+                } else {
+                    alert('Error en afegir el producte. Si us plau, intenta de nou.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hi ha hagut un problema en afegir el producte. Si us plau, intenta de nou.');
+            });
+        }
+    });
+</script>
+
+
 </body>
 
 </html>
