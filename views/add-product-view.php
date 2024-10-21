@@ -52,9 +52,7 @@
         </form>
     </div>
 
-    <footer id="footer-content">
-        <p>Roger Ortiz Leal | Ramón González Guix | Ismael Benítez Martínez © All Rights Reserved</p>
-    </footer>
+    <?php include(__DIR__ . "/footer-view.php"); ?>
 </body>
 
 </html>
