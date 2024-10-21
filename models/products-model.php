@@ -75,22 +75,8 @@ class ProductModel {
         $stmt->execute();
     }
 
-    /*public function getMyProducts($id) {
-        $sql ="SELECT p.id, p.name, p.short_description, p.starting_price, p.last_bid, p.status, p.photo, 
-                p.long_description, p.observations
-                FROM products p 
-                JOIN users u ON p.user_id = u.id 
-                WHERE u.id = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-
-        return $result;
-    }*/
     public function getMyProducts($id) {
-        $sql ="SELECT p.id, p.name, p.short_description, p.starting_price, p.status, p.photo, 
+        $sql ="SELECT p.id, p.name, p.short_description, p.starting_price, p.last_bid, p.status, p.photo, 
                 p.long_description, p.observations
                 FROM products p 
                 JOIN users u ON p.user_id = u.id 
@@ -134,4 +120,9 @@ class ProductModel {
         return $stmt->execute();
     }  
     
+    public function addNewAuction($description, $date) {
+        $stmt = $this->conn->prepare("INSERT INTO auctions (description, auction_date) VALUES (?, ?)");
+        $stmt->bind_param("ss", $description, $date);
+        return $stmt->execute();
+    }
 }

@@ -10,13 +10,14 @@ $productModel = new ProductModel($conn);
 $products = $productModel->getPendingProducts();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //var_dump($_POST);
     $form_type = $_POST['form-type'] ?? '';
 
     if ($form_type === 'create-auction') {
-        $auction_description = $_POST['auction-description'] ?? '';
-        $auction_date = $_POST['auction-date'] ?? '';
-        //... (pendiente tengo que ver el sprint 3 y no está subido)
+        $auction_description = $_POST['auction-description'];
+        $auction_date = $_POST['auction-date'];
+        
+        if ($auction_description !== '' && $auction_date !== '')
+        $productModel->addNewAuction($auction_description, $auction_date);
     } elseif ($form_type === 'product-assignment') {
         $product_id = $_POST['product_id'];
         $action = $_POST['action'];
