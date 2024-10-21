@@ -10,7 +10,13 @@
     <div class="navbar">
         <ul id="navbar">
             <li><a href="/">Llista de productes</a></li>
-            <li><a href="/controllers/auctioner-panel-controller.php">Panell de subhastador</a></li>
+            <?php if (isset($_SESSION['role'])): ?>
+                <?php if ($_SESSION['role'] === 'subhastador'): ?>
+                    <li><a href="/controllers/auctioner-panel-controller.php">Panell de subhastador</a></li>
+                <?php elseif ($_SESSION['role'] === 'venedor'): ?>
+                    <li><a href="/controllers/vendor-panel-controller.php">Panell de venedor</a></li>
+                <?php endif; ?>
+            <?php endif; ?>
         </ul>
         <div class="user-menu">
             <div class="avatar" onclick="obreDropDownUsuari()">
