@@ -11,20 +11,28 @@ $products = $productModel->getPendingProducts();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //var_dump($_POST);
-    $product_id = $_POST['product_id'];
-    $action = $_POST['action'];
-    $message = $_POST['message'] ?? '';
-    $short_description = $_POST['short_description'] ?? '';
-    $long_description = $_POST['long_description'] ?? '';
+    $form_type = $_POST['form-type'] ?? '';
 
-    if ($action === 'accept') {
-        $productModel->updateProductStatus($product_id, 'acceptat', 'Producte acceptat. ' . $message);
-    } elseif ($action === 'reject') {
-        $productModel->updateProductStatus($product_id, 'rebutjat', 'Producte rebutjat. ' . $message);
-    }
-        $productModel->updateProductDescriptions($product_id, $short_description, $long_description);
+    if ($form_type === 'create-auction') {
+        $auction_description = $_POST['auction-description'] ?? '';
+        $auction_date = $_POST['auction-date'] ?? '';
+        //... (pendiente tengo que ver el sprint 3 y no está subido)
+    } elseif ($form_type === 'product-assignment') {
+        $product_id = $_POST['product_id'];
+        $action = $_POST['action'];
+        $message = $_POST['message'] ?? '';
+        $short_description = $_POST['short_description'] ?? '';
+        $long_description = $_POST['long_description'] ?? '';
+    
+        if ($action === 'accept') {
+            $productModel->updateProductStatus($product_id, 'acceptat', 'Producte acceptat. ' . $message);
+        } elseif ($action === 'reject') {
+            $productModel->updateProductStatus($product_id, 'rebutjat', 'Producte rebutjat. ' . $message);
+        }
         
-    // Redireccionar a la misma página para evitar reenvíos de formularios
+        $productModel->updateProductDescriptions($product_id, $short_description, $long_description);
+    }
+        
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit();
 }

@@ -13,16 +13,34 @@
     <?php include(__DIR__ . "/header-view.php"); ?>
     
     <div class="container-auctions">
-
         <div class="current-auctions-header">
             <p class="title-category">Panell de Subhastador</p>
         </div>
-        
-            <?php if ($products->num_rows > 0): ?>
-                <h2 id="revision"></h2>
-            <?php endif; ?>
+        <div class="auction-gallery">
 
-            <div class="auction-gallery">
+            <table hidden id="new-auction">
+            <button type="submit" name="new-auction-button" value="create" id="new-auction-button" class="btn accept">Nova subasta</button>
+            <thead>
+                <tr>
+                    <th colspan="7">Nova subhasta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                <input type="hidden" name="form-type" value="create-auction">
+                <tr>
+                    <th>Descripció</th>
+                    <th colspan="6"><input type="text" name="create-auction"></th>
+                </tr>
+                <tr>
+                    <th>Data i hora</th>
+                    <th colspan="6"><input type="datetime-local" name="auction-date"></th>
+                </tr>
+                </form>
+            </tbody>
+            </table>
+            <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="btn accept">Crea subasta</button>
+        
             <table id="auctioneer-panel">
                 <thead>
                     <tr>
@@ -47,6 +65,7 @@
                                 <td><?= htmlspecialchars($row['short_description']); ?></td>
                                 <td><?= number_format($row['starting_price'], 2); ?></td>
                                 <td><?= htmlspecialchars($row['status']); ?></td>
+                                <input type="hidden" name="form-type" value="product-assignment">
                                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']); ?>">
                             </tr>
                             <tr class="detailed-info-content">
@@ -100,8 +119,8 @@
                                         </div>
                                         <img src="<?= htmlspecialchars($row['photo']); ?>" alt="<?= htmlspecialchars($row['name']); ?>">
                                     </div>
-                                    <input name="action" class="btn accept" type="submit" value="accept">
-                                    <input name="action" class="btn reject" type="submit" value="reject">
+                                    <button name="action" class="btn accept" type="submit" value="accept">Acceptar</button>
+                                    <button name="action" class="btn accept" type="submit" value="accept">Rebutjar</button>
                                 </td>
                             </tr>
                         </form>
@@ -120,15 +139,8 @@
         <p id="footer-content">Roger Ortiz Leal | Ramón González Guix | Ismael Benítez Martínez © All Rights Reserved</p>
     </footer>
 
-    <script>
-    document.querySelectorAll('.short-info-dropdown').forEach(function(row) {
-        row.addEventListener('click', function() {
-            let nextRow = this.nextElementSibling;
-            if (nextRow && nextRow.classList.contains('detailed-info-content')) {
-                nextRow.classList.toggle('detailed-info-expanded');
-            }
-        });
-    });
-    </script>
 </body>
 </html>
+
+<script src="../scripts/dropdown-tables.js"></script>
+<script src="../scripts/switch-tables.js"></script>

@@ -19,7 +19,7 @@
                     <span class="username"><?= htmlspecialchars($_SESSION['username']); ?></span>
                 <?php endif; ?>
             </div>
-            <div id="user-dropdown" class="dropdown-content">
+            <div id="user-dropdown" class="user-dropdown-content">
                 <?php if (!isset($_SESSION['role'])): ?>
                     <a href="/views/login-view.php">Iniciar sessió</a>
                 <?php else: ?>
