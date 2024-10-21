@@ -3,11 +3,6 @@
     require_once(__DIR__ . "/../controllers/login-controller.php");
     lazy_session_start();
 
-    if (isset($_SESSION['id'])) {
-        header("Location: /");
-        exit();
-    }
-
     $login_error = $_SESSION['login_error'] ?? '';
     unset($_SESSION['login_error']);
 ?>
@@ -18,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subasterra - Iniciar sessió</title>
-    <link rel="stylesheet" href="/../css/login.css">
+    <link rel="stylesheet" href="/../css/login.css" type="text/css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body>

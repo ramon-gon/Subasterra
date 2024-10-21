@@ -6,7 +6,19 @@
 <link rel="stylesheet" href="<?= '/css/header.css'; ?>">
 
 <header>
-    <p id="logo"><a href="/">Subasterra</a></p>
+    <div class="logo-search">
+        <p id="logo"><a href="/">Subasterra</a></p>
+        <form id="search" method="GET" action="/index.php" class="header-search-form">
+            <input type="text" name="search" placeholder="Cerca productes..." value="<?= htmlspecialchars($search ?? ''); ?>" class="search-input">
+            <select name="order" class="search-select">
+                <option value="name" <?= (isset($order) && $order === 'name') ? 'selected' : ''; ?>>Ordena per nom</option>
+                <option value="starting_price" <?= (isset($order) && $order === 'starting_price') ? 'selected' : ''; ?>>Ordena per preu</option>
+            </select>
+            <button type="submit" class="btn search-btn">
+                <img src="/images/search.svg" alt="Search" class="search-icon">
+            </button>
+        </form>
+    </div>
     <div class="navbar">
         <ul id="navbar">
             <li><a href="/">Llista de productes</a></li>
