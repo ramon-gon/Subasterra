@@ -17,7 +17,6 @@
             <p class="title-category">Panell de Subhastador</p>
         </div>
         <div class="auction-gallery">
-
             <table hidden id="new-auction">
             <button type="submit" name="new-auction-button" value="create" id="new-auction-button" class="btn accept">Nova subasta</button>
             <thead>
@@ -30,17 +29,16 @@
                 <input type="hidden" name="form-type" value="create-auction">
                 <tr>
                     <th>Descripció</th>
-                    <th colspan="6"><input type="text" name="create-auction"></th>
+                    <th colspan="6"><input type="text" name="auction-description"></th>
                 </tr>
                 <tr>
                     <th>Data i hora</th>
                     <th colspan="6"><input type="datetime-local" name="auction-date"></th>
                 </tr>
+                <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="btn accept">Crea subasta</button>
                 </form>
             </tbody>
-            </table>
-            <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="btn accept">Crea subasta</button>
-        
+            </table>        
             <table id="auctioneer-panel">
                 <thead>
                     <tr>

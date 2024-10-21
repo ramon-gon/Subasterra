@@ -37,6 +37,14 @@ CREATE TABLE IF NOT EXISTS products (
     FOREIGN KEY (user_id) REFERENCES users(id) -- Clau forana que referencia l'usuari
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS auctions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    auction_date TEXT, /* Lo dejo en tipo TEXT temporalmente porque con DATE no recoge la hora */ 
+    description TEXT,
+    product_id INT,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- Inserció de productes de prova
 INSERT INTO products (name, short_description, long_description, observations, photo, starting_price, user_id) VALUES
 ('Televisor LG', 'Televisor 4K UHD', 'Televisor LG de 55 polzades amb resolució 4K i compatibilitat amb HDR.', 'Pantalla amb alta resolució i colors vius.', '/../images/images.jpg', 699.99, 2),
