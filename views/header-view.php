@@ -41,7 +41,6 @@
                 <?php if (!isset($_SESSION['role'])): ?>
                     <a href="/views/login-view.php">Iniciar sessió</a>
                 <?php else: ?>
-                    <a href="/profile.php">Perfil</a>
                     <a href="/controllers/logout-controller.php">Tancar sessió</a>
                 <?php endif; ?>
             </div>
