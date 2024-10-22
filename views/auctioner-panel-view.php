@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panell de Subhastador</title>
-    <link rel="stylesheet" href="/../css/styles.css">
+    <link rel="stylesheet" href="/../css/auctioner-panel.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 
@@ -13,12 +13,12 @@
     <?php include(__DIR__ . "/header-view.php"); ?>
     
     <div class="container-auctions">
-        <div class="current-auctions-header">
-            <p class="title-category">Panell de Subhastador</p>
-        </div>
         <div class="auction-gallery">
             <table hidden id="new-auction">
-            <button type="submit" name="new-auction-button" value="create" id="new-auction-button" class="btn accept">Nova subasta</button>
+            <button type="submit" name="new-auction-button" value="create" id="new-auction-button" class="add-btn">
+                <img src="/images/add-icon.svg" alt="add-icon" class="add-icon">
+                <span class="button-text">Nova subasta</span>
+            </button>
             <thead>
                 <tr>
                     <th colspan="7">Nova subhasta</th>
@@ -35,7 +35,7 @@
                     <th>Data i hora</th>
                     <th colspan="6"><input type="datetime-local" name="auction-date"></th>
                 </tr>
-                <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="btn accept">Crea subasta</button>
+                <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="create-btn">Crea subasta</button>
                 </form>
             </tbody>
             </table>        
@@ -62,7 +62,7 @@
                                 <td><?= htmlspecialchars($row['name']); ?></td>
                                 <td><?= htmlspecialchars($row['short_description']); ?></td>
                                 <td><?= number_format($row['starting_price'], 2); ?></td>
-                                <td><?= htmlspecialchars($row['status']); ?></td>
+                                <td><div class="status" value="<?= htmlspecialchars($row['status']); ?>"></td>
                                 <input type="hidden" name="form-type" value="product-assignment">
                                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']); ?>">
                             </tr>
@@ -117,8 +117,10 @@
                                         </div>
                                         <img src="<?= htmlspecialchars($row['photo']); ?>" alt="<?= htmlspecialchars($row['name']); ?>">
                                     </div>
-                                    <button name="action" class="btn accept" type="submit" value="accept">Acceptar</button>
-                                    <button name="action" class="btn accept" type="submit" value="accept">Rebutjar</button>
+                                    <div class="dropdown-buttons">
+                                        <button name="action" class="accept-btn" type="submit" value="accept">Acceptar</button>
+                                        <button name="action" class="deny-btn" type="submit" value="accept">Rebutjar</button>
+                                    </div>
                                 </td>
                             </tr>
                         </form>

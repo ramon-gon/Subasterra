@@ -1,0 +1,241 @@
+@import 'globals.css';
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Changa:wght@200..800&family=Cinzel:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Overpass:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: var(--font-roboto);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container-auctions {
+    flex-grow: 1;
+    margin: 25px 50px; 
+    text-align: right;
+}
+
+.auction-gallery {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+  
+table {
+    width: 100%;
+    border-spacing: 0 15px;
+    border-radius: 8px;
+}
+
+thead {
+    font-family: var(--font-roboto);
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: #730000;
+    color: white;
+}
+
+thead th {
+    padding: 25px 30px;
+    text-align: left;
+}
+
+tbody tr {
+    font-family: var(--font-roboto);
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 25px 30px;
+    text-align: left;
+}
+
+.detailed-info-content {
+    display: none;
+    background-color: #f9f9f9;
+}
+
+.detailed-info-expanded {
+    display: table-row; 
+}
+
+.short-info-dropdown {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+}
+
+.dropdown-content img {
+    width: 150px;
+    height: 150px;
+}
+
+.dropdown-info-field {
+    margin-bottom: 10px;
+}
+
+.product-info {
+    display: inline-block;
+    min-width: 500px;
+}
+
+label {
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 16px;
+    padding-bottom: 5px;
+    font-family: 'Roboto';
+    vertical-align: top;
+} 
+
+.panel-label {
+    display: inline-block;
+    margin-right: 10px;
+    width: 180px;
+}
+  
+label.required::after {
+    content: "*";
+    color: red;
+    margin-left: 5px;
+}
+
+label.inline {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+input[type="text"],
+textarea,
+input[type="number"],
+input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 15px;
+    max-height: 100px;
+}
+.add-btn, .accept-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-btn {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-btn:hover, .accept-btn:hover {
+    background-color: var(--secondary-color-dark);
+}
+
+.button-text {
+    vertical-align: middle;
+}
+
+.add-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+.dropdown-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.deny-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.deny-btn:hover {
+    background-color: var(--primary-color-dark);
+}
+
+/* PENDENT TOT EL TEMA DELS ESTATS FINS QUE SIGUI IMPLEMENTADA LA FUNCIONALITAT */
+.status[value="pendent"]::before {
+    content: "Pendent";
+    color: white;
+    background-color: orange;
+    padding: 10px 20px;
+    border: 2px solid white;
+    outline: 1px solid orange;
+    margin-top: 1px;
+}
+
+.status[value="rebutjat"]::before {
+    content: "Rebutjat";
+    color: white;
+    background-color: red;
+    padding: 10px 20px;
+    border: 2px solid white;
+    outline: 1px solid red;
+    margin-top: 1px;
+}
+
+.status[value="pendent d’assignació a una subhasta"]::before {
+    content: "Subhasta sense assignar";
+    color: white;
+    background-color: orange;
+    padding: 10px 20px;
+    border: 2px solid white;
+    outline: 1px solid orange;
+    margin-top: 1px;
+}
+
+.status[value="assignat a una subhasta"]::before {
+    content: "Assignat a subhasta";
+    color: white;
+    background-color: green;
+    padding: 10px 20px;
+    border: 2px solid white;
+    outline: 1px solid green;
+    margin-top: 1px;
+}
+
+.status[value="retirat"]::before {
+    content: "Retirat";
+    color: white;
+    background-color: grey;
+    padding: 10px 20px;
+    border: 2px solid white;
+    outline: 1px solid grey;
+    margin-top: 1px;
+}
+
