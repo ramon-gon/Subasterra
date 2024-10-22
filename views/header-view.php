@@ -59,8 +59,9 @@
 
             for (var i = 0; i < links.length; i++) {
                 var linkPath = links[i].getAttribute('href');
-
-                if (currentPath === linkPath) {
+                if (linkPath === "/" && (currentPath === "/" || currentPath === "/index.php")) {
+                    links[i].parentElement.classList.add('actual-page');
+                } else if (currentPath === linkPath) {
                     links[i].parentElement.classList.add('actual-page');
                 }
             }
