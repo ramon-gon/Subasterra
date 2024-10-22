@@ -39,9 +39,10 @@ CREATE TABLE IF NOT EXISTS products (
 
 CREATE TABLE IF NOT EXISTS auctions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    auction_date TEXT, /* Lo dejo en tipo TEXT temporalmente porque con DATE no recoge la hora */ 
+    auction_date TIMESTAMP, 
     description TEXT,
     product_id INT,
+    status ENUM('oberta', 'tancada') NOT NULL DEFAULT 'oberta',
     FOREIGN KEY (product_id) REFERENCES products(id)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -56,3 +57,19 @@ INSERT INTO products (name, short_description, long_description, observations, p
 ('Auriculars Sony', 'Auriculars sense fil', 'Auriculars sense fil amb cancel·lació de soroll.', 'Autonomia de fins a 30 hores.', '/../images/images.jpg', 199.99, 2),
 ('Tablet Apple', 'Tablet amb pantalla Retina', 'Tablet amb pantalla Retina de 10.2 polzades i 128 GB de capacitat.', 'Compatible amb Apple Pencil.', '/../images/images.jpg', 329.99, 2),
 ('Càmera Canon', 'Càmera digital', 'Càmera rèflex digital amb objectiu de 18-55mm.', 'Ideal per a fotografies de paisatges i retrats.', '/../images/images.jpg', 499.99, 1);
+
+-- Insertar una subhasta abierta para el producto 1
+INSERT INTO auctions (auction_date, description, product_id, status) 
+VALUES (NOW(), 'Subhasta per al producte 1', 1, 'oberta');
+
+-- Insertar una subhasta tancada para el producte 2
+INSERT INTO auctions (auction_date, description, product_id, status) 
+VALUES ('2024-10-10 14:00:00', 'Subhasta finalitzada per al producte 2', 2, 'tancada');
+
+-- Insertar una subhasta abierta para el producte 3
+INSERT INTO auctions (auction_date, description, product_id, status) 
+VALUES (NOW(), 'Subhasta activa per al producte 3', 3, 'oberta');
+
+-- Insertar una subhasta tancada para el producte 1
+INSERT INTO auctions (auction_date, description, product_id, status) 
+VALUES ('2024-09-25 10:30:00', 'Subhasta tancada per al producte 1', 1, 'tancada');
