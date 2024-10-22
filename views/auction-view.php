@@ -48,7 +48,7 @@
                     <?php while ($auction = $auctions->fetch_assoc()): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($auction['id']); ?></td>
-                            <td><?php echo htmlspecialchars($auction['auction_date']); ?></td>
+                            <td><?php echo date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
                             <td><?php echo htmlspecialchars($auction['description']); ?></td>
                             <td><?php echo htmlspecialchars($auction['product_name']); ?></td>
                             <td><?php echo htmlspecialchars($auction['status']); ?></td>
