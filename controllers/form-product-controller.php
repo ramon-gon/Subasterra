@@ -7,16 +7,26 @@ include(__DIR__ . "/../models/products-model.php");
 
 $message = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'] ?? '';
-    $short_description = $_POST['short_description'] ?? '';
-    $long_description = $_POST['long_description'] ?? '';
-    $observations = $_POST['observations'] ?? '';
-    $starting_price = $_POST['starting_price'] ?? 0;
+
+    // Limpiar y validar entradas
+    $name = htmlspecialchars(trim($_POST['name'] ?? ''));
+    $short_description = htmlspecialchars(trim($_POST['short_description'] ?? '')); // Opcional
+    $long_description = htmlspecialchars(trim($_POST['long_description'] ?? ''));   // Opcional
+    $observations = htmlspecialchars(trim($_POST['observations'] ?? ''));           // Opcional
+    $starting_price = floatval($_POST['starting_price'] ?? 0);
     $user_id = $_SESSION['id'];
 
-    // Verificar si se ha subido una imagen
-    if (!empty($_FILES['photo']['name'])) {
+    // Validación de campos obligatorios
+    if (empty($name)) {
+        $message = "El nom del producte és obligatori.";
+    } elseif (strlen($name) > 50) {
+        $message = "El nom del producte no pot tenir més de 50 caràcters.";
+    } elseif ($starting_price <= 0) {
+        $message = "El preu de sortida ha de ser superior a zero.";
+    } elseif (empty($_FILES['photo']['name'])) {
+        $message = "Per favor, selecciona una imatge per al producte.";
+    } else {
+        // Si los campos obligatorios son válidos, procesamos la imagen
         $target_dir = __DIR__ . "/../images/";
         $photo_name = basename($_FILES['photo']['name']);
         $target_file = $target_dir . $photo_name;
@@ -48,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $uploadOk = false;
         }
 
-        // Si todo está bien, mover el archivo subido a la carpeta de destino
+        // Si todo está bien con la imagen, mover el archivo subido a la carpeta de destino
         if ($uploadOk && move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
             $photo_path = "/../images/" . $photo_name;
 
@@ -62,11 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $message = $message ?: "Error en pujar la imatge.";
         }
-    } else {
-        $message = "Per favor, selecciona una imatge per al producte.";
     }
-}
 
 // Passar les dades a la vista
 include_once __DIR__ . '/../views/add-product-view.php';
-
