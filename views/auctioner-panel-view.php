@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panell de Subhastador</title>
-    <link rel="stylesheet" href="/../css/auctioner-panel.css">
+    <link rel="stylesheet" href="/../css/auctioner-vendor-panel.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 
@@ -14,11 +14,11 @@
     
     <div class="container-auctions">
         <div class="auction-gallery">
-            <table hidden id="new-auction">
             <button type="submit" name="new-auction-button" value="create" id="new-auction-button" class="add-btn">
                 <img src="/images/add-icon.svg" alt="add-icon" class="add-icon">
                 <span class="button-text">Nova subasta</span>
             </button>
+            <table hidden id="new-auction">
             <thead>
                 <tr>
                     <th colspan="7">Nova subhasta</th>
