@@ -8,14 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function showNewAuctionTable() {
         newAuction.hidden = false;
         auctioneerPanel.hidden = true;
-        newAuctionButton.hidden = true;
+        newAuctionButton.style.display = "none";
         AuctionCreateButton.hidden = false;
     }
 
     function showAuctioneerPanel() {
         newAuction.hidden = true;
         auctioneerPanel.hidden = false;
-        newAuctionButton.hidden = false;
+        newAuctionButton.style.display = "flex";
         AuctionCreateButton.hidden = true;
     }
 
