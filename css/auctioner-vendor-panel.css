@@ -4,18 +4,19 @@
 html, body {
     height: 100%;
     margin: 0;
-    font-family: var(--font-roboto);
-}
-
-body {
     display: flex;
     flex-direction: column;
 }
 
 .container-auctions {
-    flex-grow: 1;
-    margin: 25px 50px; 
+    flex: 1;
+    padding: 1.5rem;
+}
+.auction-gallery-header {
+    display: flex;
+    justify-content: flex-end;
     text-align: right;
+    padding-right: 10px;
 }
 
 .auction-gallery {
@@ -121,7 +122,8 @@ label.inline {
 input[type="text"],
 textarea,
 input[type="number"],
-input[type="file"] {
+input[type="file"],
+input[type="datetime-local"] {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -135,7 +137,7 @@ textarea {
     min-height: 15px;
     max-height: 100px;
 }
-.add-btn, .accept-btn {
+.add-btn, .accept-btn, .create-btn {
     background-color: var(--secondary-color);
     color: white;
     border: none;
