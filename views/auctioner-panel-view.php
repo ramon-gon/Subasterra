@@ -13,32 +13,36 @@
     <?php include(__DIR__ . "/header-view.php"); ?>
     
     <div class="container-auctions">
-        <div class="auction-gallery">
+        <div class="auction-gallery-header">
             <button type="submit" name="new-auction-button" value="create" id="new-auction-button" class="add-btn">
                 <img src="/images/add-icon.svg" alt="add-icon" class="add-icon">
                 <span class="button-text">Nova subasta</span>
             </button>
+        </div>
+        <div class="auction-gallery">
+
             <table hidden id="new-auction">
-            <thead>
-                <tr>
-                    <th colspan="7">Nova subhasta</th>
-                </tr>
-            </thead>
-            <tbody>
-                <form method="POST" action="/controllers/auctioner-panel-controller.php">
-                <input type="hidden" name="form-type" value="create-auction">
-                <tr>
-                    <th>Descripció</th>
-                    <th colspan="6"><input type="text" name="auction-description"></th>
-                </tr>
-                <tr>
-                    <th>Data i hora</th>
-                    <th colspan="6"><input type="datetime-local" name="auction-date"></th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th colspan="7">Nova subhasta</th>
+                    </tr>
+                </thead>
+            <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                <tbody>
+                    <input type="hidden" name="form-type" value="create-auction">
+                    <tr>
+                        <th>Descripció</th>
+                        <th colspan="6"><input type="text" name="auction-description"></th>
+                    </tr>
+                    <tr>
+                        <th>Data i hora</th>
+                        <th colspan="6"><input type="datetime-local" name="auction-date"></th>
+                    </tr>
+                </tbody>
+            </table>
                 <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="create-btn">Crea subasta</button>
-                </form>
-            </tbody>
-            </table>        
+            </form>
+
             <table id="auctioneer-panel">
                 <thead>
                     <tr>
@@ -117,10 +121,28 @@
                                         </div>
                                         <img src="<?= htmlspecialchars($row['photo']); ?>" alt="<?= htmlspecialchars($row['name']); ?>">
                                     </div>
+                                    <?php if (in_array($row['status'], ['pendent'])): ?>
                                     <div class="dropdown-buttons">
                                         <button name="action" class="accept-btn" type="submit" value="accept">Acceptar</button>
                                         <button name="action" class="deny-btn" type="submit" value="accept">Rebutjar</button>
                                     </div>
+                                    <?php endif; ?>
+                                    <?php if (in_array($row['status'], ['pendent d’assignació a una subhasta'])): ?>
+                                    <div class="dropdown-buttons">
+                                        <form method="POST" action="/">
+                                            <input type="hidden" name="product_id" value="<?= $row['id']; ?>">
+                                            <button type="submit" name="action" value="retire" class="accept-btn">Assignar subhasta</button>
+                                        </form>
+                                    </div>
+                                    <?php endif; ?>
+                                    <?php if (in_array($row['status'], ['assignat a una subhasta'])): ?>
+                                    <div class="dropdown-buttons">
+                                        <form method="POST" action="/">
+                                            <input type="hidden" name="product_id" value="<?= $row['id']; ?>">
+                                            <button type="submit" name="action" value="retire" class="retire-btn">Desassignar subhasta</button>
+                                        </form>
+                                    </div>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         </form>
