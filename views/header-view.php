@@ -8,16 +8,18 @@
 <header>
     <div class="logo-search">
         <p id="logo"><a href="/">Subasterra</a></p>
-        <form id="search" method="GET" action="/index.php" class="header-search-form">
-            <input type="text" name="search" placeholder="Cerca productes..." value="<?= htmlspecialchars($search ?? ''); ?>" class="search-input">
-            <select name="order" class="search-select">
-                <option value="name" <?= (isset($order) && $order === 'name') ? 'selected' : ''; ?>>Ordena per nom</option>
-                <option value="starting_price" <?= (isset($order) && $order === 'starting_price') ? 'selected' : ''; ?>>Ordena per preu</option>
-            </select>
-            <button type="submit" class="btn search-btn">
-                <img src="/images/search.svg" alt="Search" class="search-icon">
-            </button>
-        </form>
+        <?php if (basename($_SERVER['PHP_SELF']) === 'index.php' || $_SERVER['REQUEST_URI'] === '/'): ?>
+            <form id="search" method="GET" action="/index.php" class="header-search-form">
+                <input type="text" name="search" placeholder="Cerca productes..." value="<?= htmlspecialchars($search ?? ''); ?>" class="search-input">
+                <select name="order" class="search-select">
+                    <option value="name" <?= (isset($order) && $order === 'name') ? 'selected' : ''; ?>>Ordena per nom</option>
+                    <option value="starting_price" <?= (isset($order) && $order === 'starting_price') ? 'selected' : ''; ?>>Ordena per preu</option>
+                </select>
+                <button type="submit" class="btn search-btn">
+                    <img src="/images/search.svg" alt="Search" class="search-icon">
+                </button>
+            </form>
+        <?php endif; ?>
     </div>
     <div class="navbar">
         <ul id="navbar">
@@ -41,7 +43,6 @@
                 <?php if (!isset($_SESSION['role'])): ?>
                     <a href="/views/login-view.php">Iniciar sessió</a>
                 <?php else: ?>
-                    <a href="/profile.php">Perfil</a>
                     <a href="/controllers/logout-controller.php">Tancar sessió</a>
                 <?php endif; ?>
             </div>
@@ -58,8 +59,9 @@
 
             for (var i = 0; i < links.length; i++) {
                 var linkPath = links[i].getAttribute('href');
-
-                if (currentPath === linkPath) {
+                if (linkPath === "/" && (currentPath === "/" || currentPath === "/index.php")) {
+                    links[i].parentElement.classList.add('actual-page');
+                } else if (currentPath === linkPath) {
                     links[i].parentElement.classList.add('actual-page');
                 }
             }
