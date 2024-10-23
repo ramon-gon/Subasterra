@@ -18,6 +18,18 @@ class NotificationsModel {
         return $stmt->get_result();
     }
 
+    public function getUnreadNotificationCount($receiver) {
+        $sql = "SELECT COUNT(*) as count
+                FROM notifications
+                WHERE receiver = ? AND is_read = FALSE";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('i', $receiver);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc()['count'];
+    }
+
     public function markAsRead($id) {
         $sql = "UPDATE notifications SET is_read = TRUE WHERE id = ?";
         $stmt = $this->conn->prepare($sql);

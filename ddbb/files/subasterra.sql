@@ -83,3 +83,9 @@ VALUES (NOW(), 'Subhasta activa per al producte 3', 3, 'oberta');
 -- Insertar una subhasta tancada para el producte 1
 INSERT INTO auctions (auction_date, description, product_id, status) 
 VALUES ('2024-09-25 10:30:00', 'Subhasta tancada per al producte 1', 1, 'tancada');
+
+INSERT INTO notifications (message, sender, receiver) VALUES
+('El teu producte ha estat acceptat per a la subhasta.', 3, 1),
+('El teu producte ha estat rebutjat per a la subhasta.', 3, 2),
+('Has guanyat la subhasta per al producte 1.', 3, 1),
+('Has guanyat la subhasta per al producte 2.', 3, 2);
