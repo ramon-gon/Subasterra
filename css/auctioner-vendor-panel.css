@@ -148,6 +148,17 @@ textarea {
     transition: background-color 0.3s ease;
 }
 
+.assign-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 .add-btn {
     margin-left: auto;
     display: inline-flex;
@@ -157,6 +168,10 @@ textarea {
 
 .add-btn:hover, .accept-btn:hover {
     background-color: var(--secondary-color-dark);
+}
+
+.assign-btn:hover {
+    background-color: #0b7dda;
 }
 
 .button-text {
@@ -277,3 +292,39 @@ textarea {
         margin-top: 1px;
     }
 
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+      
+      /* Modal Content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%;
+      }
+      
+      /* The Close Button */
+      .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }

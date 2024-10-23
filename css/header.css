@@ -38,9 +38,9 @@ a {
 }
 
 .avatar {
-    cursor: pointer;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .avatar img {
@@ -51,10 +51,9 @@ a {
 }
 
 .username {
-    color: white;
     font-family: 'Montserrat', sans-serif;
+    color: white;
     font-size: 14px;
-    margin-right: 15px;
 }
 
 .user-dropdown-content {
@@ -79,10 +78,6 @@ a {
 
 .dropdown-content a:hover {
     background-color: #7979796b;
-}
-
-.show {
-    display: block;
 }
 
 .navbar {
@@ -167,4 +162,147 @@ a {
     gap: 1rem;
     margin: 0;
     display: flex;
+}
+
+.notification {
+    background-color: #333;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notifications {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.notification-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 6px;
+    font-size: 12px;
+    font-family: 'Montserrat';
+}
+
+.notification-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+    top: 55px;
+    right: 0;
+    min-width: 200px;
+    max-width: 400px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    font-family: 'Montserrat';
+}
+
+.notification:last-child {
+    margin-bottom: 0;
+}
+
+.notification-dropdown-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: block !important;
+}
+
+.notification-dropdown-content li {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+
+.notification.read {
+    background-color: #222;
+}
+
+.notification.unread {
+    background-color: #444;
+}
+
+.notification-dropdown-content p {
+    margin: 0;
+    color: white;
+}
+
+.notification-dropdown-content button {
+    margin-top: 5px;
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.notification-dropdown-content button:hover {
+    color: white;
+}
+
+.show {
+    display: block;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 10px;
+}
+
+.notification-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.notification-actions form {
+    display: inline-block;
+}
+
+.notification-actions button {
+    background-color: #555;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.notification-actions button:hover {
+    background-color: #777;
+}
+
+.delete-btn {
+    background-color: red;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
+
+.notification-body {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.notification-body strong {
+    font-weight: bold;
+    color: #f1f1f1;
 }

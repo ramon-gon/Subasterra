@@ -96,4 +96,12 @@ public function addAuction($auctionDate, $description, $productIds, $status = 'o
         $stmt->bind_param("si", $status, $id);
         return $stmt->execute();
     }
+
+    public function getActiveAuctions() {
+        $sql = "SELECT a.id, a.description
+        FROM auctions a
+        WHERE a.status = 'oberta'";
+
+        return $this->conn->query($sql);
+    }
 }

@@ -36,7 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($action === 'accept') {
             $productModel->updateProductStatus($product_id, 'pendent d’assignació a una subhasta', 'Producte acceptat. A espera de ser assignat a una subasta' . $message);
         } elseif ($action === 'reject') {
-            $productModel->updateProductStatus($product_id, 'rebutjat', 'Producte rebutjat. ' . $message);
+            $productModel->updateProductStatus($product_id, 'rebutjat', 'Producte rebutjat.' . $message);
+        } elseif ($action === 'accept-and-assign') {
+            $productModel->updateProductStatus($product_id, 'assignat a una subhasta', '' . $message);
         }
         
         $productModel->updateProductDescriptions($product_id, $short_description, $long_description);

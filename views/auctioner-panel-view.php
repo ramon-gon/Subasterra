@@ -153,28 +153,42 @@
                                     </div>
                                     <?php if (in_array($row['status'], ['pendent'])): ?>
                                     <div class="dropdown-buttons">
-                                        <button name="action" class="accept-btn" type="submit" value="accept">Acceptar</button>
-                                        <button name="action" class="deny-btn" type="submit" value="accept">Rebutjar</button>
+                                        <button name="action" class="accept-btn" id="accept-btn" type="submit" value="accept">Acceptar</button>
+                                        <button name="action" class="deny-btn" type="submit" value="reject">Rebutjar</button>
+                                        <button name="action" class="assign-btn" type="button">Acceptar i assignar</button>
                                     </div>
                                     <?php endif; ?>
                                     <?php if (in_array($row['status'], ['pendent d’assignació a una subhasta'])): ?>
                                     <div class="dropdown-buttons">
-                                        <form method="POST" action="/">
-                                            <input type="hidden" name="product_id" value="<?= $row['id']; ?>">
-                                            <button type="submit" name="action" value="retire" class="accept-btn">Assignar subhasta</button>
-                                        </form>
+                                        <button name="action" class="assign-btn" type="button">Assignar subhasta</button>
                                     </div>
                                     <?php endif; ?>
                                     <?php if (in_array($row['status'], ['assignat a una subhasta'])): ?>
                                     <div class="dropdown-buttons">
-                                        <form method="POST" action="/">
-                                            <input type="hidden" name="product_id" value="<?= $row['id']; ?>">
-                                            <button type="submit" name="action" value="retire" class="retire-btn">Desassignar subhasta</button>
-                                        </form>
+                                        <button name="action" value="retire" class="retire-btn" type="submit">Desassignar subhasta</button>
                                     </div>
                                     <?php endif; ?>
                                 </td>
                             </tr>
+                            <div class="modal" id="auction-modal-confirm">
+                                <div class="modal-content">
+                                    <span class="close" id="close-modal">&times;</span>
+                                    <h1>Assigna a una subhasta activa</h1>
+                                    <?php if ($auctions->num_rows > 0): ?>
+                                        <select name="auction-select">
+                                            <?php while ($auction = $auctions->fetch_assoc()): ?>
+                                                <option value="<?= htmlspecialchars($auction['id']); ?>">
+                                                    <?= htmlspecialchars($auction['description']); ?>
+                                                </option>
+                                            <?php endwhile; ?>
+                                        </select>          
+                                        <button name="action" class="accept-btn" type="submit" value="accept-and-assign">Acceptar</button>
+                                        <button name="action" class="deny-btn" id="not-assign" type="button">Rebutjar</button>
+                                    <?php else: ?>
+                                        <p>No hi ha subhastes disponibles amb els filtres seleccionats.</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </form>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -196,3 +210,4 @@
 <script src="../scripts/switch-tables.js"></script>
 <script src="../scripts/product-selection.js"></script>
 
+<script src="../scripts/modal.js"></script>

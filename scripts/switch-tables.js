@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
         auctioneerPanel.hidden = true;
         newAuctionButton.hidden = true;
         auctionCreateButton.hidden = false;
+        newAuctionButton.style.display = "none";
+        AuctionCreateButton.hidden = false;
     }
 
     // Volver a mostrar el panel del subastador
@@ -19,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
         auctioneerPanel.hidden = false;
         newAuctionButton.hidden = false;
         auctionCreateButton.hidden = true;
+        newAuctionButton.style.display = "flex";
+        AuctionCreateButton.hidden = true;
     }
 
     // Evento para mostrar la tabla de nueva subasta
