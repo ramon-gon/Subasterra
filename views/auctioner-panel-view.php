@@ -69,6 +69,7 @@
                                 <td><div class="status" value="<?= htmlspecialchars($row['status']); ?>"></td>
                                 <input type="hidden" name="form-type" value="product-assignment">
                                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']); ?>">
+                                <input type="hidden" name="user_id" value="<?= htmlspecialchars($row['user_id']); ?>">
                             </tr>
                             <tr class="detailed-info-content">
                                 <td colspan="7">
