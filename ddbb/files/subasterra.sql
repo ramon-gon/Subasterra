@@ -54,6 +54,16 @@ CREATE TABLE IF NOT EXISTS auction_products (
     FOREIGN KEY (product_id) REFERENCES products(id)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS notifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    message TEXT,
+    is_read BOOLEAN DEFAULT FALSE,
+    sender INT,
+    receiver INT,
+    FOREIGN KEY (sender) REFERENCES users(id),
+    FOREIGN KEY (receiver) REFERENCES users(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- Inserció de productes de prova
 INSERT INTO products (name, short_description, long_description, observations, photo, starting_price, user_id) VALUES
 ('Televisor LG', 'Televisor 4K UHD', 'Televisor LG de 55 polzades amb resolució 4K i compatibilitat amb HDR.', 'Pantalla amb alta resolució i colors vius.', '/../images/images.jpg', 699.99, 2),
@@ -81,3 +91,9 @@ VALUES (NOW(), 'Subhasta activa per al producte 3', 3, 'oberta');
 -- Insertar una subhasta tancada para el producte 1
 INSERT INTO auctions (auction_date, description, product_id, status) 
 VALUES ('2024-09-25 10:30:00', 'Subhasta tancada per al producte 1', 1, 'tancada');
+
+INSERT INTO notifications (message, sender, receiver) VALUES
+('El teu producte ha estat acceptat per a la subhasta.', 3, 1),
+('El teu producte ha estat rebutjat per a la subhasta.', 3, 2),
+('Has guanyat la subhasta per al producte 1.', 3, 1),
+('Has guanyat la subhasta per al producte 2.', 3, 2);
