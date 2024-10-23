@@ -4,6 +4,9 @@ lazy_session_start();
 
 include_once __DIR__ . '/../config/config.php';
 include_once __DIR__ . '/../models/products-model.php';
+include_once __DIR__ . '/../models/auctions-model.php';
+
+$AuctionModel = new AuctionModel($conn);
 require_once(__DIR__ . '/../models/auctions-model.php');
 require_once(__DIR__ . '/../models/users-model.php');
 require_once(__DIR__ . '/../models/notifications-model.php');
@@ -12,9 +15,10 @@ require_once(__DIR__ . '/../models/notifications-model.php');
 $productModel = new ProductModel($conn);
 $products = $productModel->getPendingProducts();
 
-$auctionModel = new AuctionModel($conn);
-$auctions = $auctionModel->getActiveAuctions();
+// Obtener productos pendientes
+$products = $productModel->getPendingProducts();
 
+$productsauction = $productModel->getPendingProducts();
 $usersModel = new UsersModel($conn);
 $subhastador_id = $usersModel->getIdByUsername('subhastador');
 
@@ -26,9 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($form_type === 'create-auction') {
         $auction_description = $_POST['auction-description'];
         $auction_date = $_POST['auction-date'];
-        
-        if ($auction_description !== '' && $auction_date !== '')
-        $productModel->addNewAuction($auction_description, $auction_date);
+        $product_ids = $_POST['product_ids'] ?? []; // Capturamos los IDs de los productos
+
+        if ($auction_description !== '' && $auction_date !== '' && !empty($product_ids)) {
+            // Llamar al método addAuction con múltiples IDs de producto
+            $AuctionModel->addAuction($auction_description, $auction_date, $product_ids);
+        }
     } elseif ($form_type === 'product-assignment') {
         $product_id = $_POST['product_id'];
         $user_id = $_POST['user_id'];
@@ -51,9 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notificacions = $notificationsModel->sendNotification($message, $subhastador_id, $user_id);         
         $productModel->updateProductDescriptions($product_id, $short_description, $long_description);
     }
-        
+
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit();
 }
-include_once __DIR__ . '/../views/auctioner-panel-view.php';
 
+include_once __DIR__ . '/../views/auctioner-panel-view.php';
