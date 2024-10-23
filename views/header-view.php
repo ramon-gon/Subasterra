@@ -1,6 +1,12 @@
 <?php
     require_once(__DIR__ . '/../controllers/session-controller.php');
-    lazy_session_start();    
+    require_once(__DIR__ . '/../models/notifications-model.php');
+    include_once __DIR__ . '/../config/config.php';
+    lazy_session_start();
+
+    $notificationsModel = new NotificationsModel($conn);
+    $notifications = isset($_SESSION['id']) ? $notificationsModel->getNotifications($_SESSION['id']) : [];
+    $notificationCount = isset($_SESSION['id']) ? $notificationsModel->getUnreadNotificationCount($_SESSION['id']) : 0;
 ?>
 
 <link rel="stylesheet" href="<?= '/css/header.css'; ?>">
@@ -21,6 +27,7 @@
             </form>
         <?php endif; ?>
     </div>
+
     <div class="navbar">
         <ul id="navbar">
             <li><a href="/">Llista de productes</a></li>
@@ -32,7 +39,47 @@
                 <?php endif; ?>
             <?php endif; ?>
         </ul>
-        <div class="user-menu">
+
+        <div class="user-section">
+            <?php if (isset($_SESSION['role'])): ?>
+                <div class="notifications" onclick="toggleNotificationsDropdown()">
+                    <img src="/images/notification.svg" alt="Notifications" class="notification-icon">
+                    <?php if ($notificationCount > 0): ?>
+                        <span id="notification-count" class="notification-count"><?= $notificationCount; ?></span>
+                    <?php endif; ?>
+                </div>
+
+                <div id="notification-dropdown" class="notification-dropdown-content">
+                    <?php if ($notifications->num_rows > 0): ?>
+                        <?php while ($notification = $notifications->fetch_assoc()): ?>
+                            <div class="notification <?= $notification['is_read'] ? 'read' : 'unread'; ?>">
+                                <div class="notification-body">
+                                    <strong><?= htmlspecialchars($notification['sender_username']); ?>:</strong>
+                                    <p><?= htmlspecialchars($notification['message']); ?></p>
+                                </div>
+                                <div class="notification-actions">
+                                    <?php if (!$notification['is_read']): ?>
+                                        <form method="POST" action="/controllers/notification-controller.php">
+                                            <input type="hidden" name="notification_id" value="<?= $notification['id']; ?>">
+                                            <input type="hidden" name="action" value="mark">
+                                            <button type="submit">Marcar com a llegit</button>
+                                        </form>
+                                    <?php endif; ?>
+                                    
+                                    <form method="POST" action="/controllers/notification-controller.php">
+                                        <input type="hidden" name="notification_id" value="<?= $notification['id']; ?>">
+                                        <input type="hidden" name="action" value="delete">
+                                        <button type="submit" class="delete-btn">Esborrar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <p>No tens cap notificació.</p>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
             <div class="avatar" onclick="obreDropDownUsuari()">
                 <img src="<?= isset($_SESSION['avatar']) ? $_SESSION['avatar'] : '/images/avatar.svg'; ?>" alt="Avatar usuari">
                 <?php if (isset($_SESSION['username'])): ?>
@@ -74,9 +121,23 @@
         document.getElementById("user-dropdown").classList.toggle("show");
     }
 
+    function toggleNotificationsDropdown() {
+        document.getElementById("notification-dropdown").classList.toggle("show");
+    }
+
     window.onclick = function(event) {
         if (!event.target.matches('.avatar img')) {
             var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+
+        if (!event.target.matches('.notification-icon')) {
+            var dropdowns = document.getElementsByClassName("notification-dropdown-content");
             for (var i = 0; i < dropdowns.length; i++) {
                 var openDropdown = dropdowns[i];
                 if (openDropdown.classList.contains('show')) {
