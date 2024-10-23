@@ -10,16 +10,15 @@ require_once(__DIR__ . '/../models/notifications-model.php');
 
 
 $productModel = new ProductModel($conn);
-$products = $productModel->getProducts();
+$products = $productModel->getPendingProducts();
 
 $auctionModel = new AuctionModel($conn);
 $auctions = $auctionModel->getActiveAuctions();
 
 $usersModel = new UsersModel($conn);
-$usersModel = $subhastador_id->getIdByUsername('subhastador');
+$subhastador_id = $usersModel->getIdByUsername('subhastador');
 
 $notificationsModel = new NotificationsModel($conn);
-$notificacions = $notificationsModel->sendNotification($message, $subhastador_id, $user_id); // pendent de configurar
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form_type = $_POST['form-type'] ?? '';
@@ -40,13 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $auction_id = $_POST['auction-select'] ?? null;
 
         if ($action === 'accept') {
-            $productModel->updateProductStatus($product_id, 'pendent d’assignació a una subhasta', 'Producte acceptat. A espera de ser assignat a una subasta' . $message);
+            $message = 'Producte acceptat. A espera de ser assignat a una subasta. ' . $message;
+            $productModel->updateProductStatus($product_id, 'pendent d’assignació a una subhasta', $message);
         } elseif ($action === 'reject') {
-            $productModel->updateProductStatus($product_id, 'rebutjat', 'Producte rebutjat.' . $message);
+            $message = 'Producte rebutjat. ' . $message;
+            $productModel->updateProductStatus($product_id, 'rebutjat', $message);
         } elseif ($action === 'accept-and-assign') {
-            $productModel->updateProductStatus($product_id, 'assignat a una subhasta', '' . $message);
+            $message = 'Producte assignat a una subhasta. ' . $message;
+            $productModel->updateProductStatus($product_id, 'assignat a una subhasta', $message);
         }
-        
+        $notificacions = $notificationsModel->sendNotification($message, $subhastador_id, $user_id);         
         $productModel->updateProductDescriptions($product_id, $short_description, $long_description);
     }
         
