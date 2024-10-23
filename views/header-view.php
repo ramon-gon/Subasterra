@@ -41,42 +41,44 @@
         </ul>
 
         <div class="user-section">
-            <div class="notifications" onclick="toggleNotificationsDropdown()">
-                <img src="/images/notification.svg" alt="Notifications" class="notification-icon">
-                <?php if ($notificationCount > 0): ?>
-                    <span id="notification-count" class="notification-count"><?= $notificationCount; ?></span>
-                <?php endif; ?>
-            </div>
+            <?php if (isset($_SESSION['role'])): ?>
+                <div class="notifications" onclick="toggleNotificationsDropdown()">
+                    <img src="/images/notification.svg" alt="Notifications" class="notification-icon">
+                    <?php if ($notificationCount > 0): ?>
+                        <span id="notification-count" class="notification-count"><?= $notificationCount; ?></span>
+                    <?php endif; ?>
+                </div>
 
-            <div id="notification-dropdown" class="notification-dropdown-content">
-                <?php if ($notifications->num_rows > 0): ?>
-                    <?php while ($notification = $notifications->fetch_assoc()): ?>
-                        <div class="notification <?= $notification['is_read'] ? 'read' : 'unread'; ?>">
-                            <div class="notification-body">
-                                <strong><?= htmlspecialchars($notification['sender_username']); ?>:</strong>
-                                <p><?= htmlspecialchars($notification['message']); ?></p>
-                            </div>
-                            <div class="notification-actions">
-                                <?php if (!$notification['is_read']): ?>
+                <div id="notification-dropdown" class="notification-dropdown-content">
+                    <?php if ($notifications->num_rows > 0): ?>
+                        <?php while ($notification = $notifications->fetch_assoc()): ?>
+                            <div class="notification <?= $notification['is_read'] ? 'read' : 'unread'; ?>">
+                                <div class="notification-body">
+                                    <strong><?= htmlspecialchars($notification['sender_username']); ?>:</strong>
+                                    <p><?= htmlspecialchars($notification['message']); ?></p>
+                                </div>
+                                <div class="notification-actions">
+                                    <?php if (!$notification['is_read']): ?>
+                                        <form method="POST" action="/controllers/notification-controller.php">
+                                            <input type="hidden" name="notification_id" value="<?= $notification['id']; ?>">
+                                            <input type="hidden" name="action" value="mark">
+                                            <button type="submit">Marcar com a llegit</button>
+                                        </form>
+                                    <?php endif; ?>
+                                    
                                     <form method="POST" action="/controllers/notification-controller.php">
                                         <input type="hidden" name="notification_id" value="<?= $notification['id']; ?>">
-                                        <input type="hidden" name="action" value="mark">
-                                        <button type="submit">Marcar com a llegit</button>
+                                        <input type="hidden" name="action" value="delete">
+                                        <button type="submit" class="delete-btn">Esborrar</button>
                                     </form>
-                                <?php endif; ?>
-                                
-                                <form method="POST" action="/controllers/notification-controller.php">
-                                    <input type="hidden" name="notification_id" value="<?= $notification['id']; ?>">
-                                    <input type="hidden" name="action" value="delete">
-                                    <button type="submit" class="delete-btn">Esborrar</button>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <p>No tens cap notificació.</p>
-                <?php endif; ?>
-            </div>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <p>No tens cap notificació.</p>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
 
             <div class="avatar" onclick="obreDropDownUsuari()">
                 <img src="<?= isset($_SESSION['avatar']) ? $_SESSION['avatar'] : '/images/avatar.svg'; ?>" alt="Avatar usuari">
