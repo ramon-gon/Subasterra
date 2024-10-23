@@ -5,12 +5,11 @@ lazy_session_start();
 include_once __DIR__ . '/../config/config.php';
 include_once __DIR__ . '/../models/products-model.php';
 include_once __DIR__ . '/../models/auctions-model.php';
-
-$AuctionModel = new AuctionModel($conn);
-require_once(__DIR__ . '/../models/auctions-model.php');
 require_once(__DIR__ . '/../models/users-model.php');
 require_once(__DIR__ . '/../models/notifications-model.php');
 
+$auctionModel = new AuctionModel($conn);
+$auctions = $auctionModel->getActiveAuctions();
 
 $productModel = new ProductModel($conn);
 $products = $productModel->getPendingProducts();
@@ -34,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($auction_description !== '' && $auction_date !== '' && !empty($product_ids)) {
             // Llamar al método addAuction con múltiples IDs de producto
-            $AuctionModel->addAuction($auction_description, $auction_date, $product_ids);
+            $auctionModel->addAuction($auction_description, $auction_date, $product_ids);
         }
     } elseif ($form_type === 'product-assignment') {
         $product_id = $_POST['product_id'];
