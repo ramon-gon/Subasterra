@@ -212,6 +212,10 @@ a {
     font-family: 'Montserrat';
 }
 
+.notification:last-child {
+    margin-bottom: 0;
+}
+
 .notification-dropdown-content ul {
     list-style-type: none;
     padding: 0;
