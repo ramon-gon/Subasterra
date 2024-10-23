@@ -74,7 +74,7 @@
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <p>No notifications available</p>
+                    <p>No tens cap notificació.</p>
                 <?php endif; ?>
             </div>
 
