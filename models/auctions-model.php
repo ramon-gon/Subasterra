@@ -81,4 +81,12 @@ public function getAuctions($status = null, $startDate = null, $endDate = null) 
         $stmt->bind_param("si", $status, $id);
         return $stmt->execute();
     }
+
+    public function getActiveAuctions() {
+        $sql = "SELECT a.id, a.description
+        FROM auctions a
+        WHERE a.status = 'oberta'";
+
+        return $this->conn->query($sql);
+    }
 }
