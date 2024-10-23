@@ -32,10 +32,7 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 
-                <div class="button-group">
-                    <button type="submit" class="btn btn-login">INICIAR SESSIÓ</button>
-                    <a href="/register" class="btn btn-register">REGISTRAR-SE</a>
-                </div>
+                <button type="submit" class="btn btn-login">INICIAR SESSIÓ</button>
 
                 <div id="error-message" class="error-message" style="<?= $login_error ? 'display: block;' : 'display: none;' ?>">
                     <?= htmlspecialchars($login_error); ?>
