@@ -13,7 +13,7 @@
     <?php include(__DIR__ . "/header-view.php"); ?>
 
     <div class="container-auctions">
-    
+
         <!-- Formulario de filtros -->
         <form method="GET" action="auction-controller.php" class="filter-form">
             <label for="status">Filtrar per estat:</label>
@@ -39,7 +39,7 @@
                     <th>ID</th>
                     <th>Data</th>
                     <th>Descripció</th>
-                    <th>Producte</th>
+                    <th>Productes</th>
                     <th>Estat</th>
                 </tr>
             </thead>
@@ -47,11 +47,12 @@
                 <?php if ($auctions->num_rows > 0): ?>
                     <?php while ($auction = $auctions->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($auction['id']); ?></td>
+                            <td><?php echo htmlspecialchars($auction['auction_id'] ?? ''); ?></td>
                             <td><?php echo date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
-                            <td><?php echo htmlspecialchars($auction['description']); ?></td>
-                            <td><?php echo htmlspecialchars($auction['product_name']); ?></td>
-                            <td><?php echo htmlspecialchars($auction['status']); ?></td>
+                            <td><?php echo htmlspecialchars($auction['description'] ?? ''); ?></td>
+                            <td><?php echo !empty($auction['product_names']) ? htmlspecialchars($auction['product_names']) : 'No hi ha productes'; ?></td>
+                            <td><?php echo htmlspecialchars($auction['status'] ?? ''); ?></td>
+
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>

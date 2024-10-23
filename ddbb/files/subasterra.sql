@@ -46,6 +46,14 @@ CREATE TABLE IF NOT EXISTS auctions (
     FOREIGN KEY (product_id) REFERENCES products(id)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS auction_products (
+    auction_id INT,
+    product_id INT,
+    PRIMARY KEY (auction_id, product_id),
+    FOREIGN KEY (auction_id) REFERENCES auctions(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- Inserció de productes de prova
 INSERT INTO products (name, short_description, long_description, observations, photo, starting_price, user_id) VALUES
 ('Televisor LG', 'Televisor 4K UHD', 'Televisor LG de 55 polzades amb resolució 4K i compatibilitat amb HDR.', 'Pantalla amb alta resolució i colors vius.', '/../images/images.jpg', 699.99, 2),
