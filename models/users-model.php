@@ -14,6 +14,14 @@ class UsersModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
+    public function getIdByUsername($username) {
+        $sql = "SELECT id FROM users WHERE username = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
     public function getUserById($id) {
         $sql = "SELECT * FROM users WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
