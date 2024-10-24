@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $venedors_ids = [];
             foreach ($product_ids as $product_id) {
-                $venedor = $usersModel->getUserIdbyProduct($product_id);
+                $venedor = $productModel->getUserIdbyProduct($product_id);
                 if ($venedor && isset($venedor['user_id'])) {
                     $venedors_ids[] = $venedor['user_id'];
                 }
@@ -66,6 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($action === 'accept-and-assign') {
             $message = 'Producte assignat a una subhasta. ' . $message;
             $productModel->updateProductStatus($product_id, 'assignat a una subhasta', $message);
+        } elseif ($action === 'unassign') {
+            $message = 'Producte ha estat desassignat de la subhasta.';
+            $productModel->updateProductStatus($product_id, 'pendent d’assignació a una subhasta', $message);
         }
         $notificacions = $notificationsModel->sendNotification($message, $subhastador_id, $user_id);         
         $productModel->updateProductDescriptions($product_id, $short_description, $long_description);

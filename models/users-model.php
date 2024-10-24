@@ -14,14 +14,6 @@ class UsersModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function getUserIdbyProduct($product) {
-        $sql = "SELECT user_id FROM products WHERE id = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('s', $product);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
-    }
-
     /* 
     public function getUserByUsername($username) {
         $sql = "SELECT * FROM users WHERE username = ?";

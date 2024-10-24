@@ -119,9 +119,11 @@ class ProductModel {
         return $stmt->execute();
     }  
     
-    public function addNewAuction($description, $date) {
-        $stmt = $this->conn->prepare("INSERT INTO auctions (description, auction_date) VALUES (?, ?)");
-        $stmt->bind_param("ss", $description, $date);
-        return $stmt->execute();
+    public function getUserIdbyProduct($product) {
+        $sql = "SELECT user_id FROM products WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('s', $product);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
     }
 }
