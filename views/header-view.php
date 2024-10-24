@@ -39,7 +39,6 @@
                 <?php endif; ?>
             <?php endif; ?>
         </ul>
-
         <div class="user-section">
             <?php if (isset($_SESSION['role'])): ?>
                 <div class="notifications" onclick="toggleNotificationsDropdown()">
@@ -65,7 +64,6 @@
                                             <button type="submit">Marcar com a llegit</button>
                                         </form>
                                     <?php endif; ?>
-                                    
                                     <form method="POST" action="/controllers/notification-controller.php">
                                         <input type="hidden" name="notification_id" value="<?= $notification['id']; ?>">
                                         <input type="hidden" name="action" value="delete">
@@ -78,21 +76,17 @@
                         <p>No tens cap notificació.</p>
                     <?php endif; ?>
                 </div>
-            <?php endif; ?>
 
-            <div class="avatar" onclick="obreDropDownUsuari()">
-                <img src="<?= isset($_SESSION['avatar']) ? $_SESSION['avatar'] : '/images/avatar.svg'; ?>" alt="Avatar usuari">
-                <?php if (isset($_SESSION['username'])): ?>
+                <div class="avatar" onclick="obreDropDownUsuari()">
+                    <img src="<?= isset($_SESSION['avatar']) ? $_SESSION['avatar'] : '/images/avatar.svg'; ?>" alt="Avatar usuari">
                     <span class="username"><?= htmlspecialchars($_SESSION['username']); ?></span>
-                <?php endif; ?>
-            </div>
-            <div id="user-dropdown" class="user-dropdown-content">
-                <?php if (!isset($_SESSION['role'])): ?>
-                    <a href="/views/login-view.php">Iniciar sessió</a>
-                <?php else: ?>
+                </div>
+                <div id="user-dropdown" class="user-dropdown-content">
                     <a href="/controllers/logout-controller.php">Tancar sessió</a>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php else: ?>
+                <a href="/views/login-view.php" class="login-button">LOGIN</a>
+            <?php endif; ?>
         </div>
     </div>
 </header>

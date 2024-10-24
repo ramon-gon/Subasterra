@@ -306,3 +306,20 @@ a {
     font-weight: bold;
     color: #f1f1f1;
 }
+
+.login-button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    border: 1px solid #555;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #555;
+}
