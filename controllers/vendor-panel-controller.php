@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $messageToAuctioner = 'Un producte ha estat retirat.';
         $notificationsModel->sendNotification($messageToAuctioner, $id, $subhastador_id);
 
-        //$messageToVendor = 'Producte retirat satisfactoriament.';
-        //$notificationsModel->sendNotification($messageToVendor, $subhastador_id, $id);
+        $messageToVendor = 'Producte retirat satisfactoriament.';
+        $notificationsModel->sendNotification($messageToVendor, $subhastador_id, $id);
     } else {
         $messageToVendor = "Hi ha hagut un error i no s'ha pogut retirar el producte.";
         $notificationsModel->sendNotification($messageToVendor, $subhastador_id, $id);     
