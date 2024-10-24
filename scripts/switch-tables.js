@@ -20,5 +20,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     newAuctionButton.addEventListener('click', showNewAuctionTable);
-    auctionCreateButton.addEventListener('click', showAuctioneerPanel);
 });
