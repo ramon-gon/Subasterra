@@ -12,6 +12,7 @@ html, body {
     flex: 1;
     padding: 1.5rem;
 }
+
 .auction-gallery-header {
     display: flex;
     justify-content: flex-end;

@@ -21,56 +21,51 @@
         </div>
         <div class="auction-gallery">
 
-        <table hidden id="new-auction">
-    <thead>
-        <tr>
-            <th colspan="7">Nova Subhasta</th>
-        </tr>
-    </thead>
-    <form method="POST" action="/controllers/auctioner-panel-controller.php">
-        <tbody>
-            <input type="hidden" name="form-type" value="create-auction">
-            <tr>
-                <th>Descripció</th>
-                <th colspan="6"><input type="text" name="auction-description" required></th>
-            </tr>
-            <tr>
-                <th>Data i hora</th>
-                <th colspan="6"><input type="datetime-local" name="auction-date" required></th>
-            </tr>
-            
-            <tr>
-            <th>Selecciona productes</th>
-<th colspan="6">
-    <div class="product-selection">
-        <select id="available_products" multiple size="5">
-            <?php if ($productsauction->num_rows > 0): ?>
-                <?php while ($row = $productsauction->fetch_assoc()): ?>
-                    <option value="<?php echo htmlspecialchars($row['id']); ?>">
-                        <?php echo htmlspecialchars($row['name']); ?>
-                    </option>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <option disabled>No hi ha productes disponibles</option>
-            <?php endif; ?>
-        </select>
-        <div class="selection-buttons">
-            <button type="button" id="add_product">Agregar >></button>
-            <button type="button" id="remove_product"><< Quitar</button>
-        </div>
-        <select name="product_ids[]" id="selected_products" multiple size="5"></select>
-    </div>
-</th>
-</tr>
-
-
-                <td colspan="7">
-                    <button type="submit" class="create-btn">Crea Subasta</button>
-                </td>
-            </tr>
-        </tbody>
-    </form>
-        </table>
+            <table hidden id="new-auction">
+                <thead>
+                    <tr>
+                        <th colspan="7">Nova Subhasta</th>
+                    </tr>
+                </thead>
+                <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                <tbody>
+                    <input type="hidden" name="form-type" value="create-auction">
+                    <tr>
+                        <th>Descripció</th>
+                        <th colspan="6"><input type="text" name="auction-description" required></th>
+                    </tr>
+                    <tr>
+                        <th>Data i hora</th>
+                        <th colspan="6"><input type="datetime-local" name="auction-date" required></th>
+                    </tr>
+                    
+                    <tr>
+                        <th>Selecciona productes</th>
+                        <th colspan="6">
+                            <div class="product-selection">
+                                <select id="available_products" multiple size="5">
+                                    <?php if ($productsauction->num_rows > 0): ?>
+                                        <?php while ($row = $productsauction->fetch_assoc()): ?>
+                                            <option value="<?= htmlspecialchars($row['id']); ?>">
+                                                <?= htmlspecialchars($row['name']); ?>
+                                            </option>
+                                        <?php endwhile; ?>
+                                    <?php else: ?>
+                                        <option disabled>No hi ha productes disponibles</option>
+                                    <?php endif; ?>
+                                </select>
+                                <div class="selection-buttons">
+                                    <button type="button" id="add_product">Agregar</button>
+                                    <button type="button" id="remove_product">Quitar</button>
+                                </div>
+                                <select name="product_ids[]" id="selected_products" multiple size="5"></select>
+                            </div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="create-btn">Crea subasta</button>
+            </form>
         
 
             <table id="auctioneer-panel">
@@ -210,5 +205,4 @@
 <script src="../scripts/dropdown-tables.js"></script>
 <script src="../scripts/switch-tables.js"></script>
 <script src="../scripts/product-selection.js"></script>
-
 <script src="../scripts/modal.js"></script>

@@ -1,57 +1,49 @@
--- Elimina la base de dades si ja existeix
 DROP DATABASE IF EXISTS subasterra;
 
--- Crea la base de dades si no existeix
 CREATE DATABASE IF NOT EXISTS subasterra CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Selecciona la base de dades a utilitzar
 USE subasterra;
 
--- Taula d'usuaris
 CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador únic per a cada usuari
-    username VARCHAR(20) UNIQUE NOT NULL, -- Nom d'usuari únic
-    password VARCHAR(20) NOT NULL, -- Contrasenya de l'usuari
-    role ENUM('venedor', 'subhastador') NOT NULL -- Rol de l'usuari (venedor o subhastador)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(20) UNIQUE NOT NULL,
+    password VARCHAR(20) NOT NULL,
+    role ENUM('venedor', 'subhastador') NOT NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Inserir usuaris de prova
 INSERT INTO users (username, password, role) VALUES 
-('venedor1', 'venedor1', 'venedor'), -- Venedor de prova
-('venedor2', 'venedor2', 'venedor'), -- Un altre venedor de prova
-('subhastador', 'subhastador', 'subhastador'); -- Subhastador de prova
+('venedor1', 'venedor1', 'venedor'),
+('venedor2', 'venedor2', 'venedor'),
+('subhastador', 'subhastador', 'subhastador');
 
--- Taula de productes
 CREATE TABLE IF NOT EXISTS products (
-    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador únic per a cada producte
-    name VARCHAR(50) NOT NULL, -- Nom del producte
-    short_description TEXT, -- Descripció curta del producte
-    long_description TEXT, -- Descripció llarga del producte
-    observations TEXT, -- Observacions sobre el producte
-    starting_price DECIMAL(10, 2) NOT NULL, -- Preu inicial de la subhasta
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    short_description TEXT,
+    long_description TEXT,
+    observations TEXT,
+    starting_price DECIMAL(10, 2) NOT NULL,
     last_bid DECIMAL(10,2) NOT NULL DEFAULT 0,
-    photo VARCHAR(50), -- Ruta de la imatge del producte
-    status ENUM('pendent', 'rebutjat', 'pendent d’assignació a una subhasta', 'assignat a una subhasta', 'pendent_adjudicacio', 'venut', 'retirat') DEFAULT 'pendent', -- Estat de la validació del producte
-    auctioneer_message TEXT, -- Missatge del subhastador en cas d'acceptació o rebuig
-    user_id INT, -- Identificador de l'usuari venedor
-    FOREIGN KEY (user_id) REFERENCES users(id) -- Clau forana que referencia l'usuari
+    photo VARCHAR(50),
+    status ENUM('pendent', 'rebutjat', 'pendent d’assignació a una subhasta', 'assignat a una subhasta', 'pendent_adjudicacio', 'venut', 'retirat') DEFAULT 'pendent',
+    auctioneer_message TEXT,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS auctions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    auction_date TIMESTAMP, 
+    auction_date TIMESTAMP,
     description TEXT,
-    product_id INT,
-    status ENUM('oberta', 'tancada') NOT NULL DEFAULT 'oberta',
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    status ENUM('oberta', 'tancada') NOT NULL DEFAULT 'oberta'
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS auction_products (
     auction_id INT,
     product_id INT,
     PRIMARY KEY (auction_id, product_id),
-    FOREIGN KEY (auction_id) REFERENCES auctions(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (auction_id) REFERENCES auctions(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS notifications (
@@ -64,7 +56,6 @@ CREATE TABLE IF NOT EXISTS notifications (
     FOREIGN KEY (receiver) REFERENCES users(id)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Inserció de productes de prova
 INSERT INTO products (name, short_description, long_description, observations, photo, starting_price, user_id) VALUES
 ('Televisor LG', 'Televisor 4K UHD', 'Televisor LG de 55 polzades amb resolució 4K i compatibilitat amb HDR.', 'Pantalla amb alta resolució i colors vius.', '/../images/images.jpg', 699.99, 2),
 ('Consola PlayStation 5', 'Consola de nova generació', 'Consola de jocs PlayStation 5 amb gràfics de nova generació i SSD ultra ràpid.', 'Inclou un controlador extra i un joc.', '/../images/images.jpg', 499.99, 1),
@@ -76,24 +67,18 @@ INSERT INTO products (name, short_description, long_description, observations, p
 ('Tablet Apple', 'Tablet amb pantalla Retina', 'Tablet amb pantalla Retina de 10.2 polzades i 128 GB de capacitat.', 'Compatible amb Apple Pencil.', '/../images/images.jpg', 329.99, 2),
 ('Càmera Canon', 'Càmera digital', 'Càmera rèflex digital amb objectiu de 18-55mm.', 'Ideal per a fotografies de paisatges i retrats.', '/../images/images.jpg', 499.99, 1);
 
--- Insertar una subhasta abierta para el producto 1
-INSERT INTO auctions (auction_date, description, product_id, status) 
-VALUES (NOW(), 'Subhasta per al producte 1', 1, 'oberta');
+INSERT INTO auctions (auction_date, description, status) 
+VALUES (NOW(), 'Subhasta per al producte 1', 'oberta');
 
--- Insertar una subhasta tancada para el producte 2
-INSERT INTO auctions (auction_date, description, product_id, status) 
-VALUES ('2024-10-10 14:00:00', 'Subhasta finalitzada per al producte 2', 2, 'tancada');
+INSERT INTO auctions (auction_date, description, status) 
+VALUES ('2024-10-10 14:00:00', 'Subhasta finalitzada per al producte 2', 'tancada');
 
--- Insertar una subhasta abierta para el producte 3
-INSERT INTO auctions (auction_date, description, product_id, status) 
-VALUES (NOW(), 'Subhasta activa per al producte 3', 3, 'oberta');
+INSERT INTO auctions (auction_date, description, status) 
+VALUES (NOW(), 'Subhasta activa per al producte 3','oberta');
 
--- Insertar una subhasta tancada para el producte 1
-INSERT INTO auctions (auction_date, description, product_id, status) 
-VALUES ('2024-09-25 10:30:00', 'Subhasta tancada per al producte 1', 1, 'tancada');
+INSERT INTO auctions (auction_date, description, status) 
+VALUES ('2024-09-25 10:30:00', 'Subhasta tancada per al producte 1', 'tancada');
 
 INSERT INTO notifications (message, sender, receiver) VALUES
-('El teu producte ha estat acceptat per a la subhasta.', 3, 1),
-('El teu producte ha estat rebutjat per a la subhasta.', 3, 2),
-('Has guanyat la subhasta per al producte 1.', 3, 1),
-('Has guanyat la subhasta per al producte 2.', 3, 2);
+('Et donem la benviguda a Subasterra', 3, 1),
+('Et donem la benviguda a Subasterra', 3, 2);

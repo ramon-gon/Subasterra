@@ -5,35 +5,35 @@ lazy_session_start();
 include_once __DIR__ . '/../config/config.php';
 include_once __DIR__ . '/../models/products-model.php';
 include_once __DIR__ . '/../models/auctions-model.php';
-require_once(__DIR__ . '/../models/users-model.php');
-require_once(__DIR__ . '/../models/notifications-model.php');
+include_once(__DIR__ . '/../models/users-model.php');
+include_once(__DIR__ . '/../models/notifications-model.php');
 
 $auctionModel = new AuctionModel($conn);
 $auctions = $auctionModel->getActiveAuctions();
 
 $productModel = new ProductModel($conn);
 $products = $productModel->getPendingProducts();
-
-// Obtener productos pendientes
-$products = $productModel->getPendingProducts();
-
 $productsauction = $productModel->getPendingProducts();
+
 $usersModel = new UsersModel($conn);
 $subhastador_id = $usersModel->getIdByUsername('subhastador');
 
 $notificationsModel = new NotificationsModel($conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $form_type = $_POST['form-type'] ?? '';
+    $form_type = $_POST['form-type'] ?? null;
 
     if ($form_type === 'create-auction') {
         $auction_description = $_POST['auction-description'];
         $auction_date = $_POST['auction-date'];
-        $product_ids = $_POST['product_ids'] ?? []; // Capturamos los IDs de los productos
+        $product_ids = $_POST['product_ids'] ?? []; 
 
-        if ($auction_description !== '' && $auction_date !== '' && !empty($product_ids)) {
-            // Llamar al método addAuction con múltiples IDs de producto
+        if ($auction_description !== '' && $auction_date !== '') {
             $auctionModel->addAuction($auction_description, $auction_date, $product_ids);
+
+            $message = 'Producte assignat a una subhasta.';
+            $productModel->updateProductStatus($product_id, 'assignat a una subhasta', $message);
+            $notificationsModel->sendNotification($message, $subhastador_id, '1'); // pongo 1 porque no me da tiempo pero hay que configurar que coja el id del venededor según la id del producto       
         }
     } elseif ($form_type === 'product-assignment') {
         $product_id = $_POST['product_id'];
