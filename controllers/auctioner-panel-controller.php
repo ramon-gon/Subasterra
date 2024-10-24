@@ -20,6 +20,12 @@ $subhastador_id = $usersModel->getIdByUsername('subhastador');
 
 $notificationsModel = new NotificationsModel($conn);
 
+$orderByPrice = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC';
+$status = $_GET['filter-status'] ?? null;
+$orderByPrice = $_GET['order-price'] ?? 'asc';  // Por defecto, orden ascendente
+
+$products = $productModel->getFilteredPendingProducts($status, strtoupper($orderByPrice));
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form_type = $_POST['form-type'] ?? null;
 

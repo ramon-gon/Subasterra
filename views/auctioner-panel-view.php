@@ -68,6 +68,29 @@
             </form>
         
 
+            <form id="filter-form" method="GET" action="">
+    <label for="filter-status">Filtrar per estat:</label>
+    <select name="filter-status" id="filter-status">
+        <option value="">Tots els estats</option>
+        <option value="pendent">Pendent</option>
+        <option value="rebutjat">Rebutjat</option>
+        <option value="pendent d’assignació a una subhasta">Pendent d’assignació a una subhasta</option>
+        <option value="assignat a una subhasta">Assignat a una subhasta</option>
+        <option value="pendent_adjudicacio">Pendent d'adjudicació</option>
+        <option value="venut">Venut</option>
+        <option value="retirat">Retirat</option>
+    </select>
+
+    <label for="order-price">Ordenar per preu:</label>
+    <select name="order-price" id="order-price">
+        <option value=""></option>
+        <option value="asc">Ascendent</option>
+        <option value="desc">Descendent</option>
+    </select>
+
+    <button type="submit">Filtrar</button>
+</form>
+
             <table id="auctioneer-panel">
                 <thead>
                     <tr>
