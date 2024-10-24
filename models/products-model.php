@@ -126,4 +126,31 @@ class ProductModel {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+
+    public function getFilteredPendingProducts($status = null, $orderByPrice = 'ASC') {
+        $query = "
+            SELECT products.*, users.username 
+            FROM products 
+            JOIN users ON products.user_id = users.id 
+            WHERE status IN ('pendent', 'rebutjat', 'pendent d’assignació a una subhasta', 'assignat a una subhasta', 'pendent_adjudicacio', 'venut', 'retirat')
+        ";
+        
+        if (!empty($status)) {
+            $query .= " AND products.status = ?";
+        }
+    
+        // Ordenar por precio
+        $query .= " ORDER BY products.starting_price $orderByPrice";
+    
+        $stmt = $this->conn->prepare($query);
+        
+        if (!empty($status)) {
+            $stmt->bind_param('s', $status);
+        }
+    
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+    
+    
 }
