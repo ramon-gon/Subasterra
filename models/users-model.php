@@ -6,16 +6,25 @@ class UsersModel {
         $this->conn = $dbConnection;
     }
 
-    public function getUserByUsername($username) {
-        $sql = "SELECT * FROM users WHERE username = ?";
+    public function getIdByUsername($username) {
+        $sql = "SELECT id FROM users WHERE username = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param('s', $username);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function getIdByUsername($username) {
-        $sql = "SELECT id FROM users WHERE username = ?";
+    public function getUserIdbyProduct($product) {
+        $sql = "SELECT user_id FROM products WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('s', $product);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    /* 
+    public function getUserByUsername($username) {
+        $sql = "SELECT * FROM users WHERE username = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -83,6 +92,6 @@ class UsersModel {
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->get_result();
-    }
+    }*/
 }
 ?>

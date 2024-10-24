@@ -32,8 +32,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $auctionModel->addAuction($auction_description, $auction_date, $product_ids);
 
             $message = 'Producte assignat a una subhasta.';
-            $productModel->updateProductStatus($product_id, 'assignat a una subhasta', $message);
-            $notificationsModel->sendNotification($message, $subhastador_id, '1'); // pongo 1 porque no me da tiempo pero hay que configurar que coja el id del venededor según la id del producto       
+            foreach ($product_ids as $product_id) {
+                $productModel->updateProductStatus($product_id, 'assignat a una subhasta', $message);
+            }
+
+            $venedors_ids = [];
+            foreach ($product_ids as $product_id) {
+                $venedor = $usersModel->getUserIdbyProduct($product_id);
+                if ($venedor && isset($venedor['user_id'])) {
+                    $venedors_ids[] = $venedor['user_id'];
+                }
+            }
+
+            foreach ($venedors_ids as $venedor_id) {
+                $notificationsModel->sendNotification($message, $subhastador_id, $venedor_id);
+            }
         }
     } elseif ($form_type === 'product-assignment') {
         $product_id = $_POST['product_id'];
