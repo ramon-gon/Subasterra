@@ -35,7 +35,8 @@ CREATE TABLE IF NOT EXISTS auctions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     auction_date TIMESTAMP,
     description TEXT,
-    status ENUM('oberta', 'tancada') NOT NULL DEFAULT 'oberta'
+    status ENUM('oberta', 'tancada') NOT NULL DEFAULT 'oberta',
+    percentage INT NOT NULL DEFAULT 10 CHECK (percentage BETWEEN 0 AND 100)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS auction_products (

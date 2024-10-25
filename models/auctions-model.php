@@ -51,9 +51,9 @@ class AuctionModel {
         return $result;
     }
 
-    public function addAuction($description, $auctionDate, $productIds, $status = 'oberta') {
-        $stmt = $this->conn->prepare("INSERT INTO auctions (description, auction_date, status) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $description, $auctionDate, $status);
+    public function addAuction($description, $auctionDate, $auctionPercentage, $productIds, $status = 'oberta') {
+        $stmt = $this->conn->prepare("INSERT INTO auctions (description, auction_date, percentage, status) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssis", $description, $auctionDate, $auctionPercentage, $status);
         
         if ($stmt->execute()) {
             $auctionId = $stmt->insert_id; 

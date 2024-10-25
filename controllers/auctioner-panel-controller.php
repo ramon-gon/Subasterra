@@ -32,10 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($form_type === 'create-auction') {
         $auction_description = $_POST['auction-description'];
         $auction_date = $_POST['auction-date'];
+        $auction_percentage = $_POST['auction-percentage'];
         $product_ids = $_POST['product_ids'] ?? []; 
 
         if ($auction_description !== '' && $auction_date !== '') {
-            $auctionModel->addAuction($auction_description, $auction_date, $product_ids);
+            $auctionModel->addAuction($auction_description, $auction_date, $auction_percentage, $product_ids);
 
             $message = 'Producte assignat a una subhasta.';
             foreach ($product_ids as $product_id) {

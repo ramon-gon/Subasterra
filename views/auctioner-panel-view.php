@@ -38,7 +38,10 @@
                         <th>Data i hora</th>
                         <th colspan="6"><input type="datetime-local" name="auction-date" required></th>
                     </tr>
-                    
+                    <tr>
+                        <th>Percentatge</th>
+                        <th colspan="6"><input type="number" min="1" max="100" name="auction-percentage" required value="10"></th>
+                    </tr>
                     <tr>
                         <th>Selecciona productes</th>
                         <th colspan="6">
