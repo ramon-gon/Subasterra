@@ -25,7 +25,6 @@
                         <th>Nom producte</th>
                         <th>Descripció</th>
                         <th>Preu sortida</th>
-                        <th>Última puja</th>
                         <th>Estat</th>
                     </tr>
                 </thead>
@@ -37,7 +36,6 @@
                                 <td><?= htmlspecialchars($row['name']); ?></td>
                                 <td><?= htmlspecialchars($row['short_description'] ?? ''); ?></td>
                                 <td><?= number_format($row['starting_price'], 2); ?></td>
-                                <td><?= htmlspecialchars($row['last_bid']); ?></td>
                                 <td><div class="status" value="<?= htmlspecialchars($row['status']); ?>"></td>
                             </tr>
                             <tr class="detailed-info-content">
@@ -66,12 +64,6 @@
                                                 <label class="panel-label">Preu inicial:</label>
                                                 <div class="product-info" contenteditable="false">
                                                     <?= htmlspecialchars($row['starting_price']); ?>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-info-field">
-                                                <label class="panel-label">Última puja:</label>
-                                                <div class="product-info">
-                                                    <?= htmlspecialchars($row['last_bid']); ?>
                                                 </div>
                                             </div>
                                             <div class="dropdown-info-field">

@@ -75,7 +75,7 @@ class ProductModel {
     }
 
     public function getMyProducts($id) {
-        $sql ="SELECT p.id, p.name, p.short_description, p.starting_price, p.last_bid, p.status, p.photo, 
+        $sql ="SELECT p.id, p.name, p.short_description, p.starting_price, p.status, p.photo, 
                 p.long_description, p.observations
                 FROM products p 
                 JOIN users u ON p.user_id = u.id 

@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS products (
     long_description TEXT,
     observations TEXT,
     starting_price DECIMAL(10, 2) NOT NULL,
-    last_bid DECIMAL(10,2) NOT NULL DEFAULT 0,
     photo VARCHAR(50),
     status ENUM('pendent', 'rebutjat', 'pendent d’assignació a una subhasta', 'assignat a una subhasta', 'pendent_adjudicacio', 'venut', 'retirat') DEFAULT 'pendent',
     auctioneer_message TEXT,
