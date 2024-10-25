@@ -40,19 +40,33 @@
                     <th>Data</th>
                     <th>Descripció</th>
                     <th>Productes</th>
-                    <th>Estat</th>
+                    <th colspan="3">Estat</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if ($auctions->num_rows > 0): ?>
                     <?php while ($auction = $auctions->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($auction['auction_id'] ?? ''); ?></td>
+                            <td><?php echo htmlspecialchars($auction['id'] ?? ''); ?></td>
                             <td><?php echo date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
                             <td><?php echo htmlspecialchars($auction['description'] ?? ''); ?></td>
                             <td><?php echo !empty($auction['product_names']) ? htmlspecialchars($auction['product_names']) : 'No hi ha productes'; ?></td>
                             <td><?php echo htmlspecialchars($auction['status'] ?? ''); ?></td>
-
+                            <td>
+                                <?php if ($auction['status'] === 'oberta'): ?>
+                                    <form method="POST" action="/controllers/auction-controller.php">
+                                        <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                        <input type="hidden" name="status" value="iniciada">
+                                        <button class="accept-btn">Inicia subhasta</button>
+                                    </form>
+                                <?php elseif ($auction['status'] === 'iniciada'): ?>
+                                    <form method="POST" action="/controllers/auction-controller.php">
+                                        <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                        <input type="hidden" name="status" value="tancada">
+                                        <button class="deny-btn">Tanca subhasta</button>
+                                    </form>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>

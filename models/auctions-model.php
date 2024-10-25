@@ -6,6 +6,22 @@ class AuctionModel {
         $this->conn = $dbConnection;
     }
 
+    public function getAuctions() {
+        $query = "SELECT a.id, a.auction_date, a.description, GROUP_CONCAT(p.name) as product_names, a.status
+                FROM auctions a
+                LEFT JOIN auction_products ap ON a.id = ap.auction_id
+                LEFT JOIN products p ON ap.product_id = p.id
+                GROUP BY a.id
+                ORDER BY a.auction_date DESC";
+                
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result;
+    }
+
     public function getAuctionsWithFilters($status = null, $startDate = null, $endDate = null) {
         $query = "SELECT a.id, a.auction_date, a.description, GROUP_CONCAT(p.name) as product_names, a.status
                 FROM auctions a
@@ -80,6 +96,16 @@ class AuctionModel {
         $sql = "SELECT a.id, a.description
         FROM auctions a
         WHERE a.status = 'oberta'";
+
+        return $this->conn->query($sql);
+    }
+
+    public function getProductsInActiveAuction() {
+        $sql = "SELECT p.id
+        FROM auctions_products ap
+        INNER JOIN auctions a WHERE a.id = ap.auction_id
+        INNER JOIN products p WHERE p.id = ap.product_id
+        WHERE a.status = 'iniciada'";
 
         return $this->conn->query($sql);
     }
