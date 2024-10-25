@@ -10,13 +10,7 @@
 </head>
 
 <body>
-    <header id="header">
-        <p id="logo">Subasterra</p>
-        <button class="btn-panel" onclick="window.location.href='/controllers/vendor-panel-controller.php'">
-            Panell Venedor
-        </button>
-    </header>
-
+    <?php include(__DIR__ . "/header-view.php"); ?>
     <div class="container-auctions">
 
         <div class="current-auctions-header">
