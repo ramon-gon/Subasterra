@@ -5,6 +5,11 @@
 
     $login_error = $_SESSION['login_error'] ?? '';
     unset($_SESSION['login_error']);
+
+    if (isset($_SESSION['user_id'])) {
+        header('Location: /');
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
