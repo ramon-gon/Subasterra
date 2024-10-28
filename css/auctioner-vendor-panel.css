@@ -6,6 +6,7 @@ html, body {
     margin: 0;
     display: flex;
     flex-direction: column;
+    font-family: 'Roboto';
 }
 
 .container-auctions {
@@ -15,9 +16,50 @@ html, body {
 
 .auction-gallery-header {
     display: flex;
-    justify-content: flex-end;
-    text-align: right;
+    justify-content: space-between;
+    align-items: flex-end; 
+    position: relative;
     padding-right: 10px;
+}
+
+.filter-div {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    bottom: 0;
+}
+
+.filter-div label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.filter-div select {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14x;
+    border-radius: 5px;
+    margin-right: 20px; 
+}
+
+#filter-btn-div {
+    display: flex;
+    align-items: center;
+}
+
+#filter-btn {
+    font-family: Roboto;
+    background-color: black;
+    color: #FFF;
+    border-radius: 5px;
+    border: none;
+    padding: 8px 12px;
+    transition-duration: 0.5s;
+    cursor: pointer;
+} 
+
+#filter-btn:hover {
+    background-color: #222222;
 }
 
 .auction-gallery {
@@ -56,9 +98,14 @@ tbody tr {
     box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
 }
 
+
 th, td {
     padding: 25px 30px;
     text-align: left;
+}
+
+#icon-td {
+    padding: 0px 0px;
 }
 
 .detailed-info-content {
@@ -177,6 +224,20 @@ textarea {
 
 .button-text {
     vertical-align: middle;
+}
+
+.arrow-icon {
+    background-color: #730000;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-left: 25px;
+}
+
+.arrow-icon img {
+    width: 32px;
+    height: 32px;
+    filter: brightness(0) invert(1);
 }
 
 .add-icon {

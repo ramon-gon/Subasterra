@@ -13,12 +13,40 @@
     <?php include(__DIR__ . "/header-view.php"); ?>
     
     <div class="container-auctions">
-        <div class="auction-gallery-header">
-            <button type="submit" name="new-auction-button" value="create" id="new-auction-button" class="add-btn">
-                <img src="/images/add-icon.svg" alt="add-icon" class="add-icon">
-                <span class="button-text">Nova subasta</span>
-            </button>
-        </div>
+        <form id="filter-form" method="GET" action="">
+            <div class="auction-gallery-header">
+                    <div class="filter-div">
+                        <label for="filter-status">Filtrar per estat:</label>
+                        <select name="filter-status" id="filter-status">
+                            <option value="">Tots els estats</option>
+                            <option value="pendent">Pendent</option>
+                            <option value="rebutjat">Rebutjat</option>
+                            <option value="pendent d’assignació a una subhasta">Pendent d’assignació a una subhasta</option>
+                            <option value="assignat a una subhasta">Assignat a una subhasta</option>
+                            <option value="pendent_adjudicacio">Pendent d'adjudicació</option>
+                            <option value="venut">Venut</option>
+                            <option value="retirat">Retirat</option>
+                        </select>
+
+                        <label for="order-price">Ordenar per preu:</label>
+                        <select name="order-price" id="order-price">
+                            <option value=""></option>
+                            <option value="asc">Ascendent</option>
+                            <option value="desc">Descendent</option>
+                        </select>
+                    </div>
+
+                    <div id="filter-btn-div">
+                        <button id="filter-btn" type="submit">Aplicar filtres</button>
+                    </div>
+
+                <button type="button" name="new-auction-button" value="create" id="new-auction-button" class="add-btn">
+                    <img src="/images/add-icon.svg" alt="add-icon" class="add-icon">
+                    <span class="button-text">Nova subasta</span>
+                </button>
+            </div>
+        </form>
+
         <div class="auction-gallery">
 
             <table hidden id="new-auction">
@@ -69,34 +97,11 @@
             </table>
             <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="create-btn">Crea subasta</button>
             </form>
-        
-
-            <form id="filter-form" method="GET" action="">
-    <label for="filter-status">Filtrar per estat:</label>
-    <select name="filter-status" id="filter-status">
-        <option value="">Tots els estats</option>
-        <option value="pendent">Pendent</option>
-        <option value="rebutjat">Rebutjat</option>
-        <option value="pendent d’assignació a una subhasta">Pendent d’assignació a una subhasta</option>
-        <option value="assignat a una subhasta">Assignat a una subhasta</option>
-        <option value="pendent_adjudicacio">Pendent d'adjudicació</option>
-        <option value="venut">Venut</option>
-        <option value="retirat">Retirat</option>
-    </select>
-
-    <label for="order-price">Ordenar per preu:</label>
-    <select name="order-price" id="order-price">
-        <option value=""></option>
-        <option value="asc">Ascendent</option>
-        <option value="desc">Descendent</option>
-    </select>
-
-    <button type="submit">Filtrar</button>
-</form>
 
             <table id="auctioneer-panel">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Id venedor</th>
                         <th>Usuari</th>
                         <th>Id product</th>
@@ -111,6 +116,11 @@
                     <?php while ($row = $products->fetch_assoc()): ?>
                         <form method="POST" action="/controllers/auctioner-panel-controller.php">
                             <tr class="short-info-dropdown">
+                                <td id="icon-td">
+                                    <div class="arrow-icon">
+                                        <img src="/images/arrow-right.svg" alt="add-icon">
+                                    </div>
+                                </td>
                                 <td><?= htmlspecialchars($row['user_id']); ?></td>
                                 <td><?= htmlspecialchars($row['username']); ?></td>
                                 <td><?= htmlspecialchars($row['id']); ?></td>
@@ -123,7 +133,7 @@
                                 <input type="hidden" name="user_id" value="<?= htmlspecialchars($row['user_id']); ?>">
                             </tr>
                             <tr class="detailed-info-content">
-                                <td colspan="7">
+                                <td colspan="8">
                                     <div class="dropdown-content">
                                         <div class="dropdown-info">
                                             <div class="dropdown-info-field">
