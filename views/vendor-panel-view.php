@@ -21,6 +21,7 @@
             <table id="vendor-panel">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Id</th>
                         <th>Nom producte</th>
                         <th>Descripció</th>
@@ -32,6 +33,11 @@
                     <?php if ($products->num_rows > 0): ?>
                         <?php while ($row = $products->fetch_assoc()): ?>
                             <tr class="short-info-dropdown">
+                                <td id="icon-td">
+                                    <div class="arrow-icon">
+                                        <img src="/images/arrow-right.svg" alt="add-icon">
+                                    </div>
+                                </td>
                                 <td><?= htmlspecialchars($row['id']); ?></td>
                                 <td><?= htmlspecialchars($row['name']); ?></td>
                                 <td><?= htmlspecialchars($row['short_description'] ?? ''); ?></td>
@@ -39,7 +45,7 @@
                                 <td><div class="status" value="<?= htmlspecialchars($row['status']); ?>"></td>
                             </tr>
                             <tr class="detailed-info-content">
-                                <td colspan="6">
+                                <td colspan="7">
                                     <div class="dropdown-content">
                                         <div class="dropdown-info">
                                             <div class="dropdown-info-field">
@@ -99,17 +105,7 @@
     </div>
 
     <?php include(__DIR__ . "/footer-view.php"); ?>
-
-    <script>
-        document.querySelectorAll('.short-info-dropdown').forEach(function(row) {
-            row.addEventListener('click', function() {
-                let nextRow = this.nextElementSibling;
-                if (nextRow && nextRow.classList.contains('detailed-info-content')) {
-                    nextRow.classList.toggle('detailed-info-expanded');
-                }
-            });
-        });
-    </script>
 </body>
-
 </html>
+
+<script src="../scripts/dropdown-tables.js"></script>
