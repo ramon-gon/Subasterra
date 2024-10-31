@@ -85,16 +85,6 @@ header {
     
 }
 
-.title-category {
-    display: flex;
-    padding: 10px;
-    padding-bottom: 0px;
-    justify-content: center;
-    text-decoration: underline;
-    font-family: var(--font-montserrat);
-    font-size: 24px;
-    text-transform: uppercase;
-}
 
 .auction-gallery {
     display: flex;
@@ -384,14 +374,6 @@ h1 {
     gap: 15px;
     align-items: center;
     padding-bottom: 1rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    align-items: center;
-    justify-content: center;
 }
 
 label {

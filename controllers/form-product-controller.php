@@ -5,74 +5,73 @@ lazy_session_start();
 include(__DIR__ . "/../config/config.php");
 include(__DIR__ . "/../models/products-model.php");
 
+$_SESSION['product_error'] = '';
 $message = '';
 
+$name = htmlspecialchars(trim($_POST['name'] ?? ''));
+$short_description = htmlspecialchars(trim($_POST['short_description'] ?? ''));
+$long_description = htmlspecialchars(trim($_POST['long_description'] ?? ''));
+$observations = htmlspecialchars(trim($_POST['observations'] ?? ''));
+$starting_price = floatval($_POST['starting_price'] ?? 0);
+$user_id = $_SESSION['id'];
 
-    // Limpiar y validar entradas
-    $name = htmlspecialchars(trim($_POST['name'] ?? ''));
-    $short_description = htmlspecialchars(trim($_POST['short_description'] ?? '')); // Opcional
-    $long_description = htmlspecialchars(trim($_POST['long_description'] ?? ''));   // Opcional
-    $observations = htmlspecialchars(trim($_POST['observations'] ?? ''));           // Opcional
-    $starting_price = floatval($_POST['starting_price'] ?? 0);
-    $user_id = $_SESSION['id'];
 
-    // Validación de campos obligatorios
-    if (empty($name)) {
-        $message = "El nom del producte és obligatori.";
-    } elseif (strlen($name) > 50) {
-        $message = "El nom del producte no pot tenir més de 50 caràcters.";
-    } elseif ($starting_price <= 0) {
-        $message = "El preu de sortida ha de ser superior a zero.";
-    } elseif (empty($_FILES['photo']['name'])) {
-        $message = "Per favor, selecciona una imatge per al producte.";
-    } else {
-        // Si los campos obligatorios son válidos, procesamos la imagen
-        $target_dir = __DIR__ . "/../images/";
-        $photo_name = basename($_FILES['photo']['name']);
-        $target_file = $target_dir . $photo_name;
-        $uploadOk = true;
+if (empty($name)) {
+    $message = "El nom del producte és obligatori.";
+} elseif (strlen($name) > 50) {
+    $message = "El nom del producte no pot tenir més de 50 caràcters.";
+} elseif ($starting_price <= 0) {
+    $message = "El preu de sortida ha de ser major que 0.";
+} elseif (!isset($_FILES['photo']) || $_FILES['photo']['error'] != UPLOAD_ERR_OK) {
+    $message = $_FILES;
+} else {
+    $target_dir = __DIR__ . "/../images/";
+    $photo_name = basename($_FILES['photo']['name']);
+    $target_file = $target_dir . $photo_name;
+    $uploadOk = true;
 
-        // Comprobar si el archivo es una imagen
-        $check = getimagesize($_FILES['photo']['tmp_name']);
-        if ($check === false) {
-            $message = "El archivo no es una imagen válida.";
-            $uploadOk = false;
-        }
-
-        // Comprobar si la imagen ya existe
-        if (file_exists($target_file)) {
-            $message = "La imagen ya existe. Por favor, renombra el archivo.";
-            $uploadOk = false;
-        }
-
-        // Verificar el tamaño del archivo (máximo 5MB)
-        if ($_FILES['photo']['size'] > 5000000) {
-            $message = "La imagen es demasiado grande (máximo 5MB).";
-            $uploadOk = false;
-        }
-
-        // Tipos de archivo permitidos
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        if (!in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
-            $message = "Solo se permiten archivos JPG, JPEG, PNG y GIF.";
-            $uploadOk = false;
-        }
-
-        // Si todo está bien con la imagen, mover el archivo subido a la carpeta de destino
-        if ($uploadOk && move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
-            $photo_path = "/../images/" . $photo_name;
-
-            // Crear instancia del modelo y añadir el producto
-            $product = new ProductModel($conn);
-            if ($product->addProduct($name, $short_description, $long_description, $observations, $starting_price, $photo_path, $user_id)) {
-                $message = "Producte afegit correctament.";
-            } else {
-                $message = "Error en afegir el producte.";
-            }
-        } else {
-            $message = $message ?: "Error en pujar la imatge.";
-        }
+    if (getimagesize($_FILES['photo']['tmp_name']) === false) {
+        $message = "El fitxer no és una imatge.";
+        $uploadOk = false;
     }
 
-// Passar les dades a la vista
-include_once __DIR__ . '/../views/add-product-view.php';
+    if (file_exists($target_file)) {
+        $message = "La imatge ja existeix, si us plau, canvia el nom de la imatge.";
+        $uploadOk = false;
+    }
+
+    if ($_FILES['photo']['size'] > 5000000) {
+        $message = "La imatge és massa gran (màxim 5MB).";
+        $uploadOk = false;
+    }
+
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    if (!in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
+        $message = "Només s'accepten fitxers JPG, JPEG, PNG i GIF.";
+        $uploadOk = false;
+    }
+
+    if ($uploadOk && move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
+        $photo_path = "/../images/" . $photo_name;
+
+        $product = new ProductModel($conn);
+        if ($product->addProduct($name, $short_description, $long_description, $observations, $starting_price, $photo_path, $user_id)) {
+            $message = "El producte s'ha afegit correctament.";
+        } else {
+            $message = "Error en afegir el producte.";
+        }
+    } else {
+        $message = $message ?: "Error en pujar la imatge.";
+    }
+}
+
+if ($message) {
+    $_SESSION['error'] = $message;
+    header('Location: /../views/add-product-view.php');
+    exit();
+}
+
+header('Location: /../views/add-product-view.php');
+
+exit();
+?>
