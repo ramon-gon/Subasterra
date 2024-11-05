@@ -1,3 +1,7 @@
+<?php
+require_once(__DIR__ . '/../controllers/auction-controller.php');
+?>
+
 <!DOCTYPE html>
 <html lang="ca">
 
@@ -14,25 +18,23 @@
 
     <div class="container-auctions">
 
-        <!-- Formulario de filtros -->
-        <form method="GET" action="auction-controller.php" class="filter-form">
+        <form method="GET" action="/controllers/auction-controller.php" class="filter-form">
             <label for="status">Filtrar per estat:</label>
             <select name="status" id="status">
                 <option value="">Totes</option>
-                <option value="oberta">Oberta</option>
-                <option value="tancada">Tancada</option>
+                <option value="oberta" <?= $status === 'oberta' ? 'selected' : '' ?>>Oberta</option>
+                <option value="tancada" <?= $status === 'tancada' ? 'selected' : '' ?>>Tancada</option>
             </select>
 
             <label for="start_date">Data d'inici:</label>
-            <input type="date" name="start_date" id="start_date">
+            <input type="date" name="start_date" id="start_date" value="<?= htmlspecialchars($startDate ?? '') ?>">
 
             <label for="end_date">Data de finalització:</label>
-            <input type="date" name="end_date" id="end_date">
+            <input type="date" name="end_date" id="end_date" value="<?= htmlspecialchars($endDate ?? '') ?>">
 
             <button type="submit" class="apply-filters-btn">Aplicar filtres</button>
         </form>
 
-        <!-- Resultados de subastas -->
         <table id="auctions-table">
             <thead>
                 <tr>
@@ -44,8 +46,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if ($auctions->num_rows > 0): ?>
-                    <?php while ($auction = $auctions->fetch_assoc()): ?>
+                <?php if (!empty($auctions)): ?>
+                    <?php foreach ($auctions as $auction): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($auction['id'] ?? ''); ?></td>
                             <td><?php echo date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
@@ -68,7 +70,7 @@
                                 <?php endif; ?>
                             </td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
                         <td colspan="5">No hi ha subhastes disponibles amb els filtres seleccionats.</td>
@@ -80,5 +82,4 @@
 
     <?php include(__DIR__ . "/footer-view.php"); ?>
 </body>
-
 </html>

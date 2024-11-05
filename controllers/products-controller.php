@@ -11,7 +11,7 @@ $order = isset($_GET['order']) ? $_GET['order'] : 'name';
 
 $id = $_SESSION['id'] ?? null;
 
-$productModel = new ProductModel($conn);    
+$productModel = new ProductModel($dbConnection);    
 
 // Comprovar el rol de l'usuari per decidir quina funció cridar
 if ($role === 'subhastador') {

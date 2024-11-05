@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/../controllers/session-controller.php');
 require_once(__DIR__ . '/../models/notifications-model.php');
+require_once(__DIR__ . '/../config/config.php');
 lazy_session_start();
 
 $notificationsModel = new NotificationsModel($dbConnection);
@@ -33,7 +34,7 @@ $role = $_SESSION['role'] ?? null;
             <li><a href="/">Llista de productes</a></li>
             <?php if (isset($_SESSION['role'])): ?>
                 <?php if ($_SESSION['role'] === 'subhastador'): ?>
-                    <li><a href="/controllers/auctioner-panel-controller.php">Panell de subhastador</a></li>
+                    <li><a href="/views/auctioner-panel-view.php">Panell de subhastador</a></li>
                 <?php elseif ($_SESSION['role'] === 'venedor'): ?>
                     <li><a href="/controllers/vendor-panel-controller.php">Panell de venedor</a></li>
                 <?php endif; ?>

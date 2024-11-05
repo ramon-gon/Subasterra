@@ -1,3 +1,7 @@
+<?php
+require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
+?>
+
 <!DOCTYPE html>
 <html lang="ca">
 
@@ -75,12 +79,12 @@
                         <th colspan="6">
                             <div class="product-selection">
                                 <select id="available_products" multiple size="5">
-                                    <?php if ($productsauction->num_rows > 0): ?>
-                                        <?php while ($row = $productsauction->fetch_assoc()): ?>
+                                    <?php if (count($productsauction) > 0): ?>
+                                        <?php foreach ($productsauction as $row): ?>
                                             <option value="<?= htmlspecialchars($row['id']); ?>">
                                                 <?= htmlspecialchars($row['name']); ?>
                                             </option>
-                                        <?php endwhile; ?>
+                                        <?php endforeach; ?>
                                     <?php else: ?>
                                         <option disabled>No hi ha productes disponibles</option>
                                     <?php endif; ?>
@@ -112,8 +116,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php if ($products->num_rows > 0): ?>
-                    <?php while ($row = $products->fetch_assoc()): ?>
+                <?php if (count($products) > 0): ?>
+                    <?php foreach ($products as $row): ?>
                         <form method="POST" action="/controllers/auctioner-panel-controller.php">
                             <tr class="short-info-dropdown">
                                 <td id="icon-td">
@@ -208,11 +212,11 @@
                                     <h1>Assigna a una subhasta activa</h1>
                                     <?php if ($auctions->num_rows > 0): ?>
                                         <select name="auction-select">
-                                            <?php while ($auction = $auctions->fetch_assoc()): ?>
+                                            <?php foreach ($auctions as $auction): ?>
                                                 <option value="<?= htmlspecialchars($auction['id']); ?>">
                                                     <?= htmlspecialchars($auction['description']); ?>
                                                 </option>
-                                            <?php endwhile; ?>
+                                            <?php endforeach; ?>
                                         </select>          
                                         <button name="action" class="accept-btn" type="submit" value="accept-and-assign">Acceptar</button>
                                         <button name="action" class="deny-btn" id="not-assign" type="button">Rebutjar</button>
@@ -222,7 +226,7 @@
                                 </div>
                             </div>
                         </form>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
                         <td colspan="6">No hi ha cap producte en venda</td>

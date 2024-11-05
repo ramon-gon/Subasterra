@@ -1,3 +1,12 @@
+<!-- Include the controller file -->
+<?php
+require_once(__DIR__ . "/../config/config.php");
+require_once(__DIR__ . "/../controllers/products-controller.php");
+
+$productModel = new ProductModel($dbConnection);
+$products = $productModel->getProducts();
+?>
+
 <!DOCTYPE html>
 <html lang="ca">
 

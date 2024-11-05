@@ -3,26 +3,25 @@ require_once(__DIR__ . "/session-controller.php");
 lazy_session_start();
 
 include_once __DIR__ . '/../config/config.php';
-include_once __DIR__ . '/../models/products-model.php';
 include_once __DIR__ . '/../models/auctions-model.php';
-include_once(__DIR__ . '/../models/users-model.php');
-include_once(__DIR__ . '/../models/notifications-model.php');
+include_once __DIR__ . '/../models/users-model.php';
+include_once __DIR__ . '/../models/notifications-model.php';
 
-$auctionModel = new AuctionModel($conn);
+$auctionModel = new AuctionModel($dbConnection);
 $auctions = $auctionModel->getActiveAuctions();
 
-$productModel = new ProductModel($conn);
+$productModel = new ProductModel($dbConnection);
 $products = $productModel->getPendingProducts();
 $productsauction = $productModel->getPendingProducts();
 
-$usersModel = new UsersModel($conn);
+$usersModel = new UsersModel($dbConnection);
 $subhastador_id = $usersModel->getIdByUsername('subhastador');
 
-$notificationsModel = new NotificationsModel($conn);
+$notificationsModel = new NotificationsModel($dbConnection);
 
 $orderByPrice = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC';
 $status = $_GET['filter-status'] ?? null;
-$orderByPrice = $_GET['order-price'] ?? 'asc';  // Por defecto, orden ascendente
+$orderByPrice = $_GET['order-price'] ?? 'asc';
 
 $products = $productModel->getFilteredPendingProducts($status, strtoupper($orderByPrice));
 
