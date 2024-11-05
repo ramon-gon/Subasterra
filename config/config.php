@@ -1,5 +1,5 @@
 <?php
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'localhost:1234');
 define('DB_NAME', 'subasterra');
 define('DB_USER', 'subasterra');
 define('DB_PASS', 'subasterra1234!');
