@@ -211,7 +211,8 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                                 <div class="modal-content">
                                     <span class="close" id="close-modal">&times;</span>
                                     <h1>Assigna a una subhasta activa</h1>
-                                    <?php if ($auctions->num_rows > 0): ?>
+                                    <?php error_log(print_r($auctions, true)); ?>
+                                    <?php if (count($auctions) > 0): ?>
                                         <select name="auction-select">
                                             <?php foreach ($auctions as $auction): ?>
                                                 <option value="<?= htmlspecialchars($auction['id']); ?>">
