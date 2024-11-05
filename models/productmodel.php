@@ -14,7 +14,7 @@ class ProductModel {
         
         $sql = "SELECT id, name, short_description, long_description, photo, starting_price, status
                 FROM products 
-                WHERE LOWER(name) LIKE LOWER(:search) AND status = 'acceptat'
+                WHERE LOWER(name) LIKE LOWER(:search) AND status = 'assignat a una subhasta'
                 ORDER BY $order";
         
         $stmt = $this->conn->prepare($sql);
