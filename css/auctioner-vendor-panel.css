@@ -14,6 +14,46 @@ html, body {
     padding: 1.5rem;
 }
 
+.selector-menu-auctioneer {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: -15px;
+}
+
+#select-products {
+    background: transparent;
+    border: none;
+    font-family: 'Montserrat';
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
+    padding: 0px 12px;
+    border-bottom: 2px solid;
+}
+
+#select-auctions {
+    background: transparent;
+    border: none;
+    font-family: 'Montserrat';
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 20px;
+    padding: 0px 12px;
+    border-bottom: none;
+}
+
+#auctions-menu {
+    display: none;
+}
+
+#products-menu {
+
+}
+
 .auction-gallery-header {
     display: flex;
     justify-content: space-between;
@@ -35,7 +75,7 @@ html, body {
     margin-right: 5px;
 }
 
-.filter-div select {
+.filter-div select, .filter-div input {
     font-family: 'Roboto', sans-serif;
     font-size: 14x;
     border-radius: 5px;
@@ -47,18 +87,18 @@ html, body {
     align-items: center;
 }
 
-#filter-btn {
+.filter-btn {
     font-family: Roboto;
     background-color: black;
     color: #FFF;
-    border-radius: 5px;
+    border-radius: 2px;
     border: none;
-    padding: 8px 12px;
+    padding: 3px 12px;
     transition-duration: 0.5s;
     cursor: pointer;
 } 
 
-#filter-btn:hover {
+.filter-btn:hover {
     background-color: #222222;
 }
 

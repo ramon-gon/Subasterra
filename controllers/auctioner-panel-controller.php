@@ -9,27 +9,45 @@ include_once __DIR__ . '/../models/users-model.php';
 include_once __DIR__ . '/../models/notifications-model.php';
 
 $auctionModel = new AuctionModel($dbConnection);
-$auctions = $auctionModel->getActiveAuctions();
+$auctions = $auctionModel->getAuctions();
+$activeAuctions = $auctionModel->getActiveAuctions();
 
 $productModel = new ProductModel($dbConnection);
 $products = $productModel->getPendingProducts();
-$productsauction = $productModel->getPendingProducts();
+$productsAuction = $productModel->getPendingProducts();
 
 $usersModel = new UsersModel($dbConnection);
-$subhastador_id = $usersModel->getIdByUsername('subhastador');
+$subhastadorId = $usersModel->getIdByUsername('subhastador');
 
 $notificationsModel = new NotificationsModel($dbConnection);
 
-$orderByPrice = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC';
-$status = $_GET['filter-status'] ?? null;
-$orderByPrice = $_GET['order-price'] ?? 'asc';
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $form_type = $_GET['form-type'] ?? '';
+    $menu = $_GET['menu'] ?? '';
 
-$products = $productModel->getFilteredPendingProducts($status, strtoupper($orderByPrice));
+    if ($form_type === 'filter-products') {
+        $orderByPrice = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC';
+        $status = $_GET['filter-status'] ?? null;
+        $orderByPrice = $_GET['order-price'] ?? 'asc';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $form_type = $_POST['form-type'] ?? null;
+        $products = $productModel->getFilteredPendingProducts($status, strtoupper($orderByPrice));
+    } elseif (empty($form_type) || $form_type === 'filter-auctions') {
+        $status = $_GET['status'] ?? null;
+        $startDate = $_GET['start_date'] ?? null;
+        $endDate = $_GET['end_date'] ?? null;
 
-    if ($form_type === 'create-auction') {
+        $auctions = $auctionModel->getAuctionsWithFilters($status, $startDate, $endDate);
+    }
+
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $form_type = $_POST['form-type'] ?? '';
+
+    if ($form_type === 'update-auction') {
+        $id = $_POST['auction-id'] ?? null;
+        $status = $_POST['status'] ?? null;
+    
+        $auctionsStatus = $auctionModel->updateAuctionStatus($id, $status);
+    } elseif ($form_type === 'create-auction') {
         $auction_description = $_POST['auction-description'];
         $auction_date = $_POST['auction-date'];
         $auction_percentage = $_POST['auction-percentage'];
