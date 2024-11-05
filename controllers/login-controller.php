@@ -9,13 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST["password"]);
     
     if ($username && $password) {
-        $check_credentials = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
-        $check_credentials->bind_param("ss", $username, $password);
-        $check_credentials->execute();
+        $check_credentials = $dbConnection->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+        $check_credentials->execute([
+            ':username' => $username,
+            ':password' => $password
+        ]);
         
-        $result = $check_credentials->get_result();
-        $user_data = $result->fetch_object();
-        $check_credentials->close();
+        $user_data = $check_credentials->fetch(PDO::FETCH_OBJ);
 
         if ($user_data) {
             $_SESSION["id"] = $user_data->id;

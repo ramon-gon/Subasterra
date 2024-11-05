@@ -2,6 +2,7 @@
     require_once(__DIR__ . '/../controllers/session-controller.php');
     lazy_session_start();
 
+    $productError = $_SESSION['product_error'] ?? '';
     unset($_SESSION['product_error']);
 ?>
 
@@ -17,7 +18,7 @@
 <body>
     <div class="add-product-page">
         <div class="product-preview">
-            <label for="photo" id="image-upload-label">
+            <label id="image-upload-label" onclick="document.getElementById('hidden-photo-input').click();">
                 <div id="image-preview-container">
                     <img id="image-preview" src="#" alt="Preview de la imatge del producte" style="display: none;">
                     <div id="upload-instructions">
@@ -26,12 +27,13 @@
                     </div>
                 </div>
             </label>
-            <input type="file" name="photo" id="photo" accept="image/*" required onchange="previewImage(event)" style="display: none;">
             <button id="remove-image-btn" type="button" onclick="removeImage()" style="display: none;" class="btn btn-remove">Eliminar imatge</button>
         </div>
 
         <div class="add-product-panel">
             <form id="product-form" method="post" action="/../controllers/form-product-controller.php" enctype="multipart/form-data">
+                <input type="file" name="photo" id="hidden-photo-input" accept="image/*" style="display: none;" onchange="previewImage(event)" required>
+                
                 <div class="form-group">
                     <label class="form-label" for="name">Nom del producte:<span class="required-asterisk">*</span></label>
                     <input type="text" name="name" id="name" maxlength="50" required>
@@ -40,7 +42,6 @@
                     <label class="form-label" for="short_description">Descripció curta:</label>
                     <textarea name="short_description" id="short_description"></textarea>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label" for="long_description">Descripció llarga:</label>
                     <textarea name="long_description" id="long_description"></textarea>
@@ -54,22 +55,20 @@
                     <input type="number" step="0.01" name="starting_price" id="starting_price" required>
                 </div>
 
-                <?php if (!empty($_SESSION['product_error'])): ?>
+                <?php if ($productError): ?>
                     <div id="error-message" class="error-message">
-                        <?= htmlspecialchars($_SESSION['product_error']); ?>
+                        <?= htmlspecialchars($productError); ?>
                     </div>
-                    <?php unset($_SESSION['product_error']); ?>
                 <?php endif; ?>
 
                 <button type="submit" class="btn">Afegir Producte</button>
             </form>
         </div>
     </div>
-    
+
     <script>
         function previewImage(event) {
             const reader = new FileReader();
-            const fileInput = document.getElementById('photo');
             const preview = document.getElementById('image-preview');
             const instructions = document.getElementById('upload-instructions');
             const removeButton = document.getElementById('remove-image-btn');
@@ -82,7 +81,8 @@
                 imagePreviewContainer.style.width = 'auto';
                 removeButton.style.display = 'inline-block';
             };
-            reader.readAsDataURL(event.target.files[0]) 
+
+            reader.readAsDataURL(event.target.files[0]);
         }
 
         function removeImage() {

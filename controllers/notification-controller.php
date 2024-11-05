@@ -8,7 +8,7 @@ lazy_session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['notification_id']) && isset($_SESSION['id']) && isset($_POST['action'])) {
         $notificationId = $_POST['notification_id'];
-        $notificationsModel = new NotificationsModel($conn);
+        $notificationsModel = new NotificationsModel($dbConnection);
         
         switch ($_POST['action']) {
             case 'mark':

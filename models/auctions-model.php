@@ -8,105 +8,88 @@ class AuctionModel {
 
     public function getAuctions() {
         $query = "SELECT a.id, a.auction_date, a.description, GROUP_CONCAT(p.name) as product_names, a.status
-                FROM auctions a
-                LEFT JOIN auction_products ap ON a.id = ap.auction_id
-                LEFT JOIN products p ON ap.product_id = p.id
-                GROUP BY a.id
-                ORDER BY a.auction_date DESC";
-                
+                  FROM auctions a
+                  LEFT JOIN auction_products ap ON a.id = ap.auction_id
+                  LEFT JOIN products p ON ap.product_id = p.id
+                  GROUP BY a.id
+                  ORDER BY a.auction_date DESC";
+    
         $stmt = $this->conn->prepare($query);
-
         $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getAuctionsWithFilters($status = null, $startDate = null, $endDate = null) {
         $query = "SELECT a.id, a.auction_date, a.description, GROUP_CONCAT(p.name) as product_names, a.status
-                FROM auctions a
-                LEFT JOIN auction_products ap ON a.id = ap.auction_id
-                LEFT JOIN products p ON ap.product_id = p.id";
-
+                  FROM auctions a
+                  LEFT JOIN auction_products ap ON a.id = ap.auction_id
+                  LEFT JOIN products p ON ap.product_id = p.id";
+        
         $conditions = [];
         $params = [];
-
+    
         if (!empty($status)) {
-            $conditions[] = "a.status = ?";
-            $params[] = $status;
+            $conditions[] = "a.status = :status";
+            $params[':status'] = $status;
         }
-
         if (!empty($startDate)) {
-            $conditions[] = "a.auction_date >= ?";
-            $params[] = $startDate;
+            $conditions[] = "a.auction_date >= :startDate";
+            $params[':startDate'] = $startDate;
         }
-
         if (!empty($endDate)) {
-            $conditions[] = "a.auction_date <= ?";
-            $params[] = $endDate;
+            $conditions[] = "a.auction_date <= :endDate";
+            $params[':endDate'] = $endDate;
         }
-
-        if (count($conditions) > 0) {
+        if ($conditions) {
             $query .= " WHERE " . implode(" AND ", $conditions);
         }
-
-        $query .= " GROUP BY a.id";
-
-        $query .= " ORDER BY a.auction_date DESC";
-
+        $query .= " GROUP BY a.id ORDER BY a.auction_date DESC";
+    
         $stmt = $this->conn->prepare($query);
-
-        if (count($params) > 0) {
-            $types = str_repeat('s', count($params)); 
-            $stmt->bind_param($types, ...$params);
-        }
-
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result;
-    }
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }    
 
     public function addAuction($description, $auctionDate, $auctionPercentage, $productIds, $status = 'oberta') {
-        $stmt = $this->conn->prepare("INSERT INTO auctions (description, auction_date, percentage, status) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssis", $description, $auctionDate, $auctionPercentage, $status);
-        
-        if ($stmt->execute()) {
-            $auctionId = $stmt->insert_id; 
-
+        $this->conn->beginTransaction();
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO auctions (description, auction_date, percentage, status) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$description, $auctionDate, $auctionPercentage, $status]);
+            $auctionId = $this->conn->lastInsertId();
+    
+            $stmt = $this->conn->prepare("INSERT INTO auction_products (auction_id, product_id) VALUES (?, ?)");
             foreach ($productIds as $productId) {
-                $stmt = $this->conn->prepare("INSERT INTO auction_products (auction_id, product_id) VALUES (?, ?)");
-                $stmt->bind_param("ii", $auctionId, $productId);
-                $stmt->execute();
+                $stmt->execute([$auctionId, $productId]);
             }
-
-            return true; 
+    
+            $this->conn->commit();
+            return true;
+        } catch (PDOException $e) {
+            $this->conn->rollBack();
+            return false;
         }
-
-        return false; 
-    }
+    }    
 
     public function updateAuctionStatus($id, $status) {
         $stmt = $this->conn->prepare("UPDATE auctions SET status = ? WHERE id = ?");
-        $stmt->bind_param("si", $status, $id);
-        return $stmt->execute();
-    }
+        return $stmt->execute([$status, $id]);
+    }    
 
     public function getActiveAuctions() {
-        $sql = "SELECT a.id, a.description
-        FROM auctions a
-        WHERE a.status = 'oberta'";
-
-        return $this->conn->query($sql);
+        $sql = "SELECT a.id, a.description FROM auctions a WHERE a.status = 'oberta'";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getProductsInActiveAuction() {
         $sql = "SELECT p.id
-        FROM auctions_products ap
-        INNER JOIN auctions a WHERE a.id = ap.auction_id
-        INNER JOIN products p WHERE p.id = ap.product_id
-        WHERE a.status = 'iniciada'";
-
-        return $this->conn->query($sql);
-    }
+                FROM auction_products ap
+                INNER JOIN auctions a ON a.id = ap.auction_id
+                INNER JOIN products p ON p.id = ap.product_id
+                WHERE a.status = 'iniciada'";
+    
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }    
 }

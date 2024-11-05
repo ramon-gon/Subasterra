@@ -10,51 +10,46 @@ class NotificationsModel {
         $sql = "SELECT n.id, n.message, n.is_read, n.sender, u.username as sender_username
                 FROM notifications n
                 JOIN users u ON n.sender = u.id
-                WHERE n.receiver = ?";
+                WHERE n.receiver = :receiver";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $receiver);
-        $stmt->execute();
-        return $stmt->get_result();
+        $stmt->execute([':receiver' => $receiver]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getUnreadNotificationCount($receiver) {
         $sql = "SELECT COUNT(*) as count
                 FROM notifications
-                WHERE receiver = ? AND is_read = FALSE";
+                WHERE receiver = :receiver AND is_read = FALSE";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $receiver);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc()['count'];
+        $stmt->execute([':receiver' => $receiver]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count'];
     }
 
     public function markAsRead($id) {
-        $sql = "UPDATE notifications SET is_read = TRUE WHERE id = ?";
+        $sql = "UPDATE notifications SET is_read = TRUE WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        return $stmt->execute();
+        return $stmt->execute([':id' => $id]);
     }
 
     public function sendNotification($message, $sender, $receiver) {
-        $sql = "INSERT INTO notifications (message, sender, receiver) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO notifications (message, sender, receiver) VALUES (:message, :sender, :receiver)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('sii', $message, $sender, $receiver);
-        return $stmt->execute();
+        return $stmt->execute([':message' => $message, ':sender' => $sender, ':receiver' => $receiver]);
     }
 
     public function deleteNotification($id) {
-        $sql = "DELETE FROM notifications WHERE id = ?";
+        $sql = "DELETE FROM notifications WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        return $stmt->execute();
+        return $stmt->execute([':id' => $id]);
     }
 
     public function deleteAllNotifications($receiver) {
-        $sql = "DELETE FROM notifications WHERE receiver = ?";
+        $sql = "DELETE FROM notifications WHERE receiver = :receiver";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $receiver);
-        return $stmt->execute();
+        return $stmt->execute([':receiver' => $receiver]);
     }
 }
+?>

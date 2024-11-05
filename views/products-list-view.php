@@ -1,8 +1,3 @@
-<?php
-include(__DIR__ . "/../config/config.php");
-include(__DIR__ . "/../controllers/login-controller.php");
-?> 
-
 <!DOCTYPE html>
 <html lang="ca">
 
@@ -20,8 +15,8 @@ include(__DIR__ . "/../controllers/login-controller.php");
     <div class="container-auctions">
         <div class="auction-gallery grid-layout">
             <?php if ($role === 'subhastador'): ?>
-                <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                <?php if (count($products) > 0): ?>
+                    <?php foreach ($products as $row): ?>
                         <article class="product-card">
                             <img src="<?= htmlentities($row['photo']); ?>" alt="<?= htmlentities($row['name']); ?>" class="product-photo">
                             <h2 class="product-name"><?= htmlentities($row['name']); ?></h2>
@@ -30,13 +25,13 @@ include(__DIR__ . "/../controllers/login-controller.php");
                             <p class="product-description-long"><strong>Descripció llarga:</strong> <?= htmlentities($row['long_description']); ?></p>
                             <p class="product-price">Preu de sortida: <?= number_format($row['starting_price'], 2); ?> €</p>
                         </article>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <p>No s'han trobat productes.</p>
                 <?php endif; ?>
             <?php else: ?>
-                <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                <?php if (count($products) > 0): ?>
+                    <?php foreach ($products as $row): ?>
                         <article class="product-card">
                             <img src="<?= htmlentities($row['photo']); ?>" alt="<?= htmlentities($row['name']); ?>" class="product-photo">
                             <h2 class="product-name"><?= htmlentities($row['name']); ?></h2>
@@ -44,13 +39,11 @@ include(__DIR__ . "/../controllers/login-controller.php");
                             <p class="product-description-long"><strong>Descripció llarga:</strong> <?= htmlentities($row['long_description']); ?></p>
                             <p class="product-price">Preu de sortida: <?= number_format($row['starting_price'], 2); ?> €</p>
                         </article>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <p>No s'han trobat productes.</p>
                 <?php endif; ?>
             <?php endif; ?>
-
-            <?php $conn->close(); ?>
         </div>
     </div>
 

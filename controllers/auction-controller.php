@@ -2,7 +2,7 @@
 require_once(__DIR__ . '/../models/auctions-model.php');
 require_once(__DIR__ . '/../config/config.php');
 
-$auctionModel = new AuctionModel($conn);
+$auctionModel = new AuctionModel($dbConnection); 
 $auctions = $auctionModel->getAuctions();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $id = $_POST['auction-id'] ?? null;
     $status = $_POST['status'] ?? null;
 
-    $auctionsStatus = $auctionModel->updateAuctionStatus($id, $status);
+    $auctionModel->updateAuctionStatus($id, $status);
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit();
 }

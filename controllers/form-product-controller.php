@@ -3,7 +3,6 @@ require_once(__DIR__ . "/session-controller.php");
 lazy_session_start();
 
 include(__DIR__ . "/../config/config.php");
-include(__DIR__ . "/../models/products-model.php");
 
 $_SESSION['product_error'] = '';
 $message = '';
@@ -15,7 +14,6 @@ $observations = htmlspecialchars(trim($_POST['observations'] ?? ''));
 $starting_price = floatval($_POST['starting_price'] ?? 0);
 $user_id = $_SESSION['id'];
 
-
 if (empty($name)) {
     $message = "El nom del producte és obligatori.";
 } elseif (strlen($name) > 50) {
@@ -23,7 +21,7 @@ if (empty($name)) {
 } elseif ($starting_price <= 0) {
     $message = "El preu de sortida ha de ser major que 0.";
 } elseif (!isset($_FILES['photo']) || $_FILES['photo']['error'] != UPLOAD_ERR_OK) {
-    $message = $_FILES;
+    $message = "Si us plau, puja una imatge.";
 } else {
     $target_dir = __DIR__ . "/../images/";
     $photo_name = basename($_FILES['photo']['name']);
@@ -52,9 +50,8 @@ if (empty($name)) {
     }
 
     if ($uploadOk && move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
-        $photo_path = "/../images/" . $photo_name;
-
-        $product = new ProductModel($conn);
+        $photo_path = "/images/" . $photo_name;
+        $product = new ProductModel($dbConnection);
         if ($product->addProduct($name, $short_description, $long_description, $observations, $starting_price, $photo_path, $user_id)) {
             $message = "El producte s'ha afegit correctament.";
         } else {
@@ -66,12 +63,12 @@ if (empty($name)) {
 }
 
 if ($message) {
-    $_SESSION['error'] = $message;
+    error_log($message);
+    $_SESSION['product_error'] = $message;
     header('Location: /../views/add-product-view.php');
     exit();
 }
 
 header('Location: /../views/add-product-view.php');
-
 exit();
 ?>

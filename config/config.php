@@ -1,19 +1,16 @@
 <?php
-$servername = "localhost:1234"; // Vagrant fa port forwarding (MariaDB) al port 1234
-$username = "subasterra";
-$password = "subasterra1234!";
-$dbname = "subasterra";
+define('DB_HOST', 'localhost:1234');
+define('DB_NAME', 'subasterra');
+define('DB_USER', 'subasterra');
+define('DB_PASS', 'subasterra1234!');
 
 try {
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    
-    if ($conn->connect_error) {
-        throw new Exception("Connexió fallida: " . $conn->connect_error);
-    }
-
-    $conn->set_charset("utf8mb4");
-
-} catch (Exception $e) {
-    error_log($e->getMessage());
-    echo "Hi ha hagut un error amb la connexió. Si us plau, torna-ho a intentar més tard.";
+    $dbConnection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+    $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Error de connexió a la base de dades: ' . $e->getMessage();
+    exit;
 }
+
+require_once __DIR__ . '/autoload.php';
+?>

@@ -1,4 +1,4 @@
-    <?php
+<?php
 class ProductModel {
     private $conn;
 
@@ -14,13 +14,12 @@ class ProductModel {
         
         $sql = "SELECT id, name, short_description, long_description, photo, starting_price, status
                 FROM products 
-                WHERE LOWER(name) LIKE LOWER(?) AND status = 'acceptat'
+                WHERE LOWER(name) LIKE LOWER(:search) AND status = 'acceptat'
                 ORDER BY $order";
         
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('s', $search_param);
-        $stmt->execute();
-        return $stmt->get_result();
+        $stmt->execute([':search' => $search_param]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function getProductsSubhastador($search = '', $order = 'name') {
@@ -31,13 +30,12 @@ class ProductModel {
         
         $sql = "SELECT id, name, short_description, long_description, photo, starting_price, status
                 FROM products 
-                WHERE LOWER(name) LIKE LOWER(?) 
+                WHERE LOWER(name) LIKE LOWER(:search)
                 ORDER BY $order";
         
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('s', $search_param);
-        $stmt->execute();
-        return $stmt->get_result();
+        $stmt->execute([':search' => $search_param]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function getAcceptProducts() {
@@ -46,8 +44,9 @@ class ProductModel {
                 FROM products p 
                 JOIN users u ON p.user_id = u.id 
                 WHERE p.status = 'pendent'";
-    
-        return $this->conn->query($sql);
+
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function getPendingProducts() {
@@ -56,75 +55,68 @@ class ProductModel {
                 FROM products p 
                 JOIN users u ON p.user_id = u.id";
     
-        return $this->conn->query($sql);
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
 
     public function updateProductStatus($product_id, $status, $message) {
-        $sql = "UPDATE products SET status = ?, auctioneer_message = ? WHERE id = ?";
+        $sql = "UPDATE products SET status = :status, auctioneer_message = :message WHERE id = :product_id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('ssi', $status, $message, $product_id);
-        return $stmt->execute();
+        return $stmt->execute([':status' => $status, ':message' => $message, ':product_id' => $product_id]);
     }
 
     public function updateProductDescriptions($product_id, $short_description, $long_description) {
-        $sql = "UPDATE products SET short_description = ?, long_description = ? WHERE id = ?";
+        $sql = "UPDATE products SET short_description = :short_description, long_description = :long_description WHERE id = :product_id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('ssi', $short_description, $long_description, $product_id);
-        $stmt->execute();
+        $stmt->execute([':short_description' => $short_description, ':long_description' => $long_description, ':product_id' => $product_id]);
     }
 
     public function getMyProducts($id) {
-        $sql ="SELECT p.id, p.name, p.short_description, p.starting_price, p.status, p.photo, 
+        $sql = "SELECT p.id, p.name, p.short_description, p.starting_price, p.status, p.photo, 
                 p.long_description, p.observations
                 FROM products p 
                 JOIN users u ON p.user_id = u.id 
-                WHERE u.id = ?";
+                WHERE u.id = :id";
+        
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-
-        return $result;
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function addProduct($name, $short_description, $long_description, $observations, $starting_price, $photo_path, $user_id) {
-        $stmt = $this->conn->prepare("INSERT INTO products (name, short_description, long_description, observations, starting_price, photo, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssdsd", $name, $short_description, $long_description, $observations, $starting_price, $photo_path, $user_id);
-        return $stmt->execute();
+        $sql = "INSERT INTO products (name, short_description, long_description, observations, starting_price, photo, user_id) VALUES (:name, :short_description, :long_description, :observations, :starting_price, :photo, :user_id)";
+        
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            ':name' => $name, 
+            ':short_description' => $short_description, 
+            ':long_description' => $long_description, 
+            ':observations' => $observations, 
+            ':starting_price' => $starting_price, 
+            ':photo' => $photo_path, 
+            ':user_id' => $user_id
+        ]);
     }
+
     public function getProductById($product_id) {
-        // Preparar la consulta SQL para obtener el producto por su ID
-        $stmt = $this->conn->prepare("SELECT * FROM products WHERE id = ?");
-        $stmt->bind_param('i', $product_id);
+        $sql = "SELECT * FROM products WHERE id = :product_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':product_id' => $product_id]);
         
-        // Ejecutar la consulta
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        // Verificar si se obtuvo un resultado
-        if ($result->num_rows > 0) {
-            // Retornar el producto como un array asociativo
-            return $result->fetch_assoc();
-        } else {
-            // Si no se encuentra, retornar null
-            return null;
-        }
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
     
     public function updateProductStatusRetired($product_id, $status) {
-        $stmt = $this->conn->prepare("UPDATE products SET status = ? WHERE id = ?");
-        $stmt->bind_param('si', $status, $product_id);
-        return $stmt->execute();
+        $sql = "UPDATE products SET status = :status WHERE id = :product_id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([':status' => $status, ':product_id' => $product_id]);
     }  
     
     public function getUserIdbyProduct($product) {
-        $sql = "SELECT user_id FROM products WHERE id = ?";
+        $sql = "SELECT user_id FROM products WHERE id = :product";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('s', $product);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+        $stmt->execute([':product' => $product]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getFilteredPendingProducts($status = null, $orderByPrice = 'ASC') {
@@ -135,22 +127,18 @@ class ProductModel {
             WHERE status IN ('pendent', 'rebutjat', 'pendent d’assignació a una subhasta', 'assignat a una subhasta', 'pendent_adjudicacio', 'venut', 'retirat')
         ";
         
-        if (!empty($status)) {
-            $query .= " AND products.status = ?";
-        }
-    
-        // Ordenar por precio
-        $query .= " ORDER BY products.starting_price $orderByPrice";
-    
-        $stmt = $this->conn->prepare($query);
+        $params = [];
         
         if (!empty($status)) {
-            $stmt->bind_param('s', $status);
+            $query .= " AND products.status = :status";
+            $params[':status'] = $status;
         }
-    
-        $stmt->execute();
-        return $stmt->get_result();
+
+        $query .= " ORDER BY products.starting_price $orderByPrice";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-    
 }
+?>

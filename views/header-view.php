@@ -1,12 +1,12 @@
 <?php
-    require_once(__DIR__ . '/../controllers/session-controller.php');
-    require_once(__DIR__ . '/../models/notifications-model.php');
-    include_once __DIR__ . '/../config/config.php';
-    lazy_session_start();
+require_once(__DIR__ . '/../controllers/session-controller.php');
+require_once(__DIR__ . '/../models/notifications-model.php');
+lazy_session_start();
 
-    $notificationsModel = new NotificationsModel($conn);
-    $notifications = isset($_SESSION['id']) ? $notificationsModel->getNotifications($_SESSION['id']) : [];
-    $notificationCount = isset($_SESSION['id']) ? $notificationsModel->getUnreadNotificationCount($_SESSION['id']) : 0;
+$notificationsModel = new NotificationsModel($dbConnection);
+$notifications = isset($_SESSION['id']) ? $notificationsModel->getNotifications($_SESSION['id']) : [];
+$notificationCount = isset($_SESSION['id']) ? $notificationsModel->getUnreadNotificationCount($_SESSION['id']) : 0;
+$role = $_SESSION['role'] ?? null;
 ?>
 
 <link rel="stylesheet" href="<?= '/css/header.css'; ?>">
@@ -49,8 +49,8 @@
                 </div>
 
                 <div id="notification-dropdown" class="notification-dropdown-content">
-                    <?php if ($notifications->num_rows > 0): ?>
-                        <?php while ($notification = $notifications->fetch_assoc()): ?>
+                    <?php if (count($notifications) > 0): ?>
+                        <?php foreach ($notifications as $notification): ?>
                             <div class="notification <?= $notification['is_read'] ? 'read' : 'unread'; ?>">
                                 <div class="notification-body">
                                     <strong><?= htmlspecialchars($notification['sender_username']); ?>:</strong>
@@ -71,7 +71,7 @@
                                     </form>
                                 </div>
                             </div>
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
                     <?php else: ?>
                         <p>No tens cap notificació.</p>
                     <?php endif; ?>
