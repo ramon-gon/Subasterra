@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__ . '/../models/productmodel.php';
 require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
 ?>
 

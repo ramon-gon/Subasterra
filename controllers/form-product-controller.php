@@ -2,6 +2,7 @@
 require_once(__DIR__ . "/session-controller.php");
 lazy_session_start();
 
+include_once __DIR__ . '/../models/productmodel.php';
 include(__DIR__ . "/../config/config.php");
 
 $_SESSION['product_error'] = '';
