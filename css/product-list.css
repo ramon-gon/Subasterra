@@ -145,3 +145,21 @@ body, html {
         width: 100%;
     }
 }
+    .pagination-controls {
+        text-align: center; 
+        margin-top: 20px; 
+    }
+    
+    .pagination-button {
+        color: black;
+        font-weight: bold;
+        display: inline-block;
+        padding: 8px 12px;
+        text-decoration: none;
+        margin: 0 5px; 
+        border-radius: 5px; 
+    }
+    
+    .pagination-button.active {
+        background-color: #ccc; 
+    }    

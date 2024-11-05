@@ -3,7 +3,28 @@ require_once(__DIR__ . "/../config/config.php");
 require_once(__DIR__ . "/../controllers/products-controller.php");
 
 $productModel = new ProductModel($dbConnection);
-$products = $productModel->getProducts();
+
+// Configuració de la paginació
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Número de pàgina actual, per defecte 1
+$items_per_page = 9; // Nombre d'elements per pàgina
+
+// Càlcul del desplaçament (offset)
+$offset = ($page - 1) * $items_per_page;
+
+// Obtenir el terme de cerca i l'ordre, si s'escau
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$order = isset($_GET['order']) ? $_GET['order'] : 'name';
+
+// Obtenir productes amb paginació i cerca
+if ($role === 'subhastador') {
+    $products = $productModel->getProductsSubhastador($search, $order, $items_per_page, $offset);
+} else {
+    $products = $productModel->getProducts($search, $order, $items_per_page, $offset);
+}
+
+// Obtenir el nombre total de productes per a la paginació
+$total_products = $productModel->getTotalProducts($search, $role);
+$total_pages = ceil($total_products / $items_per_page); // Nombre total de pàgines
 ?>
 
 <!DOCTYPE html>
@@ -22,35 +43,38 @@ $products = $productModel->getProducts();
 
     <div class="container-auctions">
         <div class="auction-gallery grid-layout">
-            <?php if ($role === 'subhastador'): ?>
-                <?php if (count($products) > 0): ?>
-                    <?php foreach ($products as $row): ?>
-                        <article class="product-card">
-                            <img src="<?= htmlentities($row['photo']); ?>" alt="<?= htmlentities($row['name']); ?>" class="product-photo">
-                            <h2 class="product-name"><?= htmlentities($row['name']); ?></h2>
+            <?php if (count($products) > 0): ?>
+                <?php foreach ($products as $row): ?>
+                    <article class="product-card">
+                        <img src="<?= htmlentities($row['photo']); ?>" alt="<?= htmlentities($row['name']); ?>" class="product-photo">
+                        <h2 class="product-name"><?= htmlentities($row['name']); ?></h2>
+                        <?php if ($role === 'subhastador'): ?>
                             <p class="product-status"><strong>Estat del producte:</strong> <?= htmlentities($row['status']); ?></p>
-                            <p class="product-description-short"><strong>Descripció curta:</strong> <?= htmlentities($row['short_description']); ?></p>
-                            <p class="product-description-long"><strong>Descripció llarga:</strong> <?= htmlentities($row['long_description']); ?></p>
-                            <p class="product-price">Preu de sortida: <?= number_format($row['starting_price'], 2); ?> €</p>
-                        </article>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No s'han trobat productes.</p>
-                <?php endif; ?>
+                        <?php endif; ?>
+                        <p class="product-description-short"><strong>Descripció curta:</strong> <?= htmlentities($row['short_description']); ?></p>
+                        <p class="product-description-long"><strong>Descripció llarga:</strong> <?= htmlentities($row['long_description']); ?></p>
+                        <p class="product-price">Preu de sortida: <?= number_format($row['starting_price'], 2); ?> €</p>
+                    </article>
+                <?php endforeach; ?>
             <?php else: ?>
-                <?php if (count($products) > 0): ?>
-                    <?php foreach ($products as $row): ?>
-                        <article class="product-card">
-                            <img src="<?= htmlentities($row['photo']); ?>" alt="<?= htmlentities($row['name']); ?>" class="product-photo">
-                            <h2 class="product-name"><?= htmlentities($row['name']); ?></h2>
-                            <p class="product-description-short"><strong>Descripció curta:</strong> <?= htmlentities($row['short_description']); ?></p>
-                            <p class="product-description-long"><strong>Descripció llarga:</strong> <?= htmlentities($row['long_description']); ?></p>
-                            <p class="product-price">Preu de sortida: <?= number_format($row['starting_price'], 2); ?> €</p>
-                        </article>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No s'han trobat productes.</p>
-                <?php endif; ?>
+                <p>No s'han trobat productes.</p>
+            <?php endif; ?>
+        </div>
+
+        <!-- Controles de Paginació -->
+        <div class="pagination-controls">
+            <?php if ($page > 1): ?>
+                <a href="?page=<?= $page - 1 ?>&search=<?= htmlentities($search) ?>&order=<?= htmlentities($order) ?>" class="pagination-button">Anterior</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                <a href="?page=<?= $i ?>&search=<?= htmlentities($search) ?>&order=<?= htmlentities($order) ?>" class="pagination-button <?= $i == $page ? 'active' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($page < $total_pages): ?>
+                <a href="?page=<?= $page + 1 ?>&search=<?= htmlentities($search) ?>&order=<?= htmlentities($order) ?>" class="pagination-button">Següent</a>
             <?php endif; ?>
         </div>
     </div>

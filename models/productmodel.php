@@ -5,38 +5,65 @@ class ProductModel {
     public function __construct($dbConnection) {
         $this->conn = $dbConnection;
     }
-
-    public function getProducts($search = '', $order = 'name') {
-        $search_param = '%' . $search . '%';
+    public function getProducts($search = '', $order = 'name', $limit = 9, $offset = 0) {
+        $search_param = '%' . strtolower($search) . '%'; // Assegura't que la cerca és en minúscules
         if ($order !== 'name' && $order !== 'starting_price') {
-            $order = 'name';
+            $order = 'name'; // Ordena per defecte per nom
         }
-        
+    
         $sql = "SELECT id, name, short_description, long_description, photo, starting_price, status
                 FROM products 
-                WHERE LOWER(name) LIKE LOWER(:search) AND status = 'assignat a una subhasta'
-                ORDER BY $order";
-        
+                WHERE LOWER(name) LIKE :search AND status = 'assignat a una subhasta'
+                ORDER BY $order
+                LIMIT :limit OFFSET :offset";
+    
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':search' => $search_param]);
+        $stmt->bindParam(':search', $search_param, PDO::PARAM_STR);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    public function getProductsSubhastador($search = '', $order = 'name') {
-        $search_param = '%' . $search . '%';
+    public function getProductsSubhastador($search = '', $order = 'name', $limit = 9, $offset = 0) {
+        $search_param = '%' . strtolower($search) . '%'; // Assegura't que la cerca és en minúscules
         if ($order !== 'name' && $order !== 'starting_price') {
-            $order = 'name';
+            $order = 'name'; // Ordena per defecte per nom
         }
-        
+    
         $sql = "SELECT id, name, short_description, long_description, photo, starting_price, status
                 FROM products 
-                WHERE LOWER(name) LIKE LOWER(:search)
-                ORDER BY $order";
-        
+                WHERE LOWER(name) LIKE :search
+                ORDER BY $order
+                LIMIT :limit OFFSET :offset";
+    
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':search' => $search_param]);
+        $stmt->bindParam(':search', $search_param, PDO::PARAM_STR);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getTotalProducts($search = '', $role = '') {
+        $search_param = '%' . strtolower($search) . '%'; // Assegura't que la cerca és en minúscules
+    
+        // Comencem amb la consulta base per comptar productes
+        $sql = "SELECT COUNT(*) as total FROM products WHERE LOWER(name) LIKE :search";
+    
+        // Si l'usuari no és subhastador, afegim el filtre d'estat
+        if ($role !== 'subhastador') {
+            $sql .= " AND status = 'assignat a una subhasta'";
+        }
+    
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':search', $search_param, PDO::PARAM_STR);
+        $stmt->execute();
+    
+        // Obtenim el resultat
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total'];
+    }
+        
     
     public function getAcceptProducts() {
         $sql = "SELECT p.id, p.name, p.short_description, p.long_description, p.observations, p.starting_price, p.photo, 
