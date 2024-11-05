@@ -1,5 +1,4 @@
 <?php
-include_once __DIR__ . '/../models/productmodel.php';
 require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
 ?>
 
@@ -18,8 +17,96 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
     <?php include(__DIR__ . "/header-view.php"); ?>
     
     <div class="container-auctions">
-        <form id="filter-form" method="GET" action="">
-            <div class="auction-gallery-header">
+
+        <div class="selector-menu-auctioneer">
+            <button type="button" id="select-products">Productes</button>
+            <button type="button" id="select-auctions">Subhastes</button>
+        </div>
+
+        <div id="auctions-menu">
+            <form method="GET" action="" class="filter-form">
+                <input type="hidden" name="form-type" value="filter-auctions">
+                <input type="hidden" name="menu" value="auctions">
+                    <div class="auction-gallery-header">
+                        <div class="filter-div">
+                        <label for="status">Filtrar per estat:</label>
+                        <select name="status" id="status">
+                            <option value="">Totes</option>
+                            <option value="oberta">Oberta</option>
+                            <option value="tancada">Tancada</option>
+                        </select>
+
+                        <label for="start_date">Data d'inici:</label>
+                        <input type="date" name="start_date" id="start_date">
+
+                        <label for="end_date">Data de finalització:</label>
+                        <input type="date" name="end_date" id="end_date">
+
+                        <div id="filter-btn-div">
+                            <button class="filter-btn" type="submit">Aplicar filtres</button>
+                        </div>
+                    </div>
+
+                    <button type="button" name="new-auction-button" value="create" id="new-auction-button" class="add-btn">
+                        <img src="/images/add-icon.svg" alt="add-icon" class="add-icon">
+                        <span class="button-text">Nova subhasta</span>
+                    </button>
+
+                </div>
+            </form>
+
+            <table id="auctions-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Descripció</th>
+                        <th>Productes</th>
+                        <th colspan="3">Estat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php if (!empty($auctions)): ?>
+                    <?php foreach ($auctions as $auction): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($auction['id'] ?? ''); ?></td>
+                                <td><?php echo date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
+                                <td><?php echo htmlspecialchars($auction['description'] ?? ''); ?></td>
+                                <td><?php echo !empty($auction['product_names']) ? htmlspecialchars($auction['product_names']) : 'No hi ha productes'; ?></td>
+                                <td><?php echo htmlspecialchars($auction['status'] ?? ''); ?></td>
+                                <td>
+                                    <?php if ($auction['status'] === 'oberta'): ?>
+                                        <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                                            <input type="hidden" name="form-type" value="update-auction">
+                                            <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                            <input type="hidden" name="status" value="iniciada">
+                                            <button class="accept-btn">Inicia subhasta</button>
+                                        </form>
+                                    <?php elseif ($auction['status'] === 'iniciada'): ?>
+                                        <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                                            <input type="hidden" name="form-type" value="update-auction">
+                                            <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                            <input type="hidden" name="status" value="tancada">
+                                            <button class="deny-btn">Tanca subhasta</button>
+                                        </form>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5">No hi ha subhastes disponibles amb els filtres seleccionats.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="products-menu">
+            <form id="filter-form" method="GET" action="">
+            <input type="hidden" name="form-type" value="filter-products">
+            <input type="hidden" name="menu" value="products">
+                <div class="auction-gallery-header">
                     <div class="filter-div">
                         <label for="filter-status">Filtrar per estat:</label>
                         <select name="filter-status" id="filter-status">
@@ -39,203 +126,195 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                             <option value="asc">Ascendent</option>
                             <option value="desc">Descendent</option>
                         </select>
+
+                        <button class="filter-btn" type="submit">Aplicar filtres</button>
                     </div>
-
-                    <div id="filter-btn-div">
-                        <button id="filter-btn" type="submit">Aplicar filtres</button>
-                    </div>
-
-                <button type="button" name="new-auction-button" value="create" id="new-auction-button" class="add-btn">
-                    <img src="/images/add-icon.svg" alt="add-icon" class="add-icon">
-                    <span class="button-text">Nova subasta</span>
-                </button>
-            </div>
-        </form>
-
-        <div class="auction-gallery">
-
-            <table hidden id="new-auction">
-                <thead>
-                    <tr>
-                        <th colspan="7">Nova Subhasta</th>
-                    </tr>
-                </thead>
-                <form method="POST" action="/controllers/auctioner-panel-controller.php">
-                <tbody>
-                    <input type="hidden" name="form-type" value="create-auction">
-                    <tr>
-                        <th>Descripció</th>
-                        <th colspan="6"><input type="text" name="auction-description" required></th>
-                    </tr>
-                    <tr>
-                        <th>Data i hora</th>
-                        <th colspan="6"><input type="datetime-local" name="auction-date" required></th>
-                    </tr>
-                    <tr>
-                        <th>Percentatge</th>
-                        <th colspan="6"><input type="number" min="1" max="100" name="auction-percentage" required value="10"></th>
-                    </tr>
-                    <tr>
-                        <th>Selecciona productes</th>
-                        <th colspan="6">
-                            <div class="product-selection">
-                                <select id="available_products" multiple size="5">
-                                    <?php if (count($productsauction) > 0): ?>
-                                        <?php foreach ($productsauction as $row): ?>
-                                            <option value="<?= htmlspecialchars($row['id']); ?>">
-                                                <?= htmlspecialchars($row['name']); ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <option disabled>No hi ha productes disponibles</option>
-                                    <?php endif; ?>
-                                </select>
-                                <div class="selection-buttons">
-                                    <button type="button" id="add_product">Agregar</button>
-                                    <button type="button" id="remove_product">Quitar</button>
-                                </div>
-                                <select name="product_ids[]" id="selected_products" multiple size="5"></select>
-                            </div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-            <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="create-btn">Crea subasta</button>
+                </div>
             </form>
 
-            <table id="auctioneer-panel">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Id venedor</th>
-                        <th>Usuari</th>
-                        <th>Id product</th>
-                        <th>Nom producte</th>
-                        <th>Descripció</th>
-                        <th>Preu sortida</th>
-                        <th>Estat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php if (count($products) > 0): ?>
-                    <?php foreach ($products as $row): ?>
-                        <form method="POST" action="/controllers/auctioner-panel-controller.php">
-                            <tr class="short-info-dropdown">
-                                <td id="icon-td">
-                                    <div class="arrow-icon">
-                                        <img src="/images/arrow-right.svg" alt="add-icon">
-                                    </div>
-                                </td>
-                                <td><?= htmlspecialchars($row['user_id']); ?></td>
-                                <td><?= htmlspecialchars($row['username']); ?></td>
-                                <td><?= htmlspecialchars($row['id']); ?></td>
-                                <td><?= htmlspecialchars($row['name']); ?></td>
-                                <td><?= htmlspecialchars($row['short_description']); ?></td>
-                                <td><?= number_format($row['starting_price'], 2); ?></td>
-                                <td><div class="status" value="<?= htmlspecialchars($row['status']); ?>"></td>
-                                <input type="hidden" name="form-type" value="product-assignment">
-                                <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']); ?>">
-                                <input type="hidden" name="user_id" value="<?= htmlspecialchars($row['user_id']); ?>">
-                            </tr>
-                            <tr class="detailed-info-content">
-                                <td colspan="8">
-                                    <div class="dropdown-content">
-                                        <div class="dropdown-info">
-                                            <div class="dropdown-info-field">
-                                                <label class="panel-label">Venedor:</label>
-                                                <div class="product-info">
-                                                    <?= htmlspecialchars($row['username']); ?>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-info-field">
-                                                <label class="panel-label">Nom producte:</label>
-                                                <div class="product-info">
+            <div class="auction-gallery">
+
+                <table hidden id="new-auction">
+                    <thead>
+                        <tr>
+                            <th colspan="7">Nova Subhasta</th>
+                        </tr>
+                    </thead>
+                    <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                    <tbody>
+                        <input type="hidden" name="form-type" value="create-auction">
+                        <tr>
+                            <th>Descripció</th>
+                            <th colspan="6"><input type="text" name="auction-description" required></th>
+                        </tr>
+                        <tr>
+                            <th>Data i hora</th>
+                            <th colspan="6"><input type="datetime-local" name="auction-date" required></th>
+                        </tr>
+                        <tr>
+                            <th>Percentatge</th>
+                            <th colspan="6"><input type="number" min="1" max="100" name="auction-percentage" required value="10"></th>
+                        </tr>
+                        <tr>
+                            <th>Selecciona productes</th>
+                            <th colspan="6">
+                                <div class="product-selection">
+                                    <select id="available_products" multiple size="5">
+                                        <?php if (count($productsAuction) > 0): ?>
+                                            <?php foreach ($productsAuction as $row): ?>
+                                                <option value="<?= htmlspecialchars($row['id']); ?>">
                                                     <?= htmlspecialchars($row['name']); ?>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-info-field">
-                                                <label class="panel-label" for="short_description">Descripció breu:</label>
-                                                <div class="product-info">
-                                                    <input type="text" name="short_description" value="<?= htmlspecialchars($row['short_description']); ?>"></input>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-info-field">
-                                                <label class="panel-label" for="long_description">Descripció extendida:</label>
-                                                <div class="product-info">
-                                                    <input type="text" name="long_description" value="<?= htmlspecialchars($row['long_description']); ?>"></input>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-info-field">
-                                                <label class="panel-label">Preu inicial:</label>
-                                                <div class="product-info">
-                                                    <?= number_format($row['starting_price'], 2); ?>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-info-field">
-                                                <label class="panel-label">Observacions:</label>
-                                                <div class="product-info">
-                                                    <?= htmlspecialchars($row['observations']); ?>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-info-field">
-                                                <label class="panel-label" for="message">Missatge al venedor:</label>
-                                                <div class="product-info">
-                                                    <textarea name="message" id="auctioner-message" placeholder="Escriu un missatge per al venedor">
-                                                        <?= htmlspecialchars($row['auctioneer_message'] ?? ''); ?>
-                                                    </textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="<?= htmlspecialchars($row['photo']); ?>" alt="<?= htmlspecialchars($row['name']); ?>">
-                                    </div>
-                                    <?php if (in_array($row['status'], ['pendent'])): ?>
-                                    <div class="dropdown-buttons">
-                                        <button name="action" class="accept-btn" id="accept-btn" type="submit" value="accept">Acceptar</button>
-                                        <button name="action" class="deny-btn" type="submit" value="reject">Rebutjar</button>
-                                        <button name="action" class="assign-btn" type="button">Acceptar i assignar</button>
-                                    </div>
-                                    <?php endif; ?>
-                                    <?php if (in_array($row['status'], ['pendent d’assignació a una subhasta'])): ?>
-                                    <div class="dropdown-buttons">
-                                        <button name="action" class="assign-btn" type="button">Assignar subhasta</button>
-                                    </div>
-                                    <?php endif; ?>
-                                    <?php if (in_array($row['status'], ['assignat a una subhasta'])): ?>
-                                    <div class="dropdown-buttons">
-                                        <button name="action" value="unassign" class="retire-btn" type="submit">Desassignar subhasta</button>
-                                    </div>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                            <div class="modal" id="auction-modal-confirm">
-                                <div class="modal-content">
-                                    <span class="close" id="close-modal">&times;</span>
-                                    <h1>Assigna a una subhasta activa</h1>
-                                    <?php error_log(print_r($auctions, true)); ?>
-                                    <?php if (count($auctions) > 0): ?>
-                                        <select name="auction-select">
-                                            <?php foreach ($auctions as $auction): ?>
-                                                <option value="<?= htmlspecialchars($auction['id']); ?>">
-                                                    <?= htmlspecialchars($auction['description']); ?>
                                                 </option>
                                             <?php endforeach; ?>
-                                        </select>          
-                                        <button name="action" class="accept-btn" type="submit" value="accept-and-assign">Acceptar</button>
-                                        <button name="action" class="deny-btn" id="not-assign" type="button">Rebutjar</button>
-                                    <?php else: ?>
-                                        <p>No hi ha subhastes disponibles amb els filtres seleccionats.</p>
-                                    <?php endif; ?>
+                                        <?php else: ?>
+                                            <option disabled>No hi ha productes disponibles</option>
+                                        <?php endif; ?>
+                                    </select>
+                                    <div class="selection-buttons">
+                                        <button type="button" id="add_product">Agregar</button>
+                                        <button type="button" id="remove_product">Quitar</button>
+                                    </div>
+                                    <select name="product_ids[]" id="selected_products" multiple size="5"></select>
                                 </div>
-                            </div>
-                        </form>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="6">No hi ha cap producte en venda</td>
-                    </tr>
-                <?php endif; ?>
-                </tbody>
+                            </th>
+                        </tr>
+                    </tbody>
                 </table>
+                <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="create-btn">Crea subasta</button>
+                </form>
+
+                <table id="auctioneer-panel">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Id venedor</th>
+                            <th>Usuari</th>
+                            <th>Id product</th>
+                            <th>Nom producte</th>
+                            <th>Descripció</th>
+                            <th>Preu sortida</th>
+                            <th>Estat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php if (count($products) > 0): ?>
+                        <?php foreach ($products as $row): ?>
+                            <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                                <tr class="short-info-dropdown">
+                                    <td id="icon-td">
+                                        <div class="arrow-icon">
+                                            <img src="/images/arrow-right.svg" alt="add-icon">
+                                        </div>
+                                    </td>
+                                    <td><?= htmlspecialchars($row['user_id']); ?></td>
+                                    <td><?= htmlspecialchars($row['username']); ?></td>
+                                    <td><?= htmlspecialchars($row['id']); ?></td>
+                                    <td><?= htmlspecialchars($row['name']); ?></td>
+                                    <td><?= htmlspecialchars($row['short_description']); ?></td>
+                                    <td><?= number_format($row['starting_price'], 2); ?></td>
+                                    <td><div class="status" value="<?= htmlspecialchars($row['status']); ?>"></td>
+                                    <input type="hidden" name="form-type" value="product-assignment">
+                                    <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']); ?>">
+                                    <input type="hidden" name="user_id" value="<?= htmlspecialchars($row['user_id']); ?>">
+                                </tr>
+                                <tr class="detailed-info-content">
+                                    <td colspan="8">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-info">
+                                                <div class="dropdown-info-field">
+                                                    <label class="panel-label">Venedor:</label>
+                                                    <div class="product-info">
+                                                        <?= htmlspecialchars($row['username']); ?>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown-info-field">
+                                                    <label class="panel-label">Nom producte:</label>
+                                                    <div class="product-info">
+                                                        <?= htmlspecialchars($row['name']); ?>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown-info-field">
+                                                    <label class="panel-label" for="short_description">Descripció breu:</label>
+                                                    <div class="product-info">
+                                                        <input type="text" name="short_description" value="<?= htmlspecialchars($row['short_description']); ?>"></input>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown-info-field">
+                                                    <label class="panel-label" for="long_description">Descripció extendida:</label>
+                                                    <div class="product-info">
+                                                        <input type="text" name="long_description" value="<?= htmlspecialchars($row['long_description']); ?>"></input>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown-info-field">
+                                                    <label class="panel-label">Preu inicial:</label>
+                                                    <div class="product-info">
+                                                        <?= number_format($row['starting_price'], 2); ?>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown-info-field">
+                                                    <label class="panel-label">Observacions:</label>
+                                                    <div class="product-info">
+                                                        <?= htmlspecialchars($row['observations']); ?>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown-info-field">
+                                                    <label class="panel-label" for="message">Missatge al venedor:</label>
+                                                    <div class="product-info">
+                                                        <textarea name="message" id="auctioner-message" placeholder="Escriu un missatge per al venedor">
+                                                            <?= htmlspecialchars($row['auctioneer_message'] ?? ''); ?>
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="<?= htmlspecialchars($row['photo']); ?>" alt="<?= htmlspecialchars($row['name']); ?>">
+                                        </div>
+                                        <?php if (in_array($row['status'], ['pendent'])): ?>
+                                        <div class="dropdown-buttons">
+                                            <button name="action" class="accept-btn" id="accept-btn" type="submit" value="accept">Acceptar</button>
+                                            <button name="action" class="deny-btn" type="submit" value="reject">Rebutjar</button>
+                                            <button name="action" class="assign-btn" type="button">Acceptar i assignar</button>
+                                        </div>
+                                        <?php endif; ?>
+                                        <?php if (in_array($row['status'], ['pendent d’assignació a una subhasta'])): ?>
+                                        <div class="dropdown-buttons">
+                                            <button name="action" class="assign-btn" type="button">Assignar subhasta</button>
+                                        </div>
+                                        <?php endif; ?>
+                                        <?php if (in_array($row['status'], ['assignat a una subhasta'])): ?>
+                                        <div class="dropdown-buttons">
+                                            <button name="action" value="unassign" class="retire-btn" type="submit">Desassignar subhasta</button>
+                                        </div>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                <div class="modal" id="auction-modal-confirm">
+                                    <div class="modal-content">
+                                        <span class="close" id="close-modal">&times;</span>
+                                        <h1>Assigna a una subhasta activa</h1>
+                                        <?php if (count($activeAuctions) > 0): ?>
+                                            <select name="auction-select">
+                                                <?php foreach ($activeAuctions as $auction): ?>                                                    <option value="<?= htmlspecialchars($auction['id']); ?>">
+                                                        <?= htmlspecialchars($auction['description']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>          
+                                            <button name="action" class="accept-btn" type="submit" value="accept-and-assign">Acceptar</button>
+                                            <button name="action" class="deny-btn" id="not-assign" type="button">Rebutjar</button>
+                                        <?php else: ?>
+                                            <p>No hi ha subhastes disponibles amb els filtres seleccionats.</p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </form>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6">No hi ha cap producte en venda</td>
+                        </tr>
+                    <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
