@@ -52,4 +52,3 @@ class NotificationsModel {
         return $stmt->execute([':receiver' => $receiver]);
     }
 }
-?>
