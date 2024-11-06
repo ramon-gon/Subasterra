@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             }
 
             foreach ($venedors_ids as $venedor_id) {
-                $notificationsModel->sendNotification($message, $subhastador_id, $venedor_id);
+                $notificationsModel->sendNotification($message, $subhastadorId, $venedor_id);
             }
         }
     } elseif ($form_type === 'product-assignment') {
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $message = 'Producte ha estat desassignat de la subhasta.';
             $productModel->updateProductStatus($product_id, 'pendent d’assignació a una subhasta', $message);
         }
-        $notificacions = $notificationsModel->sendNotification($message, $subhastador_id, $user_id);         
+        $notificacions = $notificationsModel->sendNotification($message, $subhastadorId, $user_id);         
         $productModel->updateProductDescriptions($product_id, $short_description, $long_description);
     }
 
