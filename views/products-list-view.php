@@ -4,27 +4,22 @@ require_once(__DIR__ . "/../controllers/products-controller.php");
 
 $productModel = new ProductModel($dbConnection);
 
-// Configuració de la paginació
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Número de pàgina actual, per defecte 1
-$items_per_page = 9; // Nombre d'elements per pàgina
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$items_per_page = 9;
 
-// Càlcul del desplaçament (offset)
 $offset = ($page - 1) * $items_per_page;
 
-// Obtenir el terme de cerca i l'ordre, si s'escau
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $order = isset($_GET['order']) ? $_GET['order'] : 'name';
 
-// Obtenir productes amb paginació i cerca
 if ($role === 'subhastador') {
     $products = $productModel->getProductsSubhastador($search, $order, $items_per_page, $offset);
 } else {
     $products = $productModel->getProducts($search, $order, $items_per_page, $offset);
 }
 
-// Obtenir el nombre total de productes per a la paginació
 $total_products = $productModel->getTotalProducts($search, $role);
-$total_pages = ceil($total_products / $items_per_page); // Nombre total de pàgines
+$total_pages = ceil($total_products / $items_per_page);
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +34,7 @@ $total_pages = ceil($total_products / $items_per_page); // Nombre total de pàgi
 </head>
 
 <body>
+    <div class="wrapper">
     <?php include(__DIR__ . "/header-view.php"); ?>
 
     <div class="container-auctions">
@@ -60,25 +56,7 @@ $total_pages = ceil($total_products / $items_per_page); // Nombre total de pàgi
                 <p>No s'han trobat productes.</p>
             <?php endif; ?>
         </div>
-
-        <!-- Controles de Paginació -->
-        <div class="pagination-controls">
-            <?php if ($page > 1): ?>
-                <a href="?page=<?= $page - 1 ?>&search=<?= htmlentities($search) ?>&order=<?= htmlentities($order) ?>" class="pagination-button">Anterior</a>
-            <?php endif; ?>
-
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                <a href="?page=<?= $i ?>&search=<?= htmlentities($search) ?>&order=<?= htmlentities($order) ?>" class="pagination-button <?= $i == $page ? 'active' : '' ?>">
-                    <?= $i ?>
-                </a>
-            <?php endfor; ?>
-
-            <?php if ($page < $total_pages): ?>
-                <a href="?page=<?= $page + 1 ?>&search=<?= htmlentities($search) ?>&order=<?= htmlentities($order) ?>" class="pagination-button">Següent</a>
-            <?php endif; ?>
-        </div>
     </div>
-
     <?php include(__DIR__ . "/footer-view.php"); ?>
 </body>
 
