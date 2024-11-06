@@ -313,97 +313,114 @@ textarea {
 
 /* PENDENT TOT EL TEMA DELS ESTATS FINS QUE SIGUI IMPLEMENTADA LA FUNCIONALITAT */
     .status[value="pendent"]::before {
-        display: inline-block;
-        width: 90px; 
-        text-align: center; 
-        content: "Pendent";
-        color: white;
-        background-color: orange;
-        padding: 10px 5px;
-        border: 2px solid white;
-        outline: 1px solid orange;
-        margin-top: 1px;
+        content: "PENDENT";
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #028090;
+        display: inline-flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background-image: url("../images/pendent.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: left center;
     }
 
     .status[value="rebutjat"]::before {
-        display: inline-block;
-        width: 90px; 
-        text-align: center; 
-        content: "Rebutjat";
-        color: white;
-        background-color: red;
-        padding: 10px 5px;
-        border: 2px solid white;
-        outline: 1px solid red;
-        margin-top: 1px;
+        content: "REBUTJAT";
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #C03221;
+        display: inline-flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background-image: url("../images/rebutjat.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: left center;
     }
 
     .status[value="pendent d’assignació a una subhasta"]::before {
-        display: inline-block;
-        width: 90px; 
-        text-align: center; 
-        content: "No assignat";
-        color: white;
-        background-color: orange;
-        padding: 10px 5px;
-        border: 2px solid white;
-        outline: 2px solid orange;
-        margin-top: 1px;
+        content: "NO ASSIGNAT";
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #2978A0;
+        display: inline-flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background-image: url("../images/pendent-assignacio.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: left center;
     }
 
     .status[value="assignat a una subhasta"]::before {
-        display: inline-block;
-        width: 90px; 
-        text-align: center; 
-        content: "Assignat";
-        color: white;
-        background-color: green;
-        padding: 10px 5px;
-        border: 2px solid white;
-        outline: 1px solid green;
-        margin-top: 1px;
+        content: "ASSIGNAT";
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #136F63;
+        display: inline-flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background-image: url("../images/assignat.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: left center;
     }
 
     .status[value="retirat"]::before {
-        display: inline-block;
-        width: 90px; 
-        text-align: center; 
-        content: "Retirat";
-        color: white;
-        background-color: grey;
-        padding: 10px 5px;
-        border: 2px solid white;
-        outline: 1px solid grey;
-        margin-top: 1px;
+        content: "RETIRAT";
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #627C85;
+        display: inline-flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background-image: url("../images/retirat.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: left center;
     }
 
     .status[value="venut"]::before {
-        display: inline-block;
-        width: 90px; 
-        text-align: center; 
-        content: "Venut";
-        color: white;
-        background-color: green;
-        padding: 10px 5px;
-        border: 2px solid white;
-        outline: 1px solid green;
-        margin-top: 1px;
+        content: "VENUT";
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #3F826D;
+        display: inline-flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background-image: url("../images/venut.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: left center;
     }
-
+    
     .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
+        display: none;
+        position: fixed; 
+        z-index: 1; 
+        padding-top: 100px;
         left: 0;
         top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgba(0,0,0,0.4); 
       }
       
-      /* Modal Content */
       .modal-content {
         background-color: #fefefe;
         margin: auto;
@@ -412,7 +429,6 @@ textarea {
         width: 30%;
       }
       
-      /* The Close Button */
       .close {
         color: #aaaaaa;
         float: right;
