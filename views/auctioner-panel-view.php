@@ -24,117 +24,86 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
         </div>
 
         <div id="auctions-menu">
-            <form method="GET" action="" class="filter-form">
-                <input type="hidden" name="form-type" value="filter-auctions">
-                <input type="hidden" name="menu" value="auctions">
-                    <div class="auction-gallery-header">
-                        <div class="filter-div">
-                        <label for="status">Filtrar per estat:</label>
-                        <select name="status" id="status">
-                            <option value="">Totes</option>
-                            <option value="oberta">Oberta</option>
-                            <option value="tancada">Tancada</option>
-                        </select>
+            <div id="current-auctions">
+                <form method="GET" action="" class="filter-form">
+                    <input type="hidden" name="form-type" value="filter-auctions">
+                    <input type="hidden" name="menu" value="auctions">
+                        <div class="auction-gallery-header">
+                            <div class="filter-div">
+                            <label for="status">Filtrar per estat:</label>
+                            <select name="status" id="status">
+                                <option value="">Totes</option>
+                                <option value="oberta">Oberta</option>
+                                <option value="tancada">Tancada</option>
+                            </select>
 
-                        <label for="start_date">Data d'inici:</label>
-                        <input type="date" name="start_date" id="start_date">
+                            <label for="start_date">Data d'inici:</label>
+                            <input type="date" name="start_date" id="start_date">
 
-                        <label for="end_date">Data de finalització:</label>
-                        <input type="date" name="end_date" id="end_date">
+                            <label for="end_date">Data de finalització:</label>
+                            <input type="date" name="end_date" id="end_date">
 
-                        <div id="filter-btn-div">
-                            <button class="filter-btn" type="submit">Aplicar filtres</button>
+                            <div id="filter-btn-div">
+                                <button class="filter-btn" type="submit">Aplicar filtres</button>
+                            </div>
                         </div>
+
+                        <button type="button" name="new-auction-button" value="create" id="new-auction-button" class="add-btn">
+                            <img src="/images/add-icon.svg" alt="add-icon" class="add-icon">
+                            <span class="button-text">Nova subhasta</span>
+                        </button>
+
                     </div>
+                </form>
 
-                    <button type="button" name="new-auction-button" value="create" id="new-auction-button" class="add-btn">
-                        <img src="/images/add-icon.svg" alt="add-icon" class="add-icon">
-                        <span class="button-text">Nova subhasta</span>
-                    </button>
-
-                </div>
-            </form>
-
-            <table id="auctions-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Descripció</th>
-                        <th>Productes</th>
-                        <th colspan="3">Estat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php if (!empty($auctions)): ?>
-                    <?php foreach ($auctions as $auction): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($auction['id'] ?? ''); ?></td>
-                                <td><?php echo date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
-                                <td><?php echo htmlspecialchars($auction['description'] ?? ''); ?></td>
-                                <td><?php echo !empty($auction['product_names']) ? htmlspecialchars($auction['product_names']) : 'No hi ha productes'; ?></td>
-                                <td><?php echo htmlspecialchars($auction['status'] ?? ''); ?></td>
-                                <td>
-                                    <?php if ($auction['status'] === 'oberta'): ?>
-                                        <form method="POST" action="/controllers/auctioner-panel-controller.php">
-                                            <input type="hidden" name="form-type" value="update-auction">
-                                            <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
-                                            <input type="hidden" name="status" value="iniciada">
-                                            <button class="accept-btn">Inicia subhasta</button>
-                                        </form>
-                                    <?php elseif ($auction['status'] === 'iniciada'): ?>
-                                        <form method="POST" action="/controllers/auctioner-panel-controller.php">
-                                            <input type="hidden" name="form-type" value="update-auction">
-                                            <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
-                                            <input type="hidden" name="status" value="tancada">
-                                            <button class="deny-btn">Tanca subhasta</button>
-                                        </form>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
+                <table id="auctions-table">
+                    <thead>
                         <tr>
-                            <td colspan="5">No hi ha subhastes disponibles amb els filtres seleccionats.</td>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Descripció</th>
+                            <th>Productes</th>
+                            <th colspan="3">Estat</th>
                         </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-        
-        <div id="products-menu">
-            <form id="filter-form" method="GET" action="">
-            <input type="hidden" name="form-type" value="filter-products">
-            <input type="hidden" name="menu" value="products">
-                <div class="auction-gallery-header">
-                    <div class="filter-div">
-                        <label for="filter-status">Filtrar per estat:</label>
-                        <select name="filter-status" id="filter-status">
-                            <option value="">Tots els estats</option>
-                            <option value="pendent">Pendent</option>
-                            <option value="rebutjat">Rebutjat</option>
-                            <option value="pendent d’assignació a una subhasta">Pendent d’assignació a una subhasta</option>
-                            <option value="assignat a una subhasta">Assignat a una subhasta</option>
-                            <option value="pendent_adjudicacio">Pendent d'adjudicació</option>
-                            <option value="venut">Venut</option>
-                            <option value="retirat">Retirat</option>
-                        </select>
-
-                        <label for="order-price">Ordenar per preu:</label>
-                        <select name="order-price" id="order-price">
-                            <option value=""></option>
-                            <option value="asc">Ascendent</option>
-                            <option value="desc">Descendent</option>
-                        </select>
-
-                        <button class="filter-btn" type="submit">Aplicar filtres</button>
-                    </div>
-                </div>
-            </form>
-
-            <div class="auction-gallery">
-
-                <table hidden id="new-auction">
+                    </thead>
+                    <tbody>
+                    <?php if (!empty($auctions)): ?>
+                        <?php foreach ($auctions as $auction): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($auction['id'] ?? ''); ?></td>
+                                    <td><?php echo date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
+                                    <td><?php echo htmlspecialchars($auction['description'] ?? ''); ?></td>
+                                    <td><?php echo !empty($auction['product_names']) ? htmlspecialchars($auction['product_names']) : 'No hi ha productes'; ?></td>
+                                    <td><?php echo htmlspecialchars($auction['status'] ?? ''); ?></td>
+                                    <td>
+                                        <?php if ($auction['status'] === 'oberta'): ?>
+                                            <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                                                <input type="hidden" name="form-type" value="update-auction">
+                                                <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                                <input type="hidden" name="status" value="iniciada">
+                                                <button class="accept-btn">Inicia subhasta</button>
+                                            </form>
+                                        <?php elseif ($auction['status'] === 'iniciada'): ?>
+                                            <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                                                <input type="hidden" name="form-type" value="update-auction">
+                                                <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                                <input type="hidden" name="status" value="tancada">
+                                                <button class="deny-btn">Tanca subhasta</button>
+                                            </form>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="5">No hi ha subhastes disponibles amb els filtres seleccionats.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+            
+            <table hidden id="new-auction">
                     <thead>
                         <tr>
                             <th colspan="7">Nova Subhasta</th>
@@ -182,6 +151,39 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                 </table>
                 <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="create-btn">Crea subasta</button>
                 </form>
+        </div>
+        
+        <div id="products-menu">
+            <form id="filter-form" method="GET" action="">
+            <input type="hidden" name="form-type" value="filter-products">
+            <input type="hidden" name="menu" value="products">
+                <div class="auction-gallery-header">
+                    <div class="filter-div">
+                        <label for="filter-status">Filtrar per estat:</label>
+                        <select name="filter-status" id="filter-status">
+                            <option value="">Tots els estats</option>
+                            <option value="pendent">Pendent</option>
+                            <option value="rebutjat">Rebutjat</option>
+                            <option value="pendent d’assignació a una subhasta">Pendent d’assignació a una subhasta</option>
+                            <option value="assignat a una subhasta">Assignat a una subhasta</option>
+                            <option value="pendent_adjudicacio">Pendent d'adjudicació</option>
+                            <option value="venut">Venut</option>
+                            <option value="retirat">Retirat</option>
+                        </select>
+
+                        <label for="order-price">Ordenar per preu:</label>
+                        <select name="order-price" id="order-price">
+                            <option value=""></option>
+                            <option value="asc">Ascendent</option>
+                            <option value="desc">Descendent</option>
+                        </select>
+
+                        <button class="filter-btn" type="submit">Aplicar filtres</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="auction-gallery">
 
                 <table id="auctioneer-panel">
                     <thead>

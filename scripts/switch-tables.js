@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const newAuction = document.getElementById('new-auction');
-    const auctioneerPanel = document.getElementById('auctioneer-panel');
+    const auctioneerPanel = document.getElementById('current-auctions');
     
     const newAuctionButton = document.getElementById('new-auction-button');
     const auctionCreateButton = document.getElementById('auction-create');
@@ -14,9 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showNewAuctionTable() {
         newAuction.hidden = false;
-        auctioneerPanel.hidden = true;
-        newAuctionButton.style.display = "none";
-        filterForm.style.display = "none";
+        auctioneerPanel.style.display = "none";
         auctionCreateButton.hidden = false;
     }
 
@@ -25,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         productsMenu.style.display = "block";
         auctionsButton.style.borderBottom = "none";
         auctionsMenu.style.display = "none";
+        newAuction.hidden = true;
+        auctionCreateButton.hidden = true;
     }
 
     function showAuctionsMenu() {
@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
         productsMenu.style.display = "none";
         auctionsButton.style.borderBottom = "2px solid";
         auctionsMenu.style.display = "block";
+        newAuction.hidden = true;
+        auctionCreateButton.hidden = true;
+        auctioneerPanel.style.display = "block";
     }
 
     const urlParams = new URLSearchParams(window.location.search);
