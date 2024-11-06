@@ -199,7 +199,7 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                     <tbody>
                     <?php if (count($products) > 0): ?>
                         <?php foreach ($products as $row): ?>
-                            <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                            <form id="product-form-<?= htmlspecialchars($row['id']); ?>" method="POST" action="/controllers/auctioner-panel-controller.php">
                                 <tr class="short-info-dropdown">
                                     <td id="icon-td">
                                         <div class="arrow-icon">
@@ -212,7 +212,8 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                                     <td><?= htmlspecialchars($row['name']); ?></td>
                                     <td><?= htmlspecialchars($row['short_description']); ?></td>
                                     <td><?= number_format($row['starting_price'], 2); ?></td>
-                                    <td><div class="status" value="<?= htmlspecialchars($row['status']); ?>"></td>
+                                    <td><div class="status" value="<?= htmlspecialchars($row['status']); ?>"></div></td>
+
                                     <input type="hidden" name="form-type" value="product-assignment">
                                     <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']); ?>">
                                     <input type="hidden" name="user_id" value="<?= htmlspecialchars($row['user_id']); ?>">
@@ -234,15 +235,15 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                                                     </div>
                                                 </div>
                                                 <div class="dropdown-info-field">
-                                                    <label class="panel-label" for="short_description">Descripció breu:</label>
+                                                    <label class="panel-label" for="short_description_<?= $row['id']; ?>">Descripció breu:</label>
                                                     <div class="product-info">
-                                                        <input type="text" name="short_description" value="<?= htmlspecialchars($row['short_description']); ?>"></input>
+                                                        <input type="text" name="short_description" id="short_description_<?= $row['id']; ?>" value="<?= htmlspecialchars($row['short_description']); ?>">
                                                     </div>
                                                 </div>
                                                 <div class="dropdown-info-field">
-                                                    <label class="panel-label" for="long_description">Descripció extendida:</label>
+                                                    <label class="panel-label" for="long_description_<?= $row['id']; ?>">Descripció extendida:</label>
                                                     <div class="product-info">
-                                                        <input type="text" name="long_description" value="<?= htmlspecialchars($row['long_description']); ?>"></input>
+                                                        <input type="text" name="long_description" id="long_description_<?= $row['id']; ?>" value="<?= htmlspecialchars($row['long_description']); ?>">
                                                     </div>
                                                 </div>
                                                 <div class="dropdown-info-field">
@@ -258,11 +259,9 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                                                     </div>
                                                 </div>
                                                 <div class="dropdown-info-field">
-                                                    <label class="panel-label" for="message">Missatge al venedor:</label>
+                                                    <label class="panel-label" for="message_<?= $row['id']; ?>">Missatge al venedor:</label>
                                                     <div class="product-info">
-                                                        <textarea name="message" id="auctioner-message" placeholder="Escriu un missatge per al venedor">
-                                                            <?= htmlspecialchars($row['auctioneer_message'] ?? ''); ?>
-                                                        </textarea>
+                                                        <textarea name="message" id="message_<?= $row['id']; ?>" placeholder="Escriu un missatge per al venedor"><?= htmlspecialchars($row['auctioneer_message'] ?? ''); ?></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -270,14 +269,16 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                                         </div>
                                         <?php if (in_array($row['status'], ['pendent'])): ?>
                                         <div class="dropdown-buttons">
-                                            <button name="action" class="accept-btn" id="accept-btn" type="submit" value="accept">Acceptar</button>
+                                            <button name="action" class="accept-btn" type="submit" value="accept">Acceptar</button>
                                             <button name="action" class="deny-btn" type="submit" value="reject">Rebutjar</button>
-                                            <button name="action" class="assign-btn" type="button">Acceptar i assignar</button>
+                                            <button name="action" class="assign-btn" type="button" value="accept-and-assign" data-product-id="<?= htmlspecialchars($row['id']); ?>">
+                                                Acceptar i assignar
+                                            </button>
                                         </div>
                                         <?php endif; ?>
                                         <?php if (in_array($row['status'], ['pendent d’assignació a una subhasta'])): ?>
                                         <div class="dropdown-buttons">
-                                            <button name="action" class="assign-btn" type="button">Assignar subhasta</button>
+                                            <button name="action" class="assign-btn" type="submit" value="assign">Assignar subhasta</button>
                                         </div>
                                         <?php endif; ?>
                                         <?php if (in_array($row['status'], ['assignat a una subhasta'])): ?>
@@ -287,13 +288,14 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                                         <?php endif; ?>
                                     </td>
                                 </tr>
-                                <div class="modal" id="auction-modal-confirm">
+                                <div class="modal" id="auction-modal-confirm_<?= $row['id']; ?>">
                                     <div class="modal-content">
-                                        <span class="close" id="close-modal">&times;</span>
+                                        <span class="close" id="close-modal_<?= $row['id']; ?>">&times;</span>
                                         <h1>Assigna a una subhasta activa</h1>
                                         <?php if (count($activeAuctions) > 0): ?>
-                                            <select name="auction-select">
-                                                <?php foreach ($activeAuctions as $auction): ?>                                                    <option value="<?= htmlspecialchars($auction['id']); ?>">
+                                            <select name="auction-select" id="auction-select_<?= $row['id']; ?>">
+                                                <?php foreach ($activeAuctions as $auction): ?>
+                                                    <option value="<?= htmlspecialchars($auction['id']); ?>">
                                                         <?= htmlspecialchars($auction['description']); ?>
                                                     </option>
                                                 <?php endforeach; ?>
@@ -320,10 +322,9 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
 
     <?php include(__DIR__ . "/footer-view.php"); ?>
 
+    <script src="../scripts/dropdown-tables.js"></script>
+    <script src="../scripts/switch-tables.js"></script>
+    <script src="../scripts/product-selection.js"></script>
+    <script src="../scripts/modal.js"></script>
 </body>
 </html>
-
-<script src="../scripts/dropdown-tables.js"></script>
-<script src="../scripts/switch-tables.js"></script>
-<script src="../scripts/product-selection.js"></script>
-<script src="../scripts/modal.js"></script>
