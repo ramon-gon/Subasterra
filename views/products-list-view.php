@@ -5,7 +5,7 @@ require_once(__DIR__ . "/../controllers/products-controller.php");
 $productModel = new ProductModel($dbConnection);
 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$items_per_page = 9;
+$items_per_page = 12;
 
 $offset = ($page - 1) * $items_per_page;
 
