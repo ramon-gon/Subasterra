@@ -7,11 +7,13 @@ html, body {
     display: flex;
     flex-direction: column;
     font-family: 'Roboto';
+    background-color: #f9f9f9;
 }
 
 .container-auctions {
     flex: 1;
     padding: 1.5rem;
+    background-color: #f9f9f9;
 }
 
 .selector-menu-auctioneer {
@@ -140,6 +142,10 @@ th, td {
     text-align: left;
 }
 
+#last-th, #last-td {
+    padding: 25px 0px;
+}
+
 #icon-td {
     padding: 0px 0px;
 }
@@ -221,24 +227,72 @@ textarea {
     min-height: 15px;
     max-height: 100px;
 }
+
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.start-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #399E5A;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.start-btn:hover {
+    background-color: var(--secondary-color-dark);    
+}
+
+.start-btn img {
+    filter: brightness(0) invert(1);
+}
+
+.close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #D33E43;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.close-btn img {
+    filter: brightness(0) invert(1);
+}
+
+
 .add-btn, .accept-btn, .create-btn {
-    background-color: var(--secondary-color);
+    background-color: #399E5A;
     color: white;
     border: none;
     padding: 10px 15px;
     font-size: 16px;
-    border-radius: 8px;
+    border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .assign-btn {
-    background-color: #007bff;
+    background-color: #437C90;
     color: white;
     border: none;
     padding: 10px 15px;
     font-size: 16px;
-    border-radius: 8px;
+    border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -289,12 +343,12 @@ textarea {
 }
 
 .deny-btn {
-    background-color: var(--primary-color);
+    background-color: #D33E43;
     color: white;
     border: none;
     padding: 10px 15px;
     font-size: 16px;
-    border-radius: 8px;
+    border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -311,7 +365,54 @@ textarea {
     font-size: 14px;
 }
 
-/* PENDENT TOT EL TEMA DELS ESTATS FINS QUE SIGUI IMPLEMENTADA LA FUNCIONALITAT */
+    .status[value="oberta"]::before {
+        content: "OBERT";
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #2978A0;
+        display: inline-flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background-image: url("../images/obert.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: left center; 
+    }
+
+    .status[value="tancada"]::before {
+        content: "TANCAT";
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #C03221;
+        display: inline-flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background-image: url("../images/tancat.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: left center;    
+    }
+
+    .status[value="iniciada"]::before {
+        content: "INICIAT";
+        font-family: 'Montserrat';
+        font-weight: bold;
+        color: #136F63;
+        display: inline-flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background-image: url("../images/iniciat.svg");
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: left center;
+    }
+
     .status[value="pendent"]::before {
         content: "PENDENT";
         font-family: 'Montserrat';

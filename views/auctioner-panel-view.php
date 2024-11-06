@@ -63,34 +63,36 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                             <th>Data</th>
                             <th>Descripció</th>
                             <th>Productes</th>
-                            <th colspan="3">Estat</th>
+                            <th id="last-th">Estat</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php if (!empty($auctions)): ?>
                         <?php foreach ($auctions as $auction): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($auction['id'] ?? ''); ?></td>
-                                    <td><?php echo date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
-                                    <td><?php echo htmlspecialchars($auction['description'] ?? ''); ?></td>
-                                    <td><?php echo !empty($auction['product_names']) ? htmlspecialchars($auction['product_names']) : 'No hi ha productes'; ?></td>
-                                    <td><?php echo htmlspecialchars($auction['status'] ?? ''); ?></td>
-                                    <td>
-                                        <?php if ($auction['status'] === 'oberta'): ?>
-                                            <form method="POST" action="/controllers/auctioner-panel-controller.php">
-                                                <input type="hidden" name="form-type" value="update-auction">
-                                                <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
-                                                <input type="hidden" name="status" value="iniciada">
-                                                <button class="accept-btn">Inicia subhasta</button>
-                                            </form>
-                                        <?php elseif ($auction['status'] === 'iniciada'): ?>
-                                            <form method="POST" action="/controllers/auctioner-panel-controller.php">
-                                                <input type="hidden" name="form-type" value="update-auction">
-                                                <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
-                                                <input type="hidden" name="status" value="tancada">
-                                                <button class="deny-btn">Tanca subhasta</button>
-                                            </form>
-                                        <?php endif; ?>
+                                    <td><?= htmlspecialchars($auction['id'] ?? ''); ?></td>
+                                    <td><?= date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
+                                    <td><?= htmlspecialchars($auction['description'] ?? ''); ?></td>
+                                    <td><?= !empty($auction['product_names']) ? htmlspecialchars($auction['product_names']) : 'No hi ha productes'; ?></td>
+                                    <td id="last-td">
+                                        <div class="status-container">    
+                                            <div class="status" value="<?= htmlspecialchars($auction['status']); ?>"></div>
+                                            <?php if ($auction['status'] === 'oberta'): ?>
+                                                <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                                                    <input type="hidden" name="form-type" value="update-auction">
+                                                    <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                                    <input type="hidden" name="status" value="iniciada">
+                                                    <button class="start-btn"><img src="../images/iniciat.svg" alt="Iniciar subhasta"></button>
+                                                </form>
+                                            <?php elseif ($auction['status'] === 'iniciada'): ?>
+                                                <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                                                    <input type="hidden" name="form-type" value="update-auction">
+                                                    <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                                    <input type="hidden" name="status" value="tancada">
+                                                    <button class="close-btn"><img src="../images/tancat.svg" alt="Tancar subhasta"></button>
+                                                </form>
+                                            <?php endif; ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
