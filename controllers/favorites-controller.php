@@ -20,4 +20,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
 
 $productModel = new ProductModel($dbConnection);
 $products = $productModel->getProducts();
-?>
+
