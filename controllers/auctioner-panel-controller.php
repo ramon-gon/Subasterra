@@ -3,10 +3,11 @@ require_once(__DIR__ . "/session-controller.php");
 lazy_session_start();
 
 include_once __DIR__ . '/../config/config.php';
-include_once __DIR__ . '/../models/productmodel.php';
+include_once __DIR__ . '/../models/products-model.php';
 include_once __DIR__ . '/../models/auctions-model.php';
 include_once __DIR__ . '/../models/users-model.php';
 include_once __DIR__ . '/../models/notifications-model.php';
+include_once __DIR__ . '/../models/auctions-products-model.php';
 
 $auctionModel = new AuctionModel($dbConnection);
 $auctions = $auctionModel->getAuctions();
@@ -20,6 +21,7 @@ $usersModel = new UsersModel($dbConnection);
 $subhastadorId = $usersModel->getIdByUsername('subhastador');
 
 $notificationsModel = new NotificationsModel($dbConnection);
+$auctionsProductsModel = new AuctionProductModel($dbConnection);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $form_type = $_GET['form-type'] ?? '';
@@ -91,9 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         } elseif ($action === 'accept-and-assign') {
             $message = 'Producte assignat a una subhasta. ' . $message;
             $productModel->updateProductStatus($product_id, 'assignat a una subhasta', $message);
+            $auctionsProductsModel->assignProductToAuction($auction_id, $product_id);
         } elseif ($action === 'unassign') {
             $message = 'Producte ha estat desassignat de la subhasta.';
             $productModel->updateProductStatus($product_id, 'pendent d’assignació a una subhasta', $message);
+            $auctionsProductsModel->unassignProductFromAuction($auction_id, $product_id);
         }
         $notificacions = $notificationsModel->sendNotification($message, $subhastadorId, $user_id);         
         $productModel->updateProductDescriptions($product_id, $short_description, $long_description);
