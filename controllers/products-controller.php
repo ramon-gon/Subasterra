@@ -3,7 +3,7 @@ require_once(__DIR__ . "/session-controller.php");
 lazy_session_start();
 
 include_once __DIR__ . '/../config/config.php';
-include_once __DIR__ . '/../models/productmodel.php';
+include_once __DIR__ . '/../models/products-model.php';
 
 $role = $_SESSION['role'] ?? null;
 
