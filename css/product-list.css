@@ -7,6 +7,17 @@
     --paynes-gray-2: #66717e;
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container-auctions {
+    flex-grow: 1;
+    padding: 1.5rem;
+}
+
 body, html {
     background-color: var(--off-white);
     color: var(--paynes-gray-2);
@@ -17,7 +28,11 @@ body, html {
 
 .container-auctions {
     flex: 1;
-    padding: 1.5rem;
+    padding: 1rem;
+}
+
+.container-auctions.no-products {
+    padding: 0;
 }
 
 .search-form {
@@ -145,21 +160,22 @@ body, html {
         width: 100%;
     }
 }
-    .pagination-controls {
-        text-align: center; 
-        margin-top: 20px; 
-    }
-    
-    .pagination-button {
-        color: black;
-        font-weight: bold;
-        display: inline-block;
-        padding: 8px 12px;
-        text-decoration: none;
-        margin: 0 5px; 
-        border-radius: 5px; 
-    }
-    
-    .pagination-button.active {
-        background-color: #ccc; 
-    }    
+
+.pagination-controls {
+    text-align: center; 
+    margin-top: 20px; 
+}
+
+.pagination-button {
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    padding: 8px 12px;
+    text-decoration: none;
+    margin: 0 5px; 
+    border-radius: 5px; 
+}
+
+.pagination-button.active {
+    background-color: #ccc; 
+}    
