@@ -297,23 +297,23 @@ unset($_SESSION['message_success']);
                                         </div>
                                         <?php if (in_array($row['status'], ['pendent'])): ?>
                                         <div class="dropdown-buttons">
-                                            <button name="action" class="accept-btn" type="submit" value="accept">Acceptar</button>
-                                            <button name="action" class="deny-btn" type="submit" value="reject">Rebutjar</button>
-                                            <button name="action" class="assign-btn" type="button" value="accept-and-assign" data-product-id="<?= htmlspecialchars($row['id']); ?>">
+                                            <button name="action" class="accept-btn-dropdown" type="submit" value="accept">Acceptar</button>
+                                            <button name="action" class="deny-btn-dropdown" type="submit" value="reject">Rebutjar</button>
+                                            <button name="action" class="assign-btn-dropdown" type="button" value="accept-and-assign" data-product-id="<?= htmlspecialchars($row['id']); ?>">
                                                 Acceptar i assignar
                                             </button>
                                         </div>
                                         <?php endif; ?>
                                         <?php if (in_array($row['status'], ['pendent d’assignació a una subhasta'])): ?>
                                         <div class="dropdown-buttons">
-                                            <button name="action" class="assign-btn" type="submit" value="assign" data-product-id="<?= htmlspecialchars($row['id']); ?>">
+                                            <button name="action" class="assign-btn-dropdown" type="submit" value="assign" data-product-id="<?= htmlspecialchars($row['id']); ?>">
                                                 Assignar a subhasta
                                             </button>
                                         </div>
                                         <?php endif; ?>
                                         <?php if (in_array($row['status'], ['assignat a una subhasta'])): ?>
                                         <div class="dropdown-buttons">
-                                            <button name="action" value="unassign" class="retire-btn" type="submit">Desassignar subhasta</button>
+                                            <button name="action" value="unassign" class="retire-btn-dropdown" type="submit">Desassignar subhasta</button>
                                         </div>
                                         <?php endif; ?>
                                     </td>
