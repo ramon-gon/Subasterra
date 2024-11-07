@@ -66,15 +66,15 @@ INSERT INTO products (name, short_description, long_description, observations, p
 ('Auriculars Sony', 'Auriculars sense fil', 'Auriculars sense fil amb cancel·lació de soroll.', 'Autonomia de fins a 30 hores.', '/../images/sonyhp.jpg', 199.99, 2),
 ('Tablet Apple', 'Tablet amb pantalla Retina', 'Tablet amb pantalla Retina de 10.2 polzades i 128 GB de capacitat.', 'Compatible amb Apple Pencil.', '/../images/ipad.jpg', 329.99, 2),
 ('Càmera Canon', 'Càmera digital', 'Càmera rèflex digital amb objectiu de 18-55mm.', 'Ideal per a fotografies de paisatges i retrats.', '/../images/canon.jpg', 499.99, 1),
-('Televisor3 LG', 'Televisor 4K UHD', 'Televisor LG de 55 polzades amb resolució 4K i compatibilitat amb HDR.', 'Pantalla amb alta resolució i colors vius.', '/../images/lgtv.jpg', 699.99, 2),
-('Consola PlrayStation 5', 'Consola de nova generació', 'Consola de jocs PlayStation 5 amb gràfics de nova generació i SSD ultra ràpid.', 'Inclou un controlador extra i un joc.', '/../images/ps5.jpg', 499.99, 1),
-('Auricularts Bose', 'Auriculars amb so immersiu', 'Auriculars amb so de qualitat superior i cancel·lació de soroll activa.', 'Lleugers i còmodes per a ús prolongat.', '/../images/bosehp.jpg', 299.99, 2),
-('Smartwatcth Garmin', 'Rellotge intel·ligent', 'Rellotge intel·ligent per a esportistes amb GPS integrat i monitor de ritme cardíac.', 'Resistent a l\aigua fins a 50 metres.', '/../images/smartwatch.jpg', 249.99, 2),
-('Lapttop Acer', 'Portàtil lleuger', 'Un portàtil lleuger amb pantalla de 15.6 polzades.', 'Ideal per a treball i entreteniment.', '/../images/acer.jpg', 599.99, 1),
-('Smartphuone Samsung', 'Smartphone amb càmera', 'Smartphone amb càmera de 64 MP i bateria de llarga durada.', 'Pantalla AMOLED de 6.5 polzades.', '/../images/samsung.jpg', 399.99, 1),
-('Auriculuuars Sony', 'Auriculars sense fil', 'Auriculars sense fil amb cancel·lació de soroll.', 'Autonomia de fins a 30 hores.', '/../images/sonyhp.jpg', 199.99, 2),
-('Tabluuet Apple', 'Tablet amb pantalla Retina', 'Tablet amb pantalla Retina de 10.2 polzades i 128 GB de capacitat.', 'Compatible amb Apple Pencil.', '/../images/ipad.jpg', 329.99, 2),
-('Càmuera Canon', 'Càmera digital', 'Càmera rèflex digital amb objectiu de 18-55mm.', 'Ideal per a fotografies de paisatges i retrats.', '/../images/canon.jpg', 499.99, 1);
+('Bicicleta de Muntanya', 'Bicicleta resistent', 'Bicicleta de muntanya amb 21 velocitats i suspensió doble.', 'Ideal per a camins i rutes de muntanya.', '/../images/bicicleta.jpg', 299.99, 2),
+('Aspirador Dyson', 'Aspirador sense fil', 'Aspirador sense fil amb alta potència i tecnologia ciclònica.', 'Inclou accessoris per a superfícies difícils.', '/../images/dyson.jpg', 399.99, 1),
+('Altaveu Bluetooth JBL', 'Altaveu portàtil', 'Altaveu portàtil amb connectivitat Bluetooth i resistent', 'Durada de bateria de fins a 12 hores.', '/../images/jbl.jpg', 89.99, 2),
+('Cafetera Nespresso', 'Cafetera de càpsules', 'Cafetera Nespresso amb sistema de càpsules i escuma de llet automàtica.', 'Ve amb pack de benvinguda de càpsules.', '/../images/nespresso.jpg', 129.99, 2),
+('Rellotge Casio', 'Rellotge clàssic', 'Rellotge Casio amb pantalla digital i cronòmetre.', 'Clàssic i resistent', '/../images/casio.jpg', 39.99, 1),
+('Escúter Elèctric', 'Escúter amb autonomia llarga', 'Escúter elèctric amb autonomia de 25 km i velocitat màxima de 20 km/h.', 'Plegable i fàcil de transportar.', '/../images/scuter.jpg', 499.99, 2),
+('Llum LED', 'Llum per a fotografia', 'Llum LED amb temperatura de color ajustable per a selfies i vídeo.', 'Inclou trípode ajustable.', '/../images/ringlight.jpg', 59.99, 2),
+('Robot Aspirador Xiaomi', 'Aspirador intel·ligent', 'Robot aspirador amb sistema de navegació làser', 'Compatible amb Alexa i Google Home.', '/../images/robot.jpg', 249.99, 1),
+('Microones Samsung', 'Microones amb grill', 'Microones Samsung amb funció grill i interior ceràmic.', 'Fàcil de netejar i de gran capacitat.', '/../images/microones.jpg', 139.99, 1);
 
 INSERT INTO auctions (auction_date, description, status) 
 VALUES (NOW(), 'Subhasta per al producte 1', 'oberta');
