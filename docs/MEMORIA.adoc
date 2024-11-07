@@ -361,8 +361,23 @@ Per poder treballar en l'aplicació de forma local, necessitem tenir un entorn d
 
 == 6. Confecció del manual d’usuari
 
-== 7. Línies futures
+== 8. Línies futures
+1. Habilitar la possibilitat que els usuaris puguin guardar productes com a favorits, permetent-los fer un seguiment dels articles que més els interessen i en els quals podrien voler participar en el futur.
 
-== 8. Conclusions
+2. Permetre que els usuaris puguin participar en una subhasta sense necessitat d’estar registrats, facilitant l’accessibilitat i augmentant la participació a la plataforma.
 
-== 9. Webgrafia
+3. Ampliar el projecte per tal que les subhastes es puguin realitzar completament en línia en lloc de presencials, permetent als usuaris participar des de qualsevol lloc.
+
+4. Implementar sessions de subhasta en temps real, on cada subhasta tingui una hora d’inici i una hora de finalització, proporcionant una experiència dinàmica i delimitada per als usuaris.
+
+5. Permetre que els usuaris puguin retirar una puja realitzada mentre la subhasta es trobi activa, oferint més flexibilitat i control sobre les seves ofertes.
+
+== 9. Conclusions
+=== Ismael Benítez Martínez
+En general m'he familiaritzat més amb l'ús de JavaScript, PHP, HTML, CSS y sql. He après a manipular el HTML i css a través del DOM amb JavaScript, a fer servir el PHP per manipular informació de la base de dades i a treballar amb el model-vista-controlador.
+
+== 10. Webgrafia
+1. Stack Overflow. Stack Overflow. https://stackoverflow.com
+2. W3Schools. W3Schools Online Web Tutorials. https://www.w3schools.com
+3. Mozilla Developer Network (MDN). MDN Web Docs. https://developer.mozilla.org
+4. OpenAI. ChatGPT. https://chat.openai.com
