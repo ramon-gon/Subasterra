@@ -360,8 +360,51 @@ Per poder treballar en l'aplicació de forma local, necessitem tenir un entorn d
 6. Si tot ha anat bé, podrem accedir a l'aplicació a `http://localhost:8000`.
 
 == 6. Confecció del manual d’usuari
+A continuació, es detallen les instruccions per a l'ús de l'aplicació:
 
-== 8. Línies futures
+=== Pantalla principal
+* És el punt d'entrada a la plataforma i és accessible per a tots els usuaris (logats i no logats).
+* Mostra una llista de tots els productes que han sigut acceptats per a una subhasta.
+* A la part inferior de la pàgina, es mostren els controls de paginació per a navegar entre les diferents pàgines de productes.
+* Al header de la pàgina, es mostra un menú de buscador per a filtrar els productes per nom i també per ordenar-los per preu.
+
+=== Header
+* Conté el logo de la plataforma, que redirigeix a la pàgina principal.
+* A la dreta, es mostren els enllaços a les diferents seccions de la plataforma: Llistat de productes, Panell de venedors, Panell de subhastadors i la secció d'usuari, que, depenent de si l'usuari està logat o no, mostra una icona de perfil i la secció de notificacions o el botó de login.
+
+=== Footer
+* Conté el Copyright de la plataforma, els noms dels membres de l'equip de desenvolupament i un enllaç al repositori del projecte (accessible mitjançant el logo de GitLab a la dreta del footer).
+
+=== Login
+* Permet als usuaris autenticar-se a la plataforma.
+* Els usuaris poden accedir a la pàgina de login fent clic al botó de login al header.
+* Demana un usuari i una contrasenya per a l'autenticació.
+* Si les dades són correctes, l'usuari serà redirigit a la pàgina principal de la plataforma.
+* Si les dades són incorrectes, es mostrarà un missatge d'error.
+
+=== Panell de venedors
+* Permet als usuaris que han iniciat sessió com a venedors gestionar els productes que han creat.
+* Es pot accedir a aquesta secció fent clic a l'enllaç del panell de venedors al header.
+* Mostra una llista amb format de tauja de tots els productes creats per l'usuari.
+* Si es fa clic a un producte, es desplegarà una secció amb més informació sobre el producte i les opcions per a modificar-lo o eliminar-lo.
+* A la part superior hi ha un botó per a afegir un nou producte.
+
+=== Afegir producte
+* Permet als venedors afegir nous productes a la plataforma.
+* Es pot accedir a aquesta secció fent clic al botó d'afegir producte al panell de venedors.
+* Demana un nom, descripcions, una imatge i un preu per al producte.
+* El nom, el preu i la imatge són camps obligatoris.
+* Si es fa clic al botó d'afegir producte, el producte es guardarà a la base de dades.
+* Si hi ha algun error en el formulari, es mostrarà un missatge d'error.
+
+=== Panell de subhastadors
+* Té dues seccions: Llistat de subhastes i Llistat de productes.
+* Es pot accedir a les diferents seccions fent clic als enllaços corresponents al "sub-menú" superior (sota el header).
+* La secció de llistat de subhastes mostra una llista de totes les subhastes actives i permet als subhastadors configurar-les mitjançant els botons amb icones que apareixen a la dreta de cada subhasta.
+* La secció de llistat de productes mostra una llista de tots els productes que han sigut acceptats per a una subhasta i permet als subhastadors acceptar-los, rebutjar-los o assignar-los a una subhasta.
+* Quan s'utilitza el botó d'assignar un producte a una subhasta, es mostra un modal amb un desplegable per a seleccionar la subhasta a la qual es vol assignar el producte.
+
+== 7. Línies futures
 1. Habilitar la possibilitat que els usuaris puguin guardar productes com a favorits, permetent-los fer un seguiment dels articles que més els interessen i en els quals podrien voler participar en el futur.
 
 2. Permetre que els usuaris puguin participar en una subhasta sense necessitat d’estar registrats, facilitant l’accessibilitat i augmentant la participació a la plataforma.
@@ -372,14 +415,14 @@ Per poder treballar en l'aplicació de forma local, necessitem tenir un entorn d
 
 5. Permetre que els usuaris puguin retirar una puja realitzada mentre la subhasta es trobi activa, oferint més flexibilitat i control sobre les seves ofertes.
 
-== 9. Conclusions
+== 8. Conclusions
 === Ismael Benítez Martínez
 En general m'he familiaritzat més amb l'ús de JavaScript, PHP, HTML, CSS y sql. He après a manipular el HTML i css a través del DOM amb JavaScript, a fer servir el PHP per manipular informació de la base de dades i a treballar amb el model-vista-controlador.
 
 === Roger Ortiz Leal
 Aquest projecte m'ha donat l'oportunitat d'aprendre i créixer en el camp del desenvolupament web. He treballat en noves tecnologies i hem superat reptes importants en equip. Ha estat una experiència enriquidora que estic segur que em servirà en futurs projectes.
 
-== 10. Webgrafia
+== 9. Webgrafia
 1. Stack Overflow. Stack Overflow. https://stackoverflow.com
 2. W3Schools. W3Schools Online Web Tutorials. https://www.w3schools.com
 3. Mozilla Developer Network (MDN). MDN Web Docs. https://developer.mozilla.org
