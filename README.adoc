@@ -17,4 +17,4 @@ Els servidors on s'ha desplegat el projecte són:
 * **Producció** (Ismael Benítez Martínez): `192.168.50.153`
 ****
 
-Per a més informació, consulteu la link:docs/MEMORIA.adoc[**Memòria del projecte**].
+Per a més informació, consulteu la link:docs/MEMORIA.adoc[**Memòria del projecte**] (també pots accedir a la versió en PDF a link:docs/MEMORIA.pdf[**aquest enllaç**]).
