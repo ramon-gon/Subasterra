@@ -11,6 +11,23 @@ body {
 	background-color: #f9f9f9;
 }
 
+#auctions-table, #auctioneer-panel {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+#auctions-table tbody tr:hover, #auctioneer-panel tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+thead th {
+    border-top: 1px solid #ddd;
+}
+
+tbody td {
+    border-bottom: 1px solid #eee;
+}
+
 .container-auctions {
 	flex: 1;
 	padding: 1.5rem;
@@ -303,6 +320,17 @@ textarea {
 	transition: background-color 0.3s ease;
 }
 
+.assign-btn-dropdown {
+	background-color: #437C90;
+	color: white;
+	border: none;
+	padding: 10px 15px;
+	font-size: 16px;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
 .add-btn {
 	margin-left: auto;
 	display: inline-flex;
@@ -315,6 +343,10 @@ textarea {
 }
 
 .assign-btn:hover {
+	background-color: #0b7dda;
+}
+
+.assign-btn-dropdown:hover {
 	background-color: #0b7dda;
 }
 
@@ -379,6 +411,36 @@ button.deny-btn {
 }
 
 button.deny-btn:hover {
+    background-color: #b83036;
+}
+
+button.accept-btn-dropdown {
+    background-color: #399E5A;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.accept-btn-dropdown:hover {
+    background-color: #297846;
+}
+
+button.deny-btn-dropdown {
+    background-color: #D33E43;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.deny-btn-dropdown:hover {
     background-color: #b83036;
 }
 
@@ -660,12 +722,38 @@ button.deny-btn:hover {
     text-align: center;
 }
 
+.error-message, .success-message {
+    display: block;
+    width: 95%;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.error-message {
+    background-color: #F8D7DA;
+    color: #721C24;
+    border: 1px solid #F5C6CB;
+}
+
 .success-message {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
+    background-color: #D4EDDA;
     color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+    border: 1px solid #C3E6CB;
+}
+
+.add-btn, .filter-btn, .create-btn, .start-btn, .close-btn, .accept-btn, .assign-btn, .deny-btn {
+    font-size: 15px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.add-btn-dropdown, .filter-btn-dropdown, .create-btn-dropdown, .start-btn-dropdown, .close-btn-dropdown, .accept-btn-dropdown, .assign-btn-dropdown, .deny-btn-dropdown {
+    font-size: 15px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: 500;
 }
