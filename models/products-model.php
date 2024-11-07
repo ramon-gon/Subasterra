@@ -13,7 +13,7 @@ class ProductModel {
     
         $sql = "SELECT id, name, short_description, long_description, photo, starting_price, status
                 FROM products 
-                WHERE LOWER(name) LIKE :search AND status = 'assignat a una subhasta'
+                WHERE LOWER(name) LIKE :search AND status = 'assignat a una subhasta' OR status = 'pendent d’assignació a una subhasta'
                 ORDER BY $order
                 LIMIT :limit OFFSET :offset";
     
