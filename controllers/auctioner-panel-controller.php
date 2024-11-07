@@ -48,10 +48,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $id = $_POST['auction-id'] ?? null;
         $status = $_POST['status'] ?? null;
     
-        $auctionsStatus = $auctionModel->updateAuctionStatus($id, $status);
-        
-        header("Location: " . $_SERVER['REQUEST_URI'] . "?menu=auctions");
-        exit();
+        if ($auctionModel->updateAuctionStatus($id, $status)) {
+            $_SESSION['message_success'] = 'Subhasta actualitzada amb èxit.';
+        } else {
+            $_SESSION['message_error'] = 'Hi ha hagut un error en actualitzar la subhasta.';
+        }
+
+        if (strpos($_SERVER['REQUEST_URI'], '?') === false) {
+            header("Location: " . $_SERVER['REQUEST_URI'] . "?menu=auctions");
+            exit();
+        }        
     } elseif ($form_type === 'create-auction') {
         $auction_description = $_POST['auction-description'];
         $auction_date = $_POST['auction-date'];
@@ -77,9 +83,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             foreach ($venedors_ids as $venedor_id) {
                 $notificationsModel->sendNotification($message, $subhastadorId, $venedor_id);
             }
+
+            $_SESSION['message_success'] = 'Subhasta nova creada amb èxit.';
+        } else {
+            $_SESSION['message_error'] = 'Falten dades obligàtories per crear la subhasta.';
         }
+
+
+        if (strpos($_SERVER['REQUEST_URI'], 'menu=auctions') === false) {
             header("Location: " . $_SERVER['REQUEST_URI'] . "?menu=auctions");
             exit();
+        }  
     } elseif ($form_type === 'product-assignment') {
         $product_id = $_POST['product_id'];
         $user_id = $_POST['user_id'];
@@ -92,20 +106,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if ($action === 'accept') {
             $message = 'Producte acceptat. A espera de ser assignat a una subasta. ' . $message;
             $productModel->updateProductStatus($product_id, 'pendent d’assignació a una subhasta', $message);
+            $_SESSION['message_success'] = 'El producte #' . $product_id . ' ha estat acceptat.';
         } elseif ($action === 'reject') {
             $message = 'Producte rebutjat. ' . $message;
             $productModel->updateProductStatus($product_id, 'rebutjat', $message);
+            $_SESSION['message_success'] = 'El producte #' . $product_id . ' ha estat rebutjat.';
         } elseif ($action === 'accept-and-assign') {
             $message = 'Producte assignat a una subhasta. ' . $message;
             $productModel->updateProductStatus($product_id, 'assignat a una subhasta', $message);
             $auctionsProductsModel->assignProductToAuction($auction_id, $product_id);
+            $_SESSION['message_success'] = 'El producte #' . $product_id . ' ha estat assignat a la subhasta #' . $auction_id . '.';
         } elseif ($action === 'unassign') {
             $message = 'Producte ha estat desassignat de la subhasta.';
             $productModel->updateProductStatus($product_id, 'pendent d’assignació a una subhasta', $message);
             $auctionsProductsModel->unassignProductFromAuction($auction_id, $product_id);
+            $_SESSION['message_success'] = 'El producte #' . $product_id . ' ha estat desassignat de la subhasta #' . $auction_id . '.';
         }
         $notificacions = $notificationsModel->sendNotification($message, $subhastadorId, $user_id);         
         $productModel->updateProductDescriptions($product_id, $short_description, $long_description);
+
     }
 
     header("Location: " . $_SERVER['REQUEST_URI']);

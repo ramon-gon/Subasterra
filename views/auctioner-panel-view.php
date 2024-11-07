@@ -1,5 +1,11 @@
 <?php
 require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
+
+$error_submit = $_SESSION['message_error'] ?? '';
+unset($_SESSION['message_error']);
+
+$success_submit = $_SESSION['message_success'] ?? '';
+unset($_SESSION['message_success']);
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +22,14 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
 <body>
     <?php include(__DIR__ . "/header-view.php"); ?>
     
+    <div id="error-message" class="error-message" style="<?= $error_submit ? 'display: block;' : 'display: none;' ?>">
+        <?= htmlspecialchars($error_submit); ?>
+    </div>
+
+    <div id="success-message" class="success-message" style="<?= $success_submit ? 'display: block;' : 'display: none;' ?>">
+        <?= htmlspecialchars($success_submit); ?>
+    </div>
+
     <div class="container-auctions">
 
         <div class="selector-menu-auctioneer">
@@ -23,7 +37,7 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
             <button type="button" id="select-auctions">Subhastes</button>
         </div>
 
-        <div id="auctions-menu">
+        <div id="auctions-menu">    
             <div id="current-auctions">
                 <form method="GET" action="" class="filter-form">
                     <input type="hidden" name="form-type" value="filter-auctions">
@@ -56,53 +70,55 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                     </div>
                 </form>
 
-                <table id="auctions-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Data</th>
-                            <th>Descripció</th>
-                            <th>Productes</th>
-                            <th id="last-th">Estat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php if (!empty($auctions)): ?>
-                        <?php foreach ($auctions as $auction): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($auction['id'] ?? ''); ?></td>
-                                    <td><?= date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
-                                    <td><?= htmlspecialchars($auction['description'] ?? ''); ?></td>
-                                    <td><?= !empty($auction['product_names']) ? htmlspecialchars($auction['product_names']) : 'No hi ha productes'; ?></td>
-                                    <td id="last-td">
-                                        <div class="status-container">    
-                                            <div class="status" value="<?= htmlspecialchars($auction['status']); ?>"></div>
-                                            <?php if ($auction['status'] === 'oberta'): ?>
-                                                <form method="POST" action="/controllers/auctioner-panel-controller.php">
-                                                    <input type="hidden" name="form-type" value="update-auction">
-                                                    <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
-                                                    <input type="hidden" name="status" value="iniciada">
-                                                    <button class="start-btn"><img src="../images/iniciat.svg" alt="Iniciar subhasta"></button>
-                                                </form>
-                                            <?php elseif ($auction['status'] === 'iniciada'): ?>
-                                                <form method="POST" action="/controllers/auctioner-panel-controller.php">
-                                                    <input type="hidden" name="form-type" value="update-auction">
-                                                    <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
-                                                    <input type="hidden" name="status" value="tancada">
-                                                    <button class="close-btn"><img src="../images/tancat.svg" alt="Tancar subhasta"></button>
-                                                </form>
-                                            <?php endif; ?>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
+                <div class="auction-gallery">
+                    <table id="auctions-table">
+                        <thead>
                             <tr>
-                                <td colspan="5">No hi ha subhastes disponibles amb els filtres seleccionats.</td>
+                                <th>ID</th>
+                                <th>Data</th>
+                                <th>Descripció</th>
+                                <th>Productes</th>
+                                <th id="last-th">Estat</th>
                             </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <?php if (!empty($auctions)): ?>
+                            <?php foreach ($auctions as $auction): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($auction['id'] ?? ''); ?></td>
+                                        <td><?= date('d/m/Y H:i', strtotime($auction['auction_date'])); ?></td>
+                                        <td><?= htmlspecialchars($auction['description'] ?? ''); ?></td>
+                                        <td><?= !empty($auction['product_names']) ? htmlspecialchars($auction['product_names']) : 'No hi ha productes'; ?></td>
+                                        <td id="last-td">
+                                            <div class="status-container">    
+                                                <div class="status" value="<?= htmlspecialchars($auction['status']); ?>"></div>
+                                                <?php if ($auction['status'] === 'oberta'): ?>
+                                                    <form method="POST" action="">
+                                                        <input type="hidden" name="form-type" value="update-auction">
+                                                        <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                                        <input type="hidden" name="status" value="iniciada">
+                                                        <button class="start-btn"><img src="../images/iniciat.svg" alt="Iniciar subhasta"></button>
+                                                    </form>
+                                                <?php elseif ($auction['status'] === 'iniciada'): ?>
+                                                    <form method="POST" action="">
+                                                        <input type="hidden" name="form-type" value="update-auction">
+                                                        <input type="hidden" name="auction-id" value="<?= $auction['id']; ?>">
+                                                        <input type="hidden" name="status" value="tancada">
+                                                        <button class="close-btn"><img src="../images/tancat.svg" alt="Tancar subhasta"></button>
+                                                    </form>
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5">No hi ha subhastes disponibles amb els filtres seleccionats.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <table hidden id="new-auction">
@@ -111,7 +127,7 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                             <th colspan="7">Nova Subhasta</th>
                         </tr>
                     </thead>
-                    <form method="POST" action="/controllers/auctioner-panel-controller.php">
+                    <form method="POST" action="">
                     <tbody>
                         <input type="hidden" name="form-type" value="create-auction">
                         <tr>
@@ -157,7 +173,9 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                         </tr>
                     </tbody>
                 </table>
-                <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="create-btn">Crea subasta</button>
+                <div class="create-div">
+                    <button hidden type="submit" name="auction-create" value="create" id="auction-create" class="create-btn">Crea subasta</button>
+                </div>
                 </form>
         </div>
         
@@ -209,7 +227,7 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                     <tbody>
                     <?php if (count($products) > 0): ?>
                         <?php foreach ($products as $row): ?>
-                            <form id="product-form-<?= htmlspecialchars($row['id']); ?>" method="POST" action="/controllers/auctioner-panel-controller.php">
+                            <form id="product-form-<?= htmlspecialchars($row['id']); ?>" method="POST" action="">
                                 <tr class="short-info-dropdown">
                                     <td id="icon-td">
                                         <div class="arrow-icon">

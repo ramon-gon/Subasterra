@@ -58,6 +58,7 @@ html, body {
     align-items: flex-end; 
     position: relative;
     padding-right: 10px;
+    min-height: 44px;
 }
 
 .filter-div {
@@ -273,7 +274,6 @@ textarea {
 .close-btn img {
     filter: brightness(0) invert(1);
 }
-
 
 .add-btn, .accept-btn, .create-btn {
     background-color: #399E5A;
@@ -593,4 +593,19 @@ textarea {
 
     .selection-buttons button:active {
         background-color: #730000;
+    }
+
+    .create-div {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+    .success-message {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
     }
