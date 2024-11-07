@@ -57,12 +57,6 @@
                     <input type="number" step="0.01" name="starting_price" id="starting_price" required>
                 </div>
 
-                <?php if ($productError): ?>
-                    <div id="error-message" class="error-message">
-                        <?= htmlspecialchars($productError); ?>
-                    </div>
-                <?php endif; ?>
-
                 <button type="submit" class="btn">Afegir Producte</button>
             </form>
         </div>

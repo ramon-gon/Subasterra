@@ -313,7 +313,7 @@ unset($_SESSION['message_success']);
                                         <?php endif; ?>
                                         <?php if (in_array($row['status'], ['assignat a una subhasta'])): ?>
                                         <div class="dropdown-buttons">
-                                            <button name="action" value="unassign" class="retire-btn-dropdown" type="submit">Desassignar subhasta</button>
+                                            <button name="action" value="unassign" class="retire-btn" type="submit">Desassignar subhasta</button>
                                         </div>
                                         <?php endif; ?>
                                     </td>
