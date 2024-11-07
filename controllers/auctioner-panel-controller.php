@@ -49,6 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $status = $_POST['status'] ?? null;
     
         $auctionsStatus = $auctionModel->updateAuctionStatus($id, $status);
+        
+        header("Location: " . $_SERVER['REQUEST_URI'] . "?menu=auctions");
+        exit();
     } elseif ($form_type === 'create-auction') {
         $auction_description = $_POST['auction-description'];
         $auction_date = $_POST['auction-date'];
@@ -75,6 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $notificationsModel->sendNotification($message, $subhastadorId, $venedor_id);
             }
         }
+            header("Location: " . $_SERVER['REQUEST_URI'] . "?menu=auctions");
+            exit();
     } elseif ($form_type === 'product-assignment') {
         $product_id = $_POST['product_id'];
         $user_id = $_POST['user_id'];
