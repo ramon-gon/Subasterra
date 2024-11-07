@@ -74,19 +74,27 @@ INSERT INTO products (name, short_description, long_description, observations, p
 ('Escúter Elèctric', 'Escúter amb autonomia llarga', 'Escúter elèctric amb autonomia de 25 km i velocitat màxima de 20 km/h.', 'Plegable i fàcil de transportar.', '/../images/scuter.jpg', 499.99, 2),
 ('Llum LED', 'Llum per a fotografia', 'Llum LED amb temperatura de color ajustable per a selfies i vídeo.', 'Inclou trípode ajustable.', '/../images/ringlight.jpg', 59.99, 2),
 ('Robot Aspirador Xiaomi', 'Aspirador intel·ligent', 'Robot aspirador amb sistema de navegació làser', 'Compatible amb Alexa i Google Home.', '/../images/robot.jpg', 249.99, 1),
-('Microones Samsung', 'Microones amb grill', 'Microones Samsung amb funció grill i interior ceràmic.', 'Fàcil de netejar i de gran capacitat.', '/../images/microones.jpg', 139.99, 1);
+('Microones Samsung', 'Microones amb grill', 'Microones Samsung amb funció grill i interior ceràmic.', 'Fàcil de netejar i de gran capacitat.', '/../images/microones.jpg', 139.99, 1),
+('Cascos Gaming Razer', 'Auriculars gaming amb micròfon', 'Auriculars Razer amb micròfon retràctil i so envoltant 7.1.', 'Ideals per a sessions llargues de joc.', '/../images/razercascos.jpg', 149.99, 1),
+('Monitor Dell', 'Monitor Full HD', 'Monitor Dell de 27 polzades amb resolució Full HD i tecnologia IPS.', 'Angles de visió amplis i colors precisos.', '/../images/dellmonitor.jpg', 229.99, 2),
+('Escàner HP', 'Escàner d’alta resolució', 'Escàner d’alta resolució HP per a documents i fotografies.', 'Escaneig ràpid i amb detall.', '/../images/hpscanner.jpg', 89.99, 1),
+('Càmera GoPro', 'Càmera d’acció', 'Càmera d’acció GoPro amb resistència a l’aigua fins a 10 m.', 'Ideal per a esports extrems i aventures.', '/../images/gopro.jpg', 329.99, 2),
+('Projector Epson', 'Projector amb alta resolució', 'Projector Epson amb resolució 1080p i connexió HDMI.', 'Ideal per a presentacions i pel·lícules.', '/../images/epsonprojector.jpg', 499.99, 1),
+('Batedora Moulinex', 'Batedora de mà', 'Batedora de mà amb accessoris per a picar i batre.', 'Potent i fàcil de netejar.', '/../images/moulinex.jpg', 59.99, 1),
+('Càmera Instax Fujifilm', 'Càmera instantània', 'Càmera instantània Fujifilm Instax amb mode de selfies.', 'Disponible en diferents colors.', '/../images/instax.jpg', 69.99, 2),
+('Casc de Realitat Virtual Oculus', 'Casc de realitat virtual', 'Casc de realitat virtual Oculus amb controladors sense fil.', 'Experiència immersiva per a jocs.', '/../images/oculus.jpg', 399.99, 2);
 
 INSERT INTO auctions (auction_date, description, status) 
-VALUES (NOW(), 'Subhasta per al producte 1', 'oberta');
+VALUES ('2024-11-15 10:00:00', 'Productes electrodomèstics', 'oberta');
 
 INSERT INTO auctions (auction_date, description, status) 
-VALUES ('2024-10-10 14:00:00', 'Subhasta finalitzada per al producte 2', 'tancada');
+VALUES ('2024-11-15 11:00:00', 'Productes audiovisuals', 'oberta');
 
 INSERT INTO auctions (auction_date, description, status) 
-VALUES (NOW(), 'Subhasta activa per al producte 3','oberta');
+VALUES ('2024-11-15 12:00:00', 'Productes electrònics','oberta');
 
 INSERT INTO auctions (auction_date, description, status) 
-VALUES ('2024-09-25 10:30:00', 'Subhasta tancada per al producte 1', 'tancada');
+VALUES ('2024-09-25 10:30:00', 'Subhasta tancada', 'tancada');
 
 INSERT INTO notifications (message, sender, receiver) VALUES
 ('Et donem la benviguda a Subasterra', 3, 1),
