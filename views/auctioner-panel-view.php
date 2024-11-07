@@ -288,7 +288,9 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                                         <?php endif; ?>
                                         <?php if (in_array($row['status'], ['pendent d’assignació a una subhasta'])): ?>
                                         <div class="dropdown-buttons">
-                                            <button name="action" class="assign-btn" type="submit" value="assign">Assignar subhasta</button>
+                                            <button name="action" class="assign-btn" type="submit" value="assign" data-product-id="<?= htmlspecialchars($row['id']); ?>">
+                                                Assignar a subhasta
+                                            </button>
                                         </div>
                                         <?php endif; ?>
                                         <?php if (in_array($row['status'], ['assignat a una subhasta'])): ?>
