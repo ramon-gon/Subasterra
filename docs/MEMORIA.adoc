@@ -425,7 +425,7 @@ Aquest projecte m'ha donat l'oportunitat d'aprendre i créixer en el camp del de
 == 9. Presentació
 Podeu veure la nostra presentació en aquest enllaç: https://drive.google.com/file/d/1Jy5UrvhoxzqMBGQSdcMD5T9-K-K34t1r/view[**Presentació Subasterra**]
 
-== 9. Webgrafia
+== 10. Webgrafia
 1. Stack Overflow. Stack Overflow. https://stackoverflow.com
 2. W3Schools. W3Schools Online Web Tutorials. https://www.w3schools.com
 3. Mozilla Developer Network (MDN). MDN Web Docs. https://developer.mozilla.org
