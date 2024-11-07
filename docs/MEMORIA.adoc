@@ -376,6 +376,9 @@ Per poder treballar en l'aplicació de forma local, necessitem tenir un entorn d
 === Ismael Benítez Martínez
 En general m'he familiaritzat més amb l'ús de JavaScript, PHP, HTML, CSS y sql. He après a manipular el HTML i css a través del DOM amb JavaScript, a fer servir el PHP per manipular informació de la base de dades i a treballar amb el model-vista-controlador.
 
+=== Roger Ortiz Leal
+Aquest projecte m'ha donat l'oportunitat d'aprendre i créixer en el camp del desenvolupament web. He treballat en noves tecnologies i hem superat reptes importants en equip. Ha estat una experiència enriquidora que estic segur que em servirà en futurs projectes.
+
 == 10. Webgrafia
 1. Stack Overflow. Stack Overflow. https://stackoverflow.com
 2. W3Schools. W3Schools Online Web Tutorials. https://www.w3schools.com
