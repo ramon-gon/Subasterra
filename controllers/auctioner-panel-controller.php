@@ -14,8 +14,8 @@ $auctions = $auctionModel->getAuctions();
 $activeAuctions = $auctionModel->getActiveAuctions();
 
 $productModel = new ProductModel($dbConnection);
-$products = $productModel->getPendingProducts();
-$productsAuction = $productModel->getPendingProducts();
+$products = $productModel->getAllProducts();
+$productsAuction = $productModel->getPendingToAssignProducts();
 
 $usersModel = new UsersModel($dbConnection);
 $subhastadorId = $usersModel->getIdByUsername('subhastador');

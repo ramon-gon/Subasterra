@@ -130,22 +130,28 @@ require_once(__DIR__ . '/../controllers/auctioner-panel-controller.php');
                             <th>Selecciona productes</th>
                             <th colspan="6">
                                 <div class="product-selection">
-                                    <select id="available_products" multiple size="5">
-                                        <?php if (count($productsAuction) > 0): ?>
-                                            <?php foreach ($productsAuction as $row): ?>
-                                                <option value="<?= htmlspecialchars($row['id']); ?>">
-                                                    <?= htmlspecialchars($row['name']); ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        <?php else: ?>
-                                            <option disabled>No hi ha productes disponibles</option>
-                                        <?php endif; ?>
-                                    </select>
-                                    <div class="selection-buttons">
-                                        <button type="button" id="add_product">Agregar</button>
-                                        <button type="button" id="remove_product">Quitar</button>
+                                    <div class="select-container">
+                                        <select id="available_products" multiple size="5">
+                                            <?php if (count($productsAuction) > 0): ?>
+                                                <?php foreach ($productsAuction as $row): ?>
+                                                    <option value="<?= htmlspecialchars($row['id']); ?>">
+                                                        <?= htmlspecialchars($row['name']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <option disabled>No hi ha productes disponibles</option>
+                                            <?php endif; ?>
+                                        </select>
                                     </div>
-                                    <select name="product_ids[]" id="selected_products" multiple size="5"></select>
+
+                                    <div class="selection-buttons">
+                                        <button type="button" id="add_product"><img src="/images/add-right.svg" alt="add-right-icon"></button>
+                                        <button type="button" id="remove_product"><img src="/images/add-left.svg" alt="add-left-icon"></button>
+                                    </div>
+                                    
+                                    <div class="select-container">
+                                        <select name="product_ids[]" id="selected_products" multiple size="5"></select>
+                                    </div>
                                 </div>
                             </th>
                         </tr>

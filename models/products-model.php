@@ -76,11 +76,22 @@ class ProductModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    public function getPendingProducts() {
+    public function getAllProducts() {
         $sql = "SELECT p.user_id, p.id, p.name, p.short_description, p.long_description, p.observations, p.starting_price, p.photo, 
                 p.status, p.auctioneer_message, u.username 
                 FROM products p 
                 JOIN users u ON p.user_id = u.id";
+    
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPendingToAssignProducts() {
+        $sql = "SELECT p.user_id, p.id, p.name, p.short_description, p.long_description, p.observations, p.starting_price, p.photo, 
+                p.status, p.auctioneer_message, u.username 
+                FROM products p 
+                JOIN users u ON p.user_id = u.id
+                WHERE p.status = 'pendent d’assignació a una subhasta'";
     
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
