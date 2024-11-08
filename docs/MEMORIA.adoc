@@ -422,6 +422,10 @@ En general m'he familiaritzat més amb l'ús de JavaScript, PHP, HTML, CSS y sql
 === Roger Ortiz Leal
 Aquest projecte m'ha donat l'oportunitat d'aprendre i créixer en el camp del desenvolupament web. He treballat en noves tecnologies i hem superat reptes importants en equip. Ha estat una experiència enriquidora que estic segur que em servirà en futurs projectes.
 
+=== Ramon González Guix
+
+En aquest projecte, sobretot he après PHP i JavaScript. Pel que fa al CSS, la veritat és que he estat el membre de l'equip que menys l'ha treballat, però estic content amb el grup que m'ha tocat, ja que tots tres hem treballat i ens hem ajudat mútuament.
+
 == 9. Presentació
 Podeu veure la nostra presentació en aquest enllaç: https://drive.google.com/file/d/1Jy5UrvhoxzqMBGQSdcMD5T9-K-K34t1r/view[**Presentació Subasterra**]
 
